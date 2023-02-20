@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pope/views/pages/search_screen.dart';
+import 'package:ailment_alleviate/views/pages/search_screen.dart';
 
 import '../views/pages/emperis_screen.dart';
 

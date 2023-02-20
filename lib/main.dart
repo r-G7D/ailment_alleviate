@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pope/providers/emperis_provider.dart';
-import 'package:pope/routes/router.dart';
+import 'package:ailment_alleviate/providers/emperis_provider.dart';
+import 'package:ailment_alleviate/routes/router.dart';
 import 'package:provider/provider.dart';
 
 void main() {
