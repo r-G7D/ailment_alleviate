@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:ailment_alleviate/layers/data/emperis_provider.dart';
 import 'package:ailment_alleviate/routes/router.dart';
 import 'package:provider/provider.dart';
+
+import 'layers/data/dashboard_provider.dart';
+import 'layers/data/emperis_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,6 +18,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => EmperisProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => DashboardProvider(),
         ),
       ],
       child: MaterialApp.router(

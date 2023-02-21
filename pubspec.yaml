@@ -39,6 +39,7 @@ dependencies:
   go_router: ^6.0.9
   http: ^0.13.5
   google_fonts: ^4.0.3
+  flutter_riverpod: ^2.2.0
 
 dev_dependencies:
   flutter_test:
