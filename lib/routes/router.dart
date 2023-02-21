@@ -1,8 +1,8 @@
+import 'package:ailment_alleviate/layers/presentation/pages/dashboard_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
-import 'package:ailment_alleviate/views/pages/search_screen.dart';
 
-import '../views/pages/emperis_screen.dart';
+import '../layers/presentation/pages/emperis_screen.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: '/',
@@ -16,7 +16,7 @@ final GoRouter router = GoRouter(
           path: 'search',
           name: 'search',
           pageBuilder: (context, state) => slideTransitionRL(
-            const SearchScreen(),
+            const DashboardScreen(),
           ),
         ),
       ],

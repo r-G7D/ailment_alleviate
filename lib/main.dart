@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ailment_alleviate/providers/emperis_provider.dart';
+import 'package:ailment_alleviate/layers/data/emperis_provider.dart';
 import 'package:ailment_alleviate/routes/router.dart';
 import 'package:provider/provider.dart';
 

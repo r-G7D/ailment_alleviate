@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../../providers/emperis_provider.dart';
+import '../../data/emperis_provider.dart';
 
 class EmperisScreen extends StatelessWidget {
   const EmperisScreen({super.key});
