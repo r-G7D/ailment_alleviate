@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import '../../../routes/router.dart';
 import '../../data/emperis_provider.dart';
 
 class EmperisScreen extends StatelessWidget {
@@ -17,7 +18,7 @@ class EmperisScreen extends StatelessWidget {
         'pic': 'https://picsum.photos/id/1/200/300',
         'title': 'Indigenous Folklore',
         'desc':
-            'Filologi adalah studi tentang bahasa dan sastra, serta hubungan antara keduanya. Studi filologi melibatkan analisis bahasa secara historis dan komparatif, dan juga mencakup penelitian mengenai sastra, budaya, sejarah, dan sosial dari bahasa yang dipelajari. Tujuan utama dari studi filologi adalah untuk memahami asal-usul, perkembangan, dan penggunaan bahasa serta karya sastra di dalam budaya dan waktu yang berbeda.',
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc sit amet aliquam tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Sed euismod, nunc sit amet aliquam tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Sed euismod, nunc sit amet aliquam tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Sed euismod, nunc sit amet aliquam tincidunt.',
       },
       {
         'pic': 'https://picsum.photos/id/1/200/300',
@@ -29,7 +30,7 @@ class EmperisScreen extends StatelessWidget {
         'pic': 'https://picsum.photos/id/1/200/300',
         'title': 'Lorem Ipsum',
         'desc':
-            'Filologi adalah studi tentang bahasa dan sastra, serta hubungan antara keduanya. Studi filologi melibatkan analisis bahasa secara historis dan komparatif, dan juga mencakup penelitian mengenai sastra, budaya, sejarah, dan sosial dari bahasa yang dipelajari. Tujuan utama dari studi filologi adalah untuk memahami asal-usul, perkembangan, dan penggunaan bahasa serta karya sastra di dalam budaya dan waktu yang berbeda.',
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc sit amet aliquam tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Sed euismod, nunc sit amet aliquam tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Sed euismod, nunc sit amet aliquam tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Sed euismod, nunc sit amet aliquam tincidunt.',
       },
     ];
     var prov = Provider.of<EmperisProvider>(context, listen: false);
@@ -56,9 +57,9 @@ class EmperisScreen extends StatelessWidget {
                     prov.setActive(value);
                   },
                   children: [
-                    mainPage(context, data[0]),
-                    mainPage(context, data[1]),
-                    mainPage(context, data[2]),
+                    mainPage(context, data[0], null),
+                    mainPage(context, data[1], 'dashboard'),
+                    mainPage(context, data[2], null),
                   ],
                 ),
               ),
@@ -73,54 +74,62 @@ class EmperisScreen extends StatelessWidget {
     );
   }
 
-  Widget mainPage(BuildContext context, dynamic data) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(100),
-          child: Image.network(
-            data['pic'],
-            width: 100,
-            height: 100,
-          ),
-        ),
-        const SizedBox(height: 26),
-        Text(
-          data['title'],
-          style: GoogleFonts.comfortaa(
-            textStyle: Typo.title.copyWith(
-              color: black,
+  Widget mainPage(BuildContext context, dynamic data, String? route) {
+    return SafeArea(
+      child: Container(
+        height: MediaQuery.of(context).size.height,
+        padding: const EdgeInsets.only(top: 128, bottom: 134),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(100),
+              child: Image.network(
+                data['pic'],
+                width: 100,
+                height: 100,
+              ),
             ),
-          ),
-        ),
-        const SizedBox(height: 11),
-        Text(
-          data['desc'],
-          style: GoogleFonts.lato(
-            textStyle: Typo.paragraph.copyWith(
-              color: black,
-            ),
-          ),
-        ),
-        SizedBox(height: MediaQuery.of(context).size.height * 0.3),
-        ElevatedButton(
-            onPressed: () {},
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(primary),
-              minimumSize: MaterialStatePropertyAll(Size(200, 40)),
-              shape: MaterialStateProperty.all(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+            const SizedBox(height: 26),
+            Text(
+              data['title'],
+              style: GoogleFonts.comfortaa(
+                textStyle: Typo.title.copyWith(
+                  color: black,
                 ),
               ),
             ),
-            child: Text(
-              'Mulai',
-              style: GoogleFonts.comfortaa(
-                  textStyle: Typo.paragraph.copyWith(color: white)),
-            )),
-      ],
+            const SizedBox(height: 11),
+            Text(
+              data['desc'],
+              style: GoogleFonts.lato(
+                textStyle: Typo.paragraph.copyWith(
+                  color: black,
+                ),
+              ),
+            ),
+            const Spacer(),
+            ElevatedButton(
+                onPressed: () {
+                  router.pushNamed(route!);
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(primary),
+                  minimumSize: MaterialStatePropertyAll(Size(200, 40)),
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
+                child: Text(
+                  'Mulai',
+                  style: GoogleFonts.comfortaa(
+                      textStyle: Typo.paragraph.copyWith(color: white)),
+                )),
+          ],
+        ),
+      ),
     );
   }
 

@@ -14,7 +14,7 @@ class EmperisProvider with ChangeNotifier {
     _page = index;
     pageController.animateToPage(
       index,
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 500),
       curve: Curves.easeInOut,
     );
     notifyListeners();
