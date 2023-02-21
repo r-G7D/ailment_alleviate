@@ -13,8 +13,8 @@ final GoRouter router = GoRouter(
       builder: (context, state) => const EmperisScreen(),
       routes: [
         GoRoute(
-          path: 'search',
-          name: 'search',
+          path: 'dashboard',
+          name: 'dashboard',
           pageBuilder: (context, state) => slideTransitionRL(
             const DashboardScreen(),
           ),
