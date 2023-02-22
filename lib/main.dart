@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ailment_alleviate/routes/router.dart';
-import 'package:provider/provider.dart';
-
-import 'layers/data/dashboard_provider.dart';
-import 'layers/data/emperis_provider.dart';
+// import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -14,21 +12,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => EmperisProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => DashboardProvider(),
-        ),
-      ],
-      child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        routerDelegate: router.routerDelegate,
-        routeInformationParser: router.routeInformationParser,
-        routeInformationProvider: router.routeInformationProvider,
-      ),
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      routerDelegate: router.routerDelegate,
+      routeInformationParser: router.routeInformationParser,
+      routeInformationProvider: router.routeInformationProvider,
     );
   }
 }
