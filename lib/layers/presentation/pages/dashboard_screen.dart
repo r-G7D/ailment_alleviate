@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../constants/custom_style.dart';
-import '../presentation/states/dashboard_provider.dart';
+import '../../../constants/custom_style.dart';
+import '../../data/dashboard_repo.dart';
 
 class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});
