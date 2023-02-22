@@ -1,8 +1,14 @@
+
 // ignore_for_file: prefer_final_fields
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class EmperisProvider with ChangeNotifier {
+final emperisProvider = StateProvider<int>((ref) {
+  return 0;
+});
+
+class Emperis1Provider with ChangeNotifier {
   int _active = 0;
   int _page = 0;
   int get page => _page;
@@ -22,7 +28,6 @@ class EmperisProvider with ChangeNotifier {
 
   setActive(int index) {
     _active = index;
-
     notifyListeners();
   }
 }

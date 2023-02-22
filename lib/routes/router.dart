@@ -1,4 +1,4 @@
-import 'package:ailment_alleviate/layers/presentation/pages/dashboard_screen.dart';
+import 'package:ailment_alleviate/layers/data/dashboard_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
@@ -12,6 +12,13 @@ final GoRouter router = GoRouter(
       name: 'splash',
       builder: (context, state) => const EmperisScreen(),
       routes: [
+        GoRoute(
+          path: 'emperis',
+          name: 'emperis',
+          pageBuilder: (context, state) => slideTransitionRL(
+            const DashboardScreen(),
+          ),
+        ),
         GoRoute(
           path: 'dashboard',
           name: 'dashboard',
