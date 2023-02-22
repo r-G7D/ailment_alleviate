@@ -1,19 +1,26 @@
-import 'package:ailment_alleviate/layers/data/dashboard_provider.dart';
+// import 'package:ailment_alleviate/layers/data/dashboard_provider.dart';
+import 'dart:developer';
+
+import 'package:ailment_alleviate/layers/domain/filter/filter.dart';
 import 'package:ailment_alleviate/routes/router.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
-import '../../../constants/custom_style.dart';
+import '../../constants/custom_style.dart';
+import '../presentation/states/dashboard_provider.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(filterProvider, (previous, next) {
+      log('State filter berubah');
+    });
     return Scaffold(
       backgroundColor: white,
-      endDrawer: filterDrawer(context),
+      endDrawer: filterDrawer(context, ref),
       body: Padding(
         padding: const EdgeInsets.only(top: 90, left: 35, right: 35),
         child: Column(
@@ -168,8 +175,8 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget filterDrawer(BuildContext context) {
-    var prov = Provider.of<DashboardProvider>(context);
+  Widget filterDrawer(BuildContext context, WidgetRef ref) {
+    // var prov = Provider.of<DashboardProvider>(context);
     return SafeArea(
       child: Row(
         children: [
@@ -201,7 +208,10 @@ class DashboardScreen extends StatelessWidget {
                       ),
                       InkWell(
                         onTap: () {
-                          prov.clearFilter();
+                          // prov.clearFilter();
+                          ref.read(filterProvider.notifier).clearFilter();
+                          // ref.read(filterProvider.notifier).state = [];
+                          log(ref.watch(filterProvider).toString());
                         },
                         child: Text(
                           'Reset',
@@ -221,7 +231,8 @@ class DashboardScreen extends StatelessWidget {
                       spacing: 10,
                       runSpacing: 10,
                       children: [
-                        for (var i = 0; i < 10; i++) filterItem('Bahan $i'),
+                        for (var i = 0; i < 10; i++)
+                          filterItem('Bahan $i', ref),
                       ],
                     ),
                   ),
@@ -258,37 +269,41 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget filterItem(String nama) {
-    return Consumer<DashboardProvider>(builder: (_, prov, __) {
-      return InkWell(
-        onTap: () {
-          prov.filters.contains(nama)
-              ? prov.removeFilter(nama)
-              : prov.addFilter(nama);
-        },
-        child: Container(
-          height: 41,
-          width: 128,
-          decoration: BoxDecoration(
-            color: prov.filters.contains(nama) ? primary : secondary,
-            borderRadius: const BorderRadius.all(
-              Radius.circular(8),
-            ),
+  Widget filterItem(String nama, WidgetRef ref) {
+    Filter filter = ref.watch(filterProvider);
+
+    return InkWell(
+      onTap: () {
+        // prov.filters.contains(nama)
+        //     ? prov.removeFilter(nama)
+        //     : prov.addFilter(nama);
+        filter.filters.contains(nama)
+            ? ref.read(filterProvider.notifier).removeFilter(nama)
+            : ref.read(filterProvider.notifier).addFilter(nama);
+        log(ref.watch(filterProvider).toString());
+      },
+      child: Container(
+        height: 41,
+        width: 128,
+        decoration: BoxDecoration(
+          color: filter.filters.contains(nama) ? primary : secondary,
+          borderRadius: const BorderRadius.all(
+            Radius.circular(8),
           ),
-          child: Center(
-            child: Text(
-              nama,
-              style: GoogleFonts.lato(
-                textStyle: Typo.paragraph.copyWith(
-                  fontWeight: FontWeight.w400,
-                  color: prov.filters.contains(nama) ? white : black,
-                ),
+        ),
+        child: Center(
+          child: Text(
+            nama,
+            style: GoogleFonts.lato(
+              textStyle: Typo.paragraph.copyWith(
+                fontWeight: FontWeight.w400,
+                color: filter.filters.contains(nama) ? white : black,
               ),
             ),
           ),
         ),
-      );
-    });
+      ),
+    );
   }
 
   Widget botsheet(BuildContext context) {

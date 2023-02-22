@@ -1,18 +1,20 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:developer';
+
 import 'package:ailment_alleviate/constants/custom_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
 import '../../../routes/router.dart';
-import '../../data/emperis_provider.dart';
+import '../states/emperis_provider.dart';
 
-class EmperisScreen extends StatelessWidget {
+class EmperisScreen extends ConsumerWidget {
   const EmperisScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     dynamic data = [
       {
         'pic': 'https://picsum.photos/id/1/200/300',
@@ -33,7 +35,11 @@ class EmperisScreen extends StatelessWidget {
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc sit amet aliquam tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Sed euismod, nunc sit amet aliquam tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Sed euismod, nunc sit amet aliquam tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Sed euismod, nunc sit amet aliquam tincidunt.',
       },
     ];
-    var prov = Provider.of<EmperisProvider>(context, listen: false);
+    // var prov = Provider.of<EmperisProvider>(context, listen: false);
+    PageController page = PageController();
+    ref.listen(emperisProvider, (previous, next) {
+      log('State empiris berubah');
+    });
     return Scaffold(
       backgroundColor: white,
       body: Stack(
@@ -52,14 +58,16 @@ class EmperisScreen extends StatelessWidget {
                 color: white,
                 child: PageView(
                   scrollDirection: Axis.vertical,
-                  controller: prov.pageController,
+                  // controller: prov.pageController,
+                  controller: page,
                   onPageChanged: (value) {
-                    prov.setActive(value);
+                    // prov.setActive(value);
+                    ref.read(emperisProvider.notifier).state = value;
                   },
                   children: [
-                    mainPage(context, data[0], null),
+                    mainPage(context, data[0], 'dashboard'),
                     mainPage(context, data[1], 'dashboard'),
-                    mainPage(context, data[2], null),
+                    mainPage(context, data[2], 'dashboard'),
                   ],
                 ),
               ),
@@ -67,7 +75,7 @@ class EmperisScreen extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 112, left: 25),
-            child: tabBar(context),
+            child: tabBar(context, ref, page),
           ),
         ],
       ),
@@ -133,51 +141,53 @@ class EmperisScreen extends StatelessWidget {
     );
   }
 
-  Widget tabBar(BuildContext context) {
+  Widget tabBar(BuildContext context, WidgetRef ref, PageController page) {
+    int currentIndex = ref.watch(emperisProvider);
     return SizedBox(
       height: 300,
       width: 50,
-      child: Consumer<EmperisProvider>(
-        builder: (_, prov, __) {
-          return ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: 3,
-            itemBuilder: (context, index) {
-              return Column(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      prov.setPage(index);
-                    },
-                    child: Material(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(12)),
-                      ),
-                      elevation: 5,
-                      child: Container(
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(12)),
-                          color: prov.active == index ? primary : white,
-                        ),
-                        child: Center(
-                          child: Text(
-                            '0${index + 1}',
-                            style: GoogleFonts.comfortaa(
-                              textStyle: Typo.title.copyWith(
-                                color: prov.active == index ? white : primary,
-                              ),
-                            ),
+      child: ListView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: 3,
+        itemBuilder: (context, index) {
+          return Column(
+            children: [
+              InkWell(
+                onTap: () {
+                  // prov.setPage(index);
+                  page.animateToPage(
+                    index,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInOut,
+                  );
+                },
+                child: Material(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                  ),
+                  elevation: 5,
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(12)),
+                      color: currentIndex == index ? primary : white,
+                    ),
+                    child: Center(
+                      child: Text(
+                        '0${index + 1}',
+                        style: GoogleFonts.comfortaa(
+                          textStyle: Typo.title.copyWith(
+                            color: currentIndex == index ? white : primary,
                           ),
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 17)
-                ],
-              );
-            },
+                ),
+              ),
+              const SizedBox(height: 17)
+            ],
           );
         },
       ),
