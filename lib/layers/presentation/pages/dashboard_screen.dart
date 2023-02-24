@@ -33,79 +33,83 @@ class DashboardScreen extends ConsumerWidget {
         padding: const EdgeInsets.only(top: 90, left: 35, right: 35),
         child: Column(
           children: [
-            Row(
-              children: [
-                Container(
-                  height: 43,
-                  width: 250,
-                  padding: const EdgeInsets.only(left: 18),
-                  decoration: BoxDecoration(
-                    color: secondary,
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(8),
+            Padding(
+              padding: const EdgeInsets.only(left: 2.2),
+              child: Row(
+                children: [
+                  Container(
+                    height: 43,
+                    width: 250,
+                    padding: const EdgeInsets.only(left: 18),
+                    decoration: BoxDecoration(
+                      color: secondary,
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(8),
+                      ),
                     ),
-                  ),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 7),
-                        child: SizedBox(
-                          width: 190,
-                          child: TextField(
-                            controller: searchC,
-                            cursorColor: primary,
-                            maxLines: 1,
-                            style: GoogleFonts.lato(
-                                textStyle: Typo.paragraph.copyWith(
-                              fontWeight: FontWeight.w400,
-                            )),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: 'Cari gejala',
-                              hintStyle: GoogleFonts.poppins(
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 7),
+                          child: SizedBox(
+                            width: 190,
+                            child: TextField(
+                              controller: searchC,
+                              cursorColor: primary,
+                              maxLines: 1,
+                              style: GoogleFonts.lato(
                                   textStyle: Typo.paragraph.copyWith(
                                 fontWeight: FontWeight.w400,
                               )),
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: 'Cari gejala',
+                                hintStyle: GoogleFonts.poppins(
+                                    textStyle: Typo.paragraph.copyWith(
+                                  fontWeight: FontWeight.w400,
+                                )),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      const SizedBox(width: 10),
-                      InkWell(
-                        onTap: () {
-                          ref.read(queryProvider.notifier).state = searchC.text;
-                        },
+                        const SizedBox(width: 10),
+                        InkWell(
+                          onTap: () {
+                            ref.read(queryProvider.notifier).state =
+                                searchC.text;
+                          },
+                          child: Icon(
+                            Icons.search,
+                            color: white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 25),
+                  Builder(builder: (context) {
+                    return InkWell(
+                      onTap: () {
+                        Scaffold.of(context).openEndDrawer();
+                      },
+                      child: Container(
+                        height: 43,
+                        width: 43,
+                        decoration: BoxDecoration(
+                          color: primary,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(8),
+                          ),
+                        ),
                         child: Icon(
-                          Icons.search,
+                          Icons.filter_alt_outlined,
                           color: white,
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 25),
-                Builder(builder: (context) {
-                  return InkWell(
-                    onTap: () {
-                      Scaffold.of(context).openEndDrawer();
-                    },
-                    child: Container(
-                      height: 43,
-                      width: 43,
-                      decoration: BoxDecoration(
-                        color: primary,
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(8),
-                        ),
-                      ),
-                      child: Icon(
-                        Icons.filter_alt_outlined,
-                        color: white,
-                      ),
-                    ),
-                  );
-                }),
-              ],
+                    );
+                  }),
+                ],
+              ),
             ),
             const SizedBox(height: 20),
             // SizedBox(
