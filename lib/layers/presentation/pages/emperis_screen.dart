@@ -3,12 +3,13 @@
 import 'dart:developer';
 
 import 'package:ailment_alleviate/constants/custom_style.dart';
+import 'package:ailment_alleviate/layers/data/dashboard_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../routes/router.dart';
-import '../states/emperis_provider.dart';
+import '../states/basic_state.dart';
 
 class EmperisScreen extends ConsumerWidget {
   const EmperisScreen({super.key});
