@@ -156,7 +156,6 @@ class EmperisScreen extends ConsumerWidget {
               InkWell(
                 onTap: () {
                   // prov.setPage(index);
-                  ref.read(dashboardRepositoryProvider).fetchRecipes();
                   page.animateToPage(
                     index,
                     duration: const Duration(milliseconds: 500),

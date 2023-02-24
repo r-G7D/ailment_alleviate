@@ -2,6 +2,8 @@
 import 'dart:developer';
 
 import 'package:ailment_alleviate/layers/domain/filter/filter.dart';
+import 'package:ailment_alleviate/layers/domain/ingredient/ingredient.dart';
+import 'package:ailment_alleviate/layers/presentation/states/basic_state.dart';
 import 'package:ailment_alleviate/routes/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,15 +11,21 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../constants/custom_style.dart';
 import '../../data/dashboard_repo.dart';
+import '../../domain/recipe/recipe.dart';
 
 class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.listen(filterProvider, (previous, next) {
-      log('State filter berubah');
-    });
+    // ref.listen(filterProvider, (previous, next) {
+    //   log('State filter berubah');
+    // });
+    AsyncValue<List<Recipe>> searchP = ref.watch(searchProvider);
+    TextEditingController searchC = TextEditingController(
+      text: ref.watch(queryProvider),
+    );
+
     return Scaffold(
       backgroundColor: white,
       endDrawer: filterDrawer(context, ref),
@@ -44,6 +52,7 @@ class DashboardScreen extends ConsumerWidget {
                         child: SizedBox(
                           width: 190,
                           child: TextField(
+                            controller: searchC,
                             cursorColor: primary,
                             maxLines: 1,
                             style: GoogleFonts.lato(
@@ -62,9 +71,14 @@ class DashboardScreen extends ConsumerWidget {
                         ),
                       ),
                       const SizedBox(width: 10),
-                      Icon(
-                        Icons.search,
-                        color: white,
+                      InkWell(
+                        onTap: () {
+                          ref.read(queryProvider.notifier).state = searchC.text;
+                        },
+                        child: Icon(
+                          Icons.search,
+                          color: white,
+                        ),
                       ),
                     ],
                   ),
@@ -74,13 +88,6 @@ class DashboardScreen extends ConsumerWidget {
                   return InkWell(
                     onTap: () {
                       Scaffold.of(context).openEndDrawer();
-                      // showModalBottomSheet(
-                      //   // isDismissible: false,
-                      //   context: context,
-                      //   builder: (context) {
-                      //     return Container();
-                      //   },
-                      // );
                     },
                     child: Container(
                       height: 43,
@@ -101,22 +108,101 @@ class DashboardScreen extends ConsumerWidget {
               ],
             ),
             const SizedBox(height: 20),
+            // SizedBox(
+            //   height: MediaQuery.of(context).size.height - 153,
+            //   child: FutureBuilder(
+            //       future: ref
+            //           .read(dashboardRepositoryProvider)
+            //           .fetchRecipes(ref.watch(queryProvider)),
+            //       builder: (context, snapshot) {
+            //         if (snapshot.hasData) {
+            //           dynamic data = snapshot.data;
+            //           log(data.toString());
+            //           if (data.length == 0) {
+            //             return Center(
+            //               child: Text(
+            //                 'Tidak ada hasil',
+            //                 style: GoogleFonts.lato(
+            //                   textStyle: Typo.title,
+            //                 ),
+            //               ),
+            //             );
+            //           } else {
+            //             return SingleChildScrollView(
+            //               child: Wrap(
+            //                 spacing: 10,
+            //                 children: [
+            //                   ...data
+            //                       .map((e) => Column(
+            //                             children: [
+            //                               searchItem(e.name, e.ingredients),
+            //                               const SizedBox(height: 10),
+            //                             ],
+            //                           ))
+            //                       .toList(),
+            //                 ],
+            //               ),
+            //             );
+            //           }
+            //         } else if (snapshot.connectionState ==
+            //             ConnectionState.waiting) {
+            //           return const LoadingWidget();
+            //         } else {
+            //           return Center(
+            //             child: Text(
+            //               'Tidak ada hasil',
+            //               style: GoogleFonts.lato(
+            //                 textStyle: Typo.title,
+            //               ),
+            //             ),
+            //           );
+            //         }
+            //       }),
+            // ),
             SizedBox(
               height: MediaQuery.of(context).size.height - 153,
-              child: SingleChildScrollView(
-                child: Wrap(
-                  spacing: 10,
-                  children: [
-                    for (var i = 0; i < 10; i++)
-                      Column(
-                        children: [
-                          searchItem(),
-                          const SizedBox(height: 10),
-                        ],
-                      ),
-                  ],
-                ),
-              ),
+              child: searchP.when(data: (data) {
+                return SingleChildScrollView(
+                  child: data.isEmpty
+                      ? SizedBox(
+                          height: MediaQuery.of(context).size.height - 153,
+                          child: Center(
+                            child: Text(
+                              'Tidak ada hasil',
+                              style: GoogleFonts.lato(
+                                textStyle: Typo.title,
+                              ),
+                            ),
+                          ),
+                        )
+                      : Wrap(
+                          spacing: 10,
+                          children: [
+                            ...data
+                                .map((e) => Column(
+                                      children: [
+                                        //* e = Recipe
+                                        searchItem(e.id.toString(), e.name!,
+                                            e.pic!, e.ingredients),
+                                        const SizedBox(height: 10),
+                                      ],
+                                    ))
+                                .toList(),
+                          ],
+                        ),
+                );
+              }, error: ((error, stackTrace) {
+                return SizedBox(
+                  height: MediaQuery.of(context).size.height - 153,
+                  child: Center(
+                    child: Text(
+                      error.toString(),
+                    ),
+                  ),
+                );
+              }), loading: () {
+                return const LoadingWidget();
+              }),
             ),
           ],
         ),
@@ -124,7 +210,14 @@ class DashboardScreen extends ConsumerWidget {
     );
   }
 
-  Widget searchItem() {
+  Widget searchItem(
+      String id, String name, String img, List<Ingredient> ingredients) {
+    List<String> ingredientsName = [];
+    for (var element in ingredients) {
+      //* element = Ingredient
+      ingredientsName.add(element.name);
+    }
+
     return Container(
       height: 143,
       width: 151,
@@ -147,24 +240,62 @@ class DashboardScreen extends ConsumerWidget {
                 topRight: Radius.circular(8),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 6, left: 15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Nama obat',
-                  style: GoogleFonts.lato(
-                    textStyle: Typo.paragraph.copyWith(
-                      fontWeight: FontWeight.w400,
+            child: Image.network(
+              img,
+              loadingBuilder: (context, child, loadingProgress) =>
+                  loadingProgress == null ? child : const ImageLoadingWidget(),
+              errorBuilder: (context, error, stackTrace) => Container(
+                height: 100,
+                width: 151,
+                decoration: BoxDecoration(
+                  color: primary,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(8),
+                    topRight: Radius.circular(8),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    'Gambar tidak ditemukan',
+                    style: GoogleFonts.lato(
+                      textStyle: Typo.paragraph
+                          .copyWith(fontWeight: FontWeight.w400, color: white),
                     ),
                   ),
                 ),
-                Text(
-                  'Bahan 1',
-                  style: GoogleFonts.lato(
-                    textStyle: Typo.paragraph.copyWith(fontSize: 8),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 6, left: 15, right: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                FittedBox(
+                  // width: 121,
+                  // height: 14,
+                  child: Text(
+                    name,
+                    style: GoogleFonts.lato(
+                      textStyle: Typo.paragraph.copyWith(
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  // width: 121,
+                  // height: 12,
+                  child: Text(
+                    ingredientsName
+                        .toString()
+                        .replaceAll('[', '')
+                        .replaceAll(']', ''),
+                    maxLines: 2,
+                    style: GoogleFonts.lato(
+                      textStyle: Typo.paragraph.copyWith(fontSize: 8),
+                    ),
                   ),
                 ),
               ],
@@ -209,9 +340,9 @@ class DashboardScreen extends ConsumerWidget {
                       InkWell(
                         onTap: () {
                           // prov.clearFilter();
-                          ref.read(filterProvider.notifier).clearFilter();
-                          // ref.read(filterProvider.notifier).state = [];
-                          log(ref.watch(filterProvider).toString());
+                          ref.read(filterStateProvider.notifier).clearFilter();
+                          ref.read(filterProvider.notifier).state = '';
+                          log(ref.watch(filterStateProvider).toString());
                         },
                         child: Text(
                           'Reset',
@@ -225,20 +356,43 @@ class DashboardScreen extends ConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 15),
-                  SizedBox(
-                    width: double.infinity,
-                    child: Wrap(
-                      spacing: 10,
-                      runSpacing: 10,
-                      children: [
-                        for (var i = 0; i < 10; i++)
-                          filterItem('Bahan $i', ref),
-                      ],
-                    ),
+                  ref.watch(ingredientProvider).when(
+                    data: (data) {
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height - 312,
+                        child: SingleChildScrollView(
+                          child: Wrap(
+                            spacing: 10,
+                            runSpacing: 10,
+                            children: [
+                              for (var i = 0; i < data.length; i++)
+                                filterItem(data[i].name, ref),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                    error: ((error, stackTrace) {
+                      return Center(
+                        child: Text(
+                          error.toString(),
+                        ),
+                      );
+                    }),
+                    loading: () {
+                      return const LoadingWidget();
+                    },
                   ),
-                  const Spacer(),
+                  const SizedBox(height: 15),
                   ElevatedButton(
                     onPressed: () {
+                      ref.read(filterProvider.notifier).state = ref
+                          .watch(filterStateProvider)
+                          .filters
+                          .toString()
+                          .replaceAll('[', '')
+                          .replaceAll(']', '')
+                          .replaceAll(',', '');
                       router.pop();
                     },
                     style: ButtonStyle(
@@ -270,7 +424,7 @@ class DashboardScreen extends ConsumerWidget {
   }
 
   Widget filterItem(String nama, WidgetRef ref) {
-    Filter filter = ref.watch(filterProvider);
+    Filter filter = ref.watch(filterStateProvider);
 
     return InkWell(
       onTap: () {
@@ -278,9 +432,9 @@ class DashboardScreen extends ConsumerWidget {
         //     ? prov.removeFilter(nama)
         //     : prov.addFilter(nama);
         filter.filters.contains(nama)
-            ? ref.read(filterProvider.notifier).removeFilter(nama)
-            : ref.read(filterProvider.notifier).addFilter(nama);
-        log(ref.watch(filterProvider).toString());
+            ? ref.read(filterStateProvider.notifier).removeFilter(nama)
+            : ref.read(filterStateProvider.notifier).addFilter(nama);
+        log(ref.watch(filterStateProvider).toString());
       },
       child: Container(
         height: 41,

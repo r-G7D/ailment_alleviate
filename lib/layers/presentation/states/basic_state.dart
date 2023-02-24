@@ -1,4 +1,3 @@
-
 // ignore_for_file: prefer_final_fields
 
 // import 'package:flutter/material.dart';
@@ -8,6 +7,13 @@ final emperisProvider = StateProvider<int>((ref) {
   return 0;
 });
 
+final queryProvider = StateProvider<String>((ref) {
+  return '';
+});
+
+final filterProvider = StateProvider<String>((ref) {
+  return '';
+});
 // class Emperis1Provider with ChangeNotifier {
 //   int _active = 0;
 //   int _page = 0;

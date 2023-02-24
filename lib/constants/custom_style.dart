@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 Color? primary = const Color(0xFF6246EA);
 Color? secondary = const Color(0xFFD1D1E9);
@@ -31,4 +32,46 @@ class Decor {
       blurRadius: 12,
       spreadRadius: 0,
       offset: Offset(1, 4));
+}
+
+class LoadingWidget extends StatelessWidget {
+  const LoadingWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: SpinKitFoldingCube(
+        duration: const Duration(milliseconds: 1550),
+        itemBuilder: (context, index) => DecoratedBox(
+          decoration: BoxDecoration(
+            color: primary,
+          ),
+        ),
+        size: 40,
+      ),
+    );
+  }
+}
+
+class ImageLoadingWidget extends StatelessWidget {
+  const ImageLoadingWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: SpinKitFoldingCube(
+        duration: const Duration(milliseconds: 1550),
+        itemBuilder: (context, index) => DecoratedBox(
+          decoration: BoxDecoration(
+            color: white,
+          ),
+        ),
+        size: 20,
+      ),
+    );
+  }
 }

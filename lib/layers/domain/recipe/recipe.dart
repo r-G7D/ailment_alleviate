@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names, invalid_annotation_target
 
+import 'package:ailment_alleviate/layers/domain/ingredient/ingredient.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'recipe.freezed.dart';
@@ -12,7 +13,7 @@ class Recipe with _$Recipe {
     @JsonKey(name: 'nama_obat') required String? name,
     @JsonKey(name: 'keterangan') required String? desc,
     @JsonKey(name: 'gambar') required String? pic,
-    @JsonKey(name: 'bahan') required dynamic ingredients,
+    @JsonKey(name: 'bahan') required List<Ingredient> ingredients,
     // required dynamic symptoms,
     // required dynamic ingredients,
     // required dynamic steps,

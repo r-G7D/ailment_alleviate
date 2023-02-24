@@ -46,7 +46,30 @@ class ApiService {
     );
   }
 
-  Uri get dashboard => _buildUri(endpoint: '/dashboard');
+  Uri dashboard(Map<String, dynamic>? params) {
+    return _buildUri(
+      endpoint: '/dashboard',
+      params: params,
+    );
+  }
+
+  Uri dashboardId(String id) {
+    return _buildUri(
+      endpoint: '/dashboard/$id',
+    );
+  }
+
+  Uri ingredient() {
+    return _buildUri(
+      endpoint: '/bahan',
+    );
+  }
+
+  Uri ingredientId(String id) {
+    return _buildUri(
+      endpoint: '/bahan/$id',
+    );
+  }
 }
 
 final apiProvider = Provider<ApiService>(
