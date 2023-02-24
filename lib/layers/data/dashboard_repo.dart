@@ -5,6 +5,7 @@ import 'package:ailment_alleviate/layers/domain/filter/filter.dart';
 import 'package:ailment_alleviate/layers/domain/ingredient/ingredient.dart';
 import 'package:ailment_alleviate/layers/domain/recipe/recipe.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/widgets.dart';
 // import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -113,6 +114,11 @@ final ingredientProvider = FutureProvider<List<Ingredient>>((ref) async {
   var repo = ref.watch(dashboardRepositoryProvider);
   return repo.fetchIngredients();
 });
+
+final queryC = Provider<TextEditingController>((ref) {
+  return TextEditingController();
+});
+
 
 
 

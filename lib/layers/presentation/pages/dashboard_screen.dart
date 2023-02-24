@@ -22,9 +22,9 @@ class DashboardScreen extends ConsumerWidget {
     //   log('State filter berubah');
     // });
     AsyncValue<List<Recipe>> searchP = ref.watch(searchProvider);
-    TextEditingController searchC = TextEditingController(
-      text: ref.watch(queryProvider),
-    );
+    // TextEditingController searchC = TextEditingController(
+    //   text: ref.watch(queryProvider),
+    // );
 
     return Scaffold(
       backgroundColor: white,
@@ -53,8 +53,16 @@ class DashboardScreen extends ConsumerWidget {
                           padding: const EdgeInsets.only(bottom: 7),
                           child: SizedBox(
                             width: 190,
-                            child: TextField(
-                              controller: searchC,
+                            child: TextFormField(
+                              textInputAction: TextInputAction.search,
+                              // onSubmitted: (value) {
+                              //   ref.read(queryProvider.notifier).state = value;
+                              // },
+                              onChanged: (value) {
+                                ref.read(queryProvider.notifier).state = value;
+                              },
+                              // controller: searchC,
+                              controller: ref.watch(queryC),
                               cursorColor: primary,
                               maxLines: 1,
                               style: GoogleFonts.lato(
@@ -75,9 +83,13 @@ class DashboardScreen extends ConsumerWidget {
                         const SizedBox(width: 10),
                         InkWell(
                           onTap: () {
+                            // ref.read(queryProvider.notifier).state =
+                            //     searchC.text;
                             ref.read(queryProvider.notifier).state =
-                                searchC.text;
+                                ref.watch(queryC).text;
                           },
+                          //! placeholder
+                          onDoubleTap: () => router.pop(),
                           child: Icon(
                             Icons.search,
                             color: white,
@@ -222,90 +234,97 @@ class DashboardScreen extends ConsumerWidget {
       ingredientsName.add(element.name);
     }
 
-    return Container(
-      height: 143,
-      width: 151,
-      decoration: BoxDecoration(
-        color: secondary,
-        borderRadius: const BorderRadius.all(
-          Radius.circular(8),
+    return InkWell(
+      onTap: () {
+        router.pushNamed('recipe');
+      },
+      child: Container(
+        height: 143,
+        width: 151,
+        decoration: BoxDecoration(
+          color: secondary,
+          borderRadius: const BorderRadius.all(
+            Radius.circular(8),
+          ),
         ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            height: 100,
-            width: 151,
-            decoration: BoxDecoration(
-              color: primary,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(8),
-                topRight: Radius.circular(8),
-              ),
-            ),
-            child: Image.network(
-              img,
-              loadingBuilder: (context, child, loadingProgress) =>
-                  loadingProgress == null ? child : const ImageLoadingWidget(),
-              errorBuilder: (context, error, stackTrace) => Container(
-                height: 100,
-                width: 151,
-                decoration: BoxDecoration(
-                  color: primary,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(8),
-                    topRight: Radius.circular(8),
-                  ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 100,
+              width: 151,
+              decoration: BoxDecoration(
+                color: primary,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(8),
+                  topRight: Radius.circular(8),
                 ),
-                child: Center(
-                  child: Text(
-                    'Gambar tidak ditemukan',
-                    style: GoogleFonts.lato(
-                      textStyle: Typo.paragraph
-                          .copyWith(fontWeight: FontWeight.w400, color: white),
+              ),
+              child: Image.network(
+                img,
+                loadingBuilder: (context, child, loadingProgress) =>
+                    loadingProgress == null
+                        ? child
+                        : const ImageLoadingWidget(),
+                errorBuilder: (context, error, stackTrace) => Container(
+                  height: 100,
+                  width: 151,
+                  decoration: BoxDecoration(
+                    color: primary,
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      topRight: Radius.circular(8),
                     ),
                   ),
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 6, left: 15, right: 15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                FittedBox(
-                  // width: 121,
-                  // height: 14,
-                  child: Text(
-                    name,
-                    style: GoogleFonts.lato(
-                      textStyle: Typo.paragraph.copyWith(
-                        fontWeight: FontWeight.w400,
+                  child: Center(
+                    child: Text(
+                      'Gambar tidak ditemukan',
+                      style: GoogleFonts.lato(
+                        textStyle: Typo.paragraph.copyWith(
+                            fontWeight: FontWeight.w400, color: white),
                       ),
                     ),
                   ),
                 ),
-                SizedBox(
-                  // width: 121,
-                  // height: 12,
-                  child: Text(
-                    ingredientsName
-                        .toString()
-                        .replaceAll('[', '')
-                        .replaceAll(']', ''),
-                    maxLines: 2,
-                    style: GoogleFonts.lato(
-                      textStyle: Typo.paragraph.copyWith(fontSize: 8),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 6, left: 15, right: 15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  FittedBox(
+                    // width: 121,
+                    // height: 14,
+                    child: Text(
+                      name,
+                      style: GoogleFonts.lato(
+                        textStyle: Typo.paragraph.copyWith(
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                  SizedBox(
+                    // width: 121,
+                    // height: 12,
+                    child: Text(
+                      ingredientsName
+                          .toString()
+                          .replaceAll('[', '')
+                          .replaceAll(']', ''),
+                      maxLines: 2,
+                      style: GoogleFonts.lato(
+                        textStyle: Typo.paragraph.copyWith(fontSize: 8),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
