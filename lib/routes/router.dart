@@ -28,6 +28,13 @@ final GoRouter router = GoRouter(
             const DashboardScreen(),
           ),
         ),
+        GoRoute(
+          path: 'recipe',
+          name: 'recipe',
+          pageBuilder: (context, state) => slideTransitionRL(
+            const RecipeScreen(),
+          ),
+        ),
       ],
     )
   ],

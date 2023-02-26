@@ -5,6 +5,7 @@ import 'package:ailment_alleviate/layers/domain/filter/filter.dart';
 import 'package:ailment_alleviate/layers/domain/ingredient/ingredient.dart';
 import 'package:ailment_alleviate/layers/domain/recipe/recipe.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/widgets.dart';
 // import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -15,7 +16,7 @@ part 'dashboard_repo.g.dart';
 
 class DashboardRepository {
   final Dio dio = Dio();
-  final ApiService api = ApiService();
+  final APIService api = APIService();
 
   Future<List<Recipe>> fetchRecipes(String? query, String? filter) async {
     final param = {
@@ -113,6 +114,18 @@ final ingredientProvider = FutureProvider<List<Ingredient>>((ref) async {
   var repo = ref.watch(dashboardRepositoryProvider);
   return repo.fetchIngredients();
 });
+
+final queryC = Provider<TextEditingController>((ref) {
+  return TextEditingController();
+});
+
+final recipeProvider = FutureProvider<Recipe>((ref) async {
+  var repo = ref.watch(dashboardRepositoryProvider);
+  var id = ref.watch(idProvider);
+  log(id.toString());
+  return repo.fetchRecipe(id);
+});
+
 
 
 

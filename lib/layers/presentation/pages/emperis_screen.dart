@@ -66,9 +66,7 @@ class EmperisScreen extends ConsumerWidget {
                     ref.read(emperisProvider.notifier).state = value;
                   },
                   children: [
-                    mainPage(context, data[0], 'dashboard'),
-                    mainPage(context, data[1], 'dashboard'),
-                    mainPage(context, data[2], 'dashboard'),
+                    ...data.map((e) => mainPage(context, e, 'dashboard')),
                   ],
                 ),
               ),
@@ -97,6 +95,30 @@ class EmperisScreen extends ConsumerWidget {
                 data['pic'],
                 width: 100,
                 height: 100,
+                loadingBuilder: (context, child, loadingProgress) =>
+                    loadingProgress == null
+                        ? child
+                        : const ImageLoadingWidget(),
+                errorBuilder: (context, error, stackTrace) => Container(
+                  height: 100,
+                  width: 100,
+                  decoration: BoxDecoration(
+                    color: primary,
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      topRight: Radius.circular(8),
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Gambar tidak ditemukan',
+                      style: GoogleFonts.lato(
+                        textStyle: Typo.paragraph.copyWith(
+                            fontWeight: FontWeight.w400, color: white),
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 26),
@@ -123,6 +145,7 @@ class EmperisScreen extends ConsumerWidget {
                   router.pushNamed(route!);
                 },
                 style: ButtonStyle(
+                  elevation: MaterialStatePropertyAll(5),
                   backgroundColor: MaterialStateProperty.all(primary),
                   minimumSize: MaterialStatePropertyAll(Size(200, 40)),
                   shape: MaterialStateProperty.all(
@@ -146,12 +169,12 @@ class EmperisScreen extends ConsumerWidget {
     int currentIndex = ref.watch(emperisProvider);
     return SizedBox(
       height: 300,
-      width: 50,
       child: ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
         itemCount: 3,
         itemBuilder: (context, index) {
           return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               InkWell(
                 onTap: () {
@@ -167,9 +190,10 @@ class EmperisScreen extends ConsumerWidget {
                     borderRadius: BorderRadius.all(Radius.circular(12)),
                   ),
                   elevation: 5,
-                  child: Container(
-                    width: 50,
+                  child: AnimatedContainer(
+                    width: currentIndex == index ? 50 : 50,
                     height: 50,
+                    duration: Duration(milliseconds: 250),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(12)),
                       color: currentIndex == index ? primary : white,
