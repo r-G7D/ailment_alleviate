@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-class ApiService {
+import 'api_error.dart';
+
+class APIService {
   static const String _baseUrl = 'deployailment.pythonanywhere.com';
 
   Future<T> run<T>({
@@ -19,17 +23,15 @@ class ApiService {
           return parse(response.data);
         case 204:
           return parse(response.data);
+        case 404:
+          throw const APIError.notFound();
         default:
-          throw Exception();
-        // case 404:
-        //   throw const APIError.notFound();
-        // default:
-        //   throw const APIError.unknown();
+          throw const APIError.unknown();
       }
     } catch (e) {
       throw Exception(e.toString());
     }
-    //  on SocketException catch (_) {
+    // on SocketException catch (_) {
     //   throw const APIError.noInternetConnection();
     // }
   }
@@ -72,8 +74,8 @@ class ApiService {
   }
 }
 
-final apiProvider = Provider<ApiService>(
-  (ref) => ApiService(),
+final apiProvider = Provider<APIService>(
+  (ref) => APIService(),
 );
 
 // @riverpod
