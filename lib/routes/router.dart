@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
 import '../layers/presentation/pages/emperis_screen.dart';
+import '../layers/presentation/pages/splash_screen.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: '/',
@@ -10,7 +11,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/',
       name: 'splash',
-      builder: (context, state) => const EmperisScreen(),
+      builder: (context, state) =>  SplashScreen(),
       routes: [
         GoRoute(
           path: 'emperis',
