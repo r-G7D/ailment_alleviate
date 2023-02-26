@@ -1,4 +1,5 @@
 import 'package:ailment_alleviate/layers/presentation/pages/dashboard_screen.dart';
+import 'package:ailment_alleviate/layers/presentation/pages/recipe_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
@@ -24,6 +25,13 @@ final GoRouter router = GoRouter(
           name: 'dashboard',
           pageBuilder: (context, state) => slideTransitionRL(
             const DashboardScreen(),
+          ),
+        ),
+        GoRoute(
+          path: 'recipe',
+          name: 'recipe',
+          pageBuilder: (context, state) => slideTransitionRL(
+            const RecipeScreen(),
           ),
         ),
       ],

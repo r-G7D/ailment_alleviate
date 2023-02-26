@@ -3,6 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 Color? primary = const Color(0xFF6246EA);
 Color? secondary = const Color(0xFFD1D1E9);
+Color? light = const Color(0xFFDAE4FF);
 Color? black = const Color(0xFF2B2C34);
 Color? white = const Color(0xFFFFFFFE);
 
