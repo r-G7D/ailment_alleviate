@@ -30,78 +30,78 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            padding: EdgeInsets.only(
-              top: 100,
-            ),
-            width: 500,
-            height: 300,
-            child: Stack(
-              children: [
-                Positioned(
-                  width: 294,
-                  height: 130,
-                  top: 60,
-                  left: 48,
-                  child: Container(
-                      decoration: BoxDecoration(
-                        color: secondary,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Column(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.only(
-                              top: 60,
-                            ),
-                            child: Text(
-                              'Emperis',
-                              style: GoogleFonts.comfortaa(
-                                textStyle: Typo.title.copyWith(
-                                  color: black,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
+          InkWell(
+            child: Container(
+              padding: EdgeInsets.only(
+                top: 100,
+              ),
+              width: 500,
+              height: 300,
+              child: Stack(
+                children: [
+                  Positioned(
+                    width: 294,
+                    height: 130,
+                    top: 60,
+                    left: 48,
+                    child: Container(
+                        decoration: BoxDecoration(
+                          color: secondary,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.only(
+                                top: 60,
+                              ),
+                              child: Text(
+                                'Emperis',
+                                style: GoogleFonts.comfortaa(
+                                  textStyle: Typo.title.copyWith(
+                                    color: black,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(
-                              top: 3,
-                            ),
-                            child: Text(
-                              'Ramuan yang sudah terbukti dan teruji',
-                              style: GoogleFonts.comfortaa(
-                                textStyle: Typo.title.copyWith(
-                                  color: black,
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w300,
+                            Container(
+                              padding: EdgeInsets.only(
+                                top: 3,
+                              ),
+                              child: Text(
+                                'Ramuan yang sudah terbukti dan teruji',
+                                style: GoogleFonts.comfortaa(
+                                  textStyle: Typo.title.copyWith(
+                                    color: black,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w300,
+                                  ),
                                 ),
                               ),
-                            ),
-                          )
-                        ],
-                      )),
-                ),
-                Positioned(
-                  width: 100,
-                  height: 100,
-                  top: 0,
-                  left: 145,
-                  child: InkWell(
+                            )
+                          ],
+                        )),
+                  ),
+                  Positioned(
+                    width: 100,
+                    height: 100,
+                    top: 0,
+                    left: 145,
                     child: Container(
                       decoration: BoxDecoration(
                         color: primary,
                         borderRadius: BorderRadius.circular(100),
                       ),
                     ),
-                    onTap: () {
-                      router.pushNamed('emperis');
-                    },
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
+            onTap: () {
+              router.pushNamed('emperis');
+            },
           ),
           Container(
             padding: EdgeInsets.only(
