@@ -16,7 +16,7 @@ part 'dashboard_repo.g.dart';
 
 class DashboardRepository {
   final Dio dio = Dio();
-  final ApiService api = ApiService();
+  final APIService api = APIService();
 
   Future<List<Recipe>> fetchRecipes(String? query, String? filter) async {
     final param = {
@@ -117,6 +117,13 @@ final ingredientProvider = FutureProvider<List<Ingredient>>((ref) async {
 
 final queryC = Provider<TextEditingController>((ref) {
   return TextEditingController();
+});
+
+final recipeProvider = FutureProvider<Recipe>((ref) async {
+  var repo = ref.watch(dashboardRepositoryProvider);
+  var id = ref.watch(idProvider);
+  log(id.toString());
+  return repo.fetchRecipe(id);
 });
 
 
