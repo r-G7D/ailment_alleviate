@@ -15,9 +15,8 @@ class Recipe with _$Recipe {
     @JsonKey(name: 'gambar') required String? pic,
     @JsonKey(name: 'bahan') required List<Ingredient> ingredients,
     // required dynamic symptoms,
-    // required dynamic ingredients,
-    // required dynamic steps,
-    // required dynamic usage,
+    @JsonKey(name: 'cara_pembuatan') required String steps,
+    @JsonKey(name: 'aturan_pemakaian') required String usage,
   }) = _Recipe;
 
   factory Recipe.fromJson(Map<String, dynamic> json) => _$RecipeFromJson(json);
