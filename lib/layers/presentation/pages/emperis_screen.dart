@@ -3,7 +3,7 @@
 import 'dart:developer';
 
 import 'package:ailment_alleviate/constants/custom_style.dart';
-import 'package:ailment_alleviate/layers/data/dashboard_repo.dart';
+import 'package:ailment_alleviate/layers/presentation/components/net_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -89,37 +89,16 @@ class EmperisScreen extends ConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(100),
-              child: Image.network(
-                data['pic'],
-                width: 100,
-                height: 100,
-                loadingBuilder: (context, child, loadingProgress) =>
-                    loadingProgress == null
-                        ? child
-                        : const ImageLoadingWidget(),
-                errorBuilder: (context, error, stackTrace) => Container(
-                  height: 100,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    color: primary,
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(8),
-                      topRight: Radius.circular(8),
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Gambar tidak ditemukan',
-                      style: GoogleFonts.lato(
-                        textStyle: Typo.paragraph.copyWith(
-                            fontWeight: FontWeight.w400, color: white),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+            InkWell(
+              onTap: () => router.pop(),
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(100),
+                  child: NetImage(
+                    url: data['pic'],
+                    bg: primary!,
+                    width: 100,
+                    height: 100,
+                  )),
             ),
             const SizedBox(height: 26),
             Text(

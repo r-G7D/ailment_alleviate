@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_final_fields
 
 // import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final emperisProvider = StateProvider.autoDispose<int>((ref) {
@@ -20,8 +19,8 @@ final idProvider = StateProvider<int>((ref) {
   return 0;
 });
 
-final recipePage = Provider<PageController>((ref) {
-  return PageController();
+final recipePageProvider = StateProvider.autoDispose<int>((ref) {
+  return 0;
 });
 
 // class Emperis1Provider with ChangeNotifier {

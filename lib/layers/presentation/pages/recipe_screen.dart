@@ -8,9 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../data/dashboard_repo.dart';
+import '../../data/dashboard/dashboard_repo.dart';
 import '../../domain/ingredient/ingredient.dart';
 import '../../domain/recipe/recipe.dart';
+import '../controllers/basic_controller.dart';
 import '../states/basic_state.dart';
 
 class RecipeScreen extends ConsumerWidget {
@@ -54,7 +55,9 @@ class RecipeScreen extends ConsumerWidget {
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(100),
                       child: NetImage(
-                        url: recipe.pic!,
+                        // url: recipe.pic!,
+                        url:
+                            'https://www.themealdb.com/images/media/meals/58oia61564916529.jpg',
                         bg: primary!,
                         width: 100,
                         height: 100,
@@ -111,7 +114,7 @@ class RecipeScreen extends ConsumerWidget {
                 child: PageView(
                   controller: ref.watch(recipePage),
                   onPageChanged: (value) =>
-                      ref.read(emperisProvider.notifier).state = value,
+                      ref.read(recipePageProvider.notifier).state = value,
                   children: [
                     ingredientPage(context, recipe.ingredients),
                     stepPage(context, recipe.steps),
@@ -260,7 +263,7 @@ class RecipeScreen extends ConsumerWidget {
   }
 
   Widget tabView(BuildContext context, WidgetRef ref) {
-    int currentIndex = ref.watch(emperisProvider);
+    int currentIndex = ref.watch(recipePageProvider);
     dynamic items = {
       'title': [
         'Bahan',
