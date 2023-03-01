@@ -10,9 +10,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../constants/custom_style.dart';
-import '../../data/dashboard_repo.dart';
+import '../../data/dashboard/dashboard_repo.dart';
 import '../../domain/recipe/recipe.dart';
 import '../components/net_image.dart';
+import '../controllers/basic_controller.dart';
 
 class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});
@@ -271,8 +272,9 @@ class DashboardScreen extends ConsumerWidget {
                 borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(8), topRight: Radius.circular(8)),
                 child: NetImage(
-                  // url:'https://www.themealdb.com/images/media/meals/58oia61564916529.jpg',
-                  url: img,
+                  url:
+                      'https://www.themealdb.com/images/media/meals/58oia61564916529.jpg',
+                  // url: img,
                   bg: primary!,
                   width: 151,
                   height: 100,
