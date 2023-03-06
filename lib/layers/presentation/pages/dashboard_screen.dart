@@ -78,7 +78,7 @@ class DashboardScreen extends ConsumerWidget {
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: 'Cari gejala',
-                                hintStyle: GoogleFonts.poppins(
+                                hintStyle: GoogleFonts.lato(
                                     textStyle: Typo.paragraph.copyWith(
                                   fontWeight: FontWeight.w400,
                                 )),
@@ -476,12 +476,6 @@ class DashboardScreen extends ConsumerWidget {
           ),
         ),
       ),
-    );
-  }
-
-  Widget botsheet(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.8,
     );
   }
 }

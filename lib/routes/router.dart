@@ -1,5 +1,9 @@
+import 'package:ailment_alleviate/layers/presentation/pages/maker/add_ingredient_screen.dart';
+import 'package:ailment_alleviate/layers/presentation/pages/maker/add_med_screen.dart';
 import 'package:ailment_alleviate/layers/presentation/pages/dashboard_screen.dart';
 import 'package:ailment_alleviate/layers/presentation/pages/home_screen.dart';
+import 'package:ailment_alleviate/layers/presentation/pages/maker/maker_screen.dart';
+import 'package:ailment_alleviate/layers/presentation/pages/role_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
@@ -15,6 +19,13 @@ final GoRouter router = GoRouter(
       name: 'splash',
       builder: (context, state) => SplashScreen(),
       routes: [
+        GoRoute(
+          path: 'role',
+          name: 'role',
+          pageBuilder: (context, state) => slideTransitionRL(
+            const RoleScreen(),
+          ),
+        ),
         GoRoute(
           path: 'home',
           name: 'home',
@@ -41,6 +52,27 @@ final GoRouter router = GoRouter(
           name: 'recipe',
           pageBuilder: (context, state) => slideTransitionRL(
             const RecipeScreen(),
+          ),
+        ),
+        GoRoute(
+          path: 'maker',
+          name: 'maker',
+          pageBuilder: (context, state) => slideTransitionRL(
+            const MakerScreen(),
+          ),
+        ),
+        GoRoute(
+          path: 'add-med',
+          name: 'add-med',
+          pageBuilder: (context, state) => slideTransitionRL(
+            const AddMedScreen(),
+          ),
+        ),
+        GoRoute(
+          path: 'add-ingredient',
+          name: 'add-ingredient',
+          pageBuilder: (context, state) => slideTransitionRL(
+            const AddIngredientScreen(),
           ),
         ),
       ],

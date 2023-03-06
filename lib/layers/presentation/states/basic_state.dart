@@ -3,6 +3,12 @@
 // import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+enum Role { user, maker }
+
+final roleProvider = StateProvider<Role>((ref) {
+  return Role.user;
+});
+
 final emperisProvider = StateProvider.autoDispose<int>((ref) {
   return 0;
 });

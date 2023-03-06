@@ -3,9 +3,14 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 Color? primary = const Color(0xFF6246EA);
 Color? secondary = const Color(0xFFD1D1E9);
+Color? red = const Color(0xffE53935);
+Color? yellow = const Color(0xffFFC400);
+Color? green = const Color(0xff4BB450);
 Color? light = const Color(0xFFDAE4FF);
 Color? black = const Color(0xFF2B2C34);
 Color? white = const Color(0xFFFFFFFE);
+Color? offWhite = const Color(0xFFEDEDED);
+Color? grey = const Color(0xFFD9D9D9);
 
 ThemeData appTheme = ThemeData(
   brightness: Brightness.light,

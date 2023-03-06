@@ -16,31 +16,34 @@ class EmperisScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    var roleP = ref.watch(roleProvider.notifier);
+    String filoPath = roleP.state == Role.maker ? 'maker' : 'dashboard';
     dynamic data = [
       {
         'pic': 'https://picsum.photos/id/1/200/300',
         'title': 'Indigenous Folklore',
+        'path': null,
         'desc':
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc sit amet aliquam tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Sed euismod, nunc sit amet aliquam tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Sed euismod, nunc sit amet aliquam tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Sed euismod, nunc sit amet aliquam tincidunt.',
       },
       {
         'pic': 'https://picsum.photos/id/1/200/300',
         'title': 'Filologi',
+        'path': filoPath,
         'desc':
             'Filologi adalah studi tentang bahasa dan sastra, serta hubungan antara keduanya. Studi filologi melibatkan analisis bahasa secara historis dan komparatif, dan juga mencakup penelitian mengenai sastra, budaya, sejarah, dan sosial dari bahasa yang dipelajari. Tujuan utama dari studi filologi adalah untuk memahami asal-usul, perkembangan, dan penggunaan bahasa serta karya sastra di dalam budaya dan waktu yang berbeda.',
       },
       {
         'pic': 'https://picsum.photos/id/1/200/300',
         'title': 'Lorem Ipsum',
+        'path': null,
         'desc':
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc sit amet aliquam tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Sed euismod, nunc sit amet aliquam tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Sed euismod, nunc sit amet aliquam tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Sed euismod, nunc sit amet aliquam tincidunt.',
       },
     ];
     // var prov = Provider.of<EmperisProvider>(context, listen: false);
     PageController page = PageController();
-    ref.listen(emperisProvider, (previous, next) {
-      log('State empiris berubah');
-    });
+
     return Scaffold(
       backgroundColor: white,
       body: Stack(
@@ -66,7 +69,7 @@ class EmperisScreen extends ConsumerWidget {
                     ref.read(emperisProvider.notifier).state = value;
                   },
                   children: [
-                    ...data.map((e) => mainPage(context, e, 'dashboard')),
+                    ...data.map((e) => mainPage(context, e)),
                   ],
                 ),
               ),
@@ -81,7 +84,7 @@ class EmperisScreen extends ConsumerWidget {
     );
   }
 
-  Widget mainPage(BuildContext context, dynamic data, String? route) {
+  Widget mainPage(BuildContext context, dynamic data) {
     return SafeArea(
       child: Container(
         height: MediaQuery.of(context).size.height,
@@ -121,11 +124,12 @@ class EmperisScreen extends ConsumerWidget {
             const Spacer(),
             ElevatedButton(
                 onPressed: () {
-                  router.pushNamed(route!);
+                  data['path'] == null ? null : router.pushNamed(data['path']);
                 },
                 style: ButtonStyle(
                   elevation: MaterialStatePropertyAll(5),
-                  backgroundColor: MaterialStateProperty.all(primary),
+                  backgroundColor: MaterialStateProperty.all(
+                      data['path'] == null ? secondary : primary),
                   minimumSize: MaterialStatePropertyAll(Size(200, 40)),
                   shape: MaterialStateProperty.all(
                     RoundedRectangleBorder(
