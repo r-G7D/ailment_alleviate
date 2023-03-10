@@ -101,7 +101,9 @@ class _AddIngredientScreenState extends State<AddIngredientScreen> {
                 borderRadius: BorderRadius.circular(18),
               ),
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(context);
+                },
                 child: Text(
                   'Tambah',
                   style: GoogleFonts.lato(

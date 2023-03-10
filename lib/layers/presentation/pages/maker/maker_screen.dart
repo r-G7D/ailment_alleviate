@@ -16,13 +16,15 @@ class MakerScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: Text(
-          'Alleviate',
+          'Ailment Alleviate',
           style: GoogleFonts.comfortaa(
               textStyle: Typo.title.copyWith(color: white)),
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
             icon: Icon(
               Boxicons.bx_log_out,
               color: white,

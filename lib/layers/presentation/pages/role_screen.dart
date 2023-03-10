@@ -35,7 +35,7 @@ class RoleScreen extends ConsumerWidget {
         router.pushNamed(path);
         role == 'Maker'
             ? ref.read(roleProvider.notifier).state = Role.maker
-            : null;
+            : ref.read(roleProvider.notifier).state = Role.user;
         log(ref.read(roleProvider).toString());
       },
       child: Container(

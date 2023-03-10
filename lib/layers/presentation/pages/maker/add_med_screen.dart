@@ -157,7 +157,9 @@ class _AddMedScreenState extends State<AddMedScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
                     child: Icon(
                       Boxicons.bx_x,
                       color: primary,
@@ -165,7 +167,9 @@ class _AddMedScreenState extends State<AddMedScreen> {
                     ),
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
                     child: Icon(
                       Boxicons.bx_check,
                       color: primary,

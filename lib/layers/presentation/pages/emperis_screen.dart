@@ -29,7 +29,7 @@ class EmperisScreen extends ConsumerWidget {
       {
         'pic': 'https://picsum.photos/id/1/200/300',
         'title': 'Filologi',
-        'path': filoPath,
+        'path': 'dashboard',
         'desc':
             'Filologi adalah studi tentang bahasa dan sastra, serta hubungan antara keduanya. Studi filologi melibatkan analisis bahasa secara historis dan komparatif, dan juga mencakup penelitian mengenai sastra, budaya, sejarah, dan sosial dari bahasa yang dipelajari. Tujuan utama dari studi filologi adalah untuk memahami asal-usul, perkembangan, dan penggunaan bahasa serta karya sastra di dalam budaya dan waktu yang berbeda.',
       },
