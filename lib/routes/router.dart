@@ -4,8 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
 import '../layers/presentation/pages/emperis_screen.dart';
+import '../layers/presentation/pages/login_screen.dart';
 import '../layers/presentation/pages/recipe_screen.dart';
+import '../layers/presentation/pages/register_screen.dart';
 import '../layers/presentation/pages/splash_screen.dart';
+
 
 final GoRouter router = GoRouter(
   initialLocation: '/',
@@ -13,13 +16,27 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/',
       name: 'splash',
-      builder: (context, state) => SplashScreen(),
+      builder: (context, state) => LoginScreen(),
       routes: [
         GoRoute(
           path: 'home',
           name: 'home',
           pageBuilder: (context, state) => slideTransitionRL(
             const HomeScreen(),
+          ),
+        ),
+        GoRoute(
+          path: 'login',
+          name: 'login',
+          pageBuilder: (context, state) => slideTransitionRL(
+            const LoginScreen(),
+          ),
+        ),
+        GoRoute(
+          path: 'register',
+          name: 'register',
+          pageBuilder: (context, state) => slideTransitionRL(
+            const RegisterScreen(),
           ),
         ),
         GoRoute(

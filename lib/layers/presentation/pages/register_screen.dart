@@ -1,12 +1,14 @@
 // ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers
 
+import 'dart:io';
 import 'package:ailment_alleviate/constants/custom_style.dart';
 import 'package:ailment_alleviate/routes/router.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 
 class RegisterScreen extends StatelessWidget {
-  const RegisterScreen({super.key});
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +115,7 @@ class RegisterScreen extends StatelessWidget {
                 Row(
                   children: [
                     SizedBox(
-                      width: 34,
+                      width: 32,
                     ),
                     InkWell(
                       child: Container(
@@ -160,12 +162,15 @@ class RegisterScreen extends StatelessWidget {
   }
 
   Widget register() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          padding: EdgeInsets.only(top: 15, left: 34),
-          child: Text(
+    return Padding(
+      padding: const EdgeInsets.only(left: 34, right: 34),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 15,
+          ),
+          Text(
             'Nama',
             style: GoogleFonts.comfortaa(
               textStyle: Typo.title.copyWith(
@@ -175,11 +180,13 @@ class RegisterScreen extends StatelessWidget {
               ),
             ),
           ),
-        ),
-        InputLabel(label: 'Masukkan Nama'),
-        Container(
-          padding: EdgeInsets.only(top: 15, left: 34),
-          child: Text(
+          InputLabel(
+            label: 'Masukkan Nama',
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Text(
             'Email',
             style: GoogleFonts.comfortaa(
               textStyle: Typo.title.copyWith(
@@ -189,11 +196,11 @@ class RegisterScreen extends StatelessWidget {
               ),
             ),
           ),
-        ),
-        InputLabel(label: 'Masukkan Email'),
-        Container(
-          padding: EdgeInsets.only(top: 15, left: 34),
-          child: Text(
+          InputLabel(label: 'Masukkan Email'),
+          SizedBox(
+            height: 15,
+          ),
+          Text(
             'Password',
             style: GoogleFonts.comfortaa(
               textStyle: Typo.title.copyWith(
@@ -203,14 +210,14 @@ class RegisterScreen extends StatelessWidget {
               ),
             ),
           ),
-        ),
-        InputLabel(
-          label: 'Masukkan Password',
-          isOsecure: true,
-        ),
-        Container(
-          padding: EdgeInsets.only(top: 15, left: 34),
-          child: Text(
+          InputLabel(
+            label: 'Masukkan Password',
+            isObscure: true,
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Text(
             'Konfirmasi Password',
             style: GoogleFonts.comfortaa(
               textStyle: Typo.title.copyWith(
@@ -220,22 +227,22 @@ class RegisterScreen extends StatelessWidget {
               ),
             ),
           ),
-        ),
-        InputLabel(
-          label: 'Masukkan Password',
-          isOsecure: true,
-        ),
-      ],
+          InputLabel(
+            label: 'Masukkan Password',
+            isObscure: true,
+          ),
+        ],
+      ),
     );
   }
 
   Widget verif() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          padding: EdgeInsets.only(top: 15, left: 34),
-          child: Text(
+    return Padding(
+      padding: const EdgeInsets.only(top: 15),
+      child: ListView(
+        padding: EdgeInsets.only(left: 34, right: 34),
+        children: [
+          Text(
             'Alamat',
             style: GoogleFonts.comfortaa(
               textStyle: Typo.title.copyWith(
@@ -245,11 +252,11 @@ class RegisterScreen extends StatelessWidget {
               ),
             ),
           ),
-        ),
-        InputLabel(label: 'Masukkan Alamat'),
-        Container(
-          padding: EdgeInsets.only(top: 15, left: 34),
-          child: Text(
+          InputLabel(label: 'Masukkan Alamat'),
+          SizedBox(
+            height: 15,
+          ),
+          Text(
             'Nomor Telepon',
             style: GoogleFonts.comfortaa(
               textStyle: Typo.title.copyWith(
@@ -259,11 +266,11 @@ class RegisterScreen extends StatelessWidget {
               ),
             ),
           ),
-        ),
-        InputLabel(label: 'Masukkan Nomor Telepon'),
-        Container(
-          padding: EdgeInsets.only(top: 15, left: 34),
-          child: Text(
+          InputLabel(label: 'Masukkan Nomor Telepon'),
+          SizedBox(
+            height: 15,
+          ),
+          Text(
             'Gambar Pendukung',
             style: GoogleFonts.comfortaa(
               textStyle: Typo.title.copyWith(
@@ -273,14 +280,14 @@ class RegisterScreen extends StatelessWidget {
               ),
             ),
           ),
-        ),
-        InputLabel2(
-          label: 'Pilih Gambar Pendukung',
-          isOsecure: true,
-        ),
-        Container(
-          padding: EdgeInsets.only(top: 15, left: 34),
-          child: Text(
+          InputLabel2(
+            label: 'Pilih Gambar Pendukung',
+            isObscure: true,
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Text(
             'Sertifikat',
             style: GoogleFonts.comfortaa(
               textStyle: Typo.title.copyWith(
@@ -290,12 +297,12 @@ class RegisterScreen extends StatelessWidget {
               ),
             ),
           ),
-        ),
-        InputLabel2(
-          label: 'Pilih Sertifikat',
-          isOsecure: true,
-        ),
-      ],
+          InputLabel2(
+            label: 'Pilih Sertifikat',
+            isObscure: true,
+          ),
+        ],
+      ),
     );
   }
 }
@@ -304,16 +311,18 @@ class InputLabel extends StatelessWidget {
   InputLabel({
     super.key,
     required this.label,
-    this.isOsecure,
+    this.isObscure,
   });
   final String? label;
-  bool? isOsecure;
+  bool? isObscure;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: 34, right: 34),
       child: TextField(
+        onChanged: (value) {
+          print(value);
+        },
         style: GoogleFonts.comfortaa(
           textStyle: Typo.title.copyWith(
             color: white,
@@ -321,7 +330,7 @@ class InputLabel extends StatelessWidget {
             fontWeight: FontWeight.w700,
           ),
         ),
-        obscureText: isOsecure ?? false,
+        obscureText: isObscure ?? false,
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
           border: UnderlineInputBorder(),
@@ -345,51 +354,140 @@ class InputLabel extends StatelessWidget {
   }
 }
 
-class InputLabel2 extends StatelessWidget {
+class InputLabel2 extends StatefulWidget {
   InputLabel2({
-    super.key,
+    Key? key,
     required this.label,
-    this.isOsecure,
-  });
+    this.isObscure,
+  }) : super(key: key);
+
   final String? label;
-  bool? isOsecure;
+  final bool? isObscure;
+
+  @override
+  _InputLabel2State createState() => _InputLabel2State();
+}
+
+class _InputLabel2State extends State<InputLabel2> {
+  File? _imageFile;
+
+  Future<void> _pickImage(BuildContext context) async {
+    final dialogResult = await showDialog<int>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text('Select an image'),
+        actions: <Widget>[
+          TextButton(
+            child: Text('Camera'),
+            onPressed: () {
+              Navigator.pop(context, 0);
+            },
+          ),
+          TextButton(
+            child: Text('Gallery'),
+            onPressed: () {
+              Navigator.pop(context, 1);
+            },
+          ),
+        ],
+      ),
+    );
+
+    if (dialogResult == null) {
+      return;
+    }
+
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(
+      source: dialogResult == 0 ? ImageSource.camera : ImageSource.gallery,
+    );
+
+    if (pickedFile != null) {
+      setState(() {
+        _imageFile = File(pickedFile.path);
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(_imageFile!.path)),
+      );
+    }
+  }
+
+  void _clearImage() {
+    setState(() {
+      _imageFile = null;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(left: 34, right: 34),
-      child: TextField(
-        style: GoogleFonts.comfortaa(
-          textStyle: Typo.title.copyWith(
-            color: white,
-            fontSize: 15,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        obscureText: isOsecure ?? false,
-        keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-          icon: Icon(
-            Icons.camera_alt_rounded,
-            color: white,
-          ),
-          border: UnderlineInputBorder(),
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: white!),
-          ),
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: white!),
-          ),
-          hintText: label,
-          hintStyle: GoogleFonts.comfortaa(
+    return Column(
+      children: [
+        _imageFile != null
+            ? Column(
+                children: [
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Container(
+                      padding: EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        color: white,
+                      ),
+                      child: Image.file(
+                        _imageFile!,
+                        height: 280,
+                        width: 200,
+                      )),
+                ],
+              )
+            : SizedBox(),
+        SizedBox(height: 16),
+        TextField(
+          style: GoogleFonts.comfortaa(
             textStyle: Typo.title.copyWith(
               color: white,
               fontSize: 15,
               fontWeight: FontWeight.w700,
             ),
           ),
+          readOnly: true,
+          onTap: () {
+            _pickImage(context);
+          },
+          decoration: InputDecoration(
+            prefixIcon: _imageFile != null
+                ? IconButton(
+                    icon: Icon(Icons.clear),
+                    color: Colors.white,
+                    onPressed: _clearImage,
+                  )
+                : null,
+            suffixIcon: IconButton(
+              icon: Icon(Icons.camera_alt),
+              color: white,
+              onPressed: () {
+                _pickImage(context);
+              },
+            ),
+            border: UnderlineInputBorder(),
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: white!),
+            ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: white!),
+            ),
+            hintText: _imageFile != null ? _imageFile!.path : widget.label,
+            hintStyle: GoogleFonts.comfortaa(
+              textStyle: Typo.title.copyWith(
+                color: white,
+                fontSize: 15,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
         ),
-      ),
+      ],
     );
   }
 }
