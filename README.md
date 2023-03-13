@@ -2,7 +2,7 @@
 
 Link Figma: https://www.figma.com/file/ODbJqzzHQB3O9u0mYjcHmY/Ailment-Alleviate?node-id=1%3A2&t=20k1elFdsXrsvv9Q-1
 
-Workflow: <br />
+Workflow: 
 1. Anggota melakukan clone repo kemudian "install" projek <br />
 2. Anggota memindahkan card ke In Progress <br />
 3. Anggota harus membuat branch baru, sebelum mengerjakan/coding, dengan aturan nama branch: <br />
