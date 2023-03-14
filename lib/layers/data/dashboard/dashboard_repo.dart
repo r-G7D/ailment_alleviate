@@ -100,7 +100,8 @@ class FilterNotifier extends StateNotifier<Filter> {
 }
 
 final filterStateProvider =
-    StateNotifierProvider<FilterNotifier, Filter>((ref) => FilterNotifier());
+    StateNotifierProvider.autoDispose<FilterNotifier, Filter>(
+        (ref) => FilterNotifier());
 
 final searchProvider = FutureProvider<List<Recipe>>((ref) async {
   var filter = ref.watch(filterProvider);

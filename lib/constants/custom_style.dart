@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 Color? primary = const Color(0xFF6246EA);
+Color? primaryLight = const Color(0xFFB9B9F0);
 Color? secondary = const Color(0xFFD1D1E9);
 Color? red = const Color(0xffE53935);
 Color? yellow = const Color(0xffFFC400);

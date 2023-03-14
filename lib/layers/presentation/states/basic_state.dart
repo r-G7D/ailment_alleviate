@@ -29,6 +29,14 @@ final recipePageProvider = StateProvider.autoDispose<int>((ref) {
   return 0;
 });
 
+final acceptedProvider = StateProvider.autoDispose<bool>((ref) {
+  return false;
+});
+
+final pendingProvider = StateProvider.autoDispose<bool>((ref) {
+  return false;
+});
+
 // class Emperis1Provider with ChangeNotifier {
 //   int _active = 0;
 //   int _page = 0;
