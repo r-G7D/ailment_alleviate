@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'create_med_controller.dart';
+part of 'image_state.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -29,21 +29,38 @@ class _SystemHash {
   }
 }
 
-String _$CreateMedControllerHash() =>
-    r'80fec94806189e120b7de934b30a77411596cb2f';
+String _$InputImgRecipeHash() => r'6146d56db1a0e7ebdb96465492051edae2218f46';
 
-/// See also [CreateMedController].
-final createMedControllerProvider =
-    AutoDisposeNotifierProvider<CreateMedController, List<String>>(
-  CreateMedController.new,
-  name: r'createMedControllerProvider',
+/// See also [InputImgRecipe].
+final inputImgRecipeProvider =
+    AutoDisposeNotifierProvider<InputImgRecipe, File?>(
+  InputImgRecipe.new,
+  name: r'inputImgRecipeProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$CreateMedControllerHash,
+      : _$InputImgRecipeHash,
 );
-typedef CreateMedControllerRef = AutoDisposeNotifierProviderRef<List<String>>;
+typedef InputImgRecipeRef = AutoDisposeNotifierProviderRef<File?>;
 
-abstract class _$CreateMedController extends AutoDisposeNotifier<List<String>> {
+abstract class _$InputImgRecipe extends AutoDisposeNotifier<File?> {
   @override
-  List<String> build();
+  File? build();
+}
+
+String _$InputImgCreateIngHash() => r'b228b1084e2049e311fcda3fa413f7ca5e0dcbb6';
+
+/// See also [InputImgCreateIng].
+final inputImgCreateIngProvider =
+    AutoDisposeNotifierProvider<InputImgCreateIng, File?>(
+  InputImgCreateIng.new,
+  name: r'inputImgCreateIngProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$InputImgCreateIngHash,
+);
+typedef InputImgCreateIngRef = AutoDisposeNotifierProviderRef<File?>;
+
+abstract class _$InputImgCreateIng extends AutoDisposeNotifier<File?> {
+  @override
+  File? build();
 }

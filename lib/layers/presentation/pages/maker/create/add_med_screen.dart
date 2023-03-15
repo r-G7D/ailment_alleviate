@@ -1,19 +1,24 @@
+import 'dart:io';
+
 import 'package:ailment_alleviate/layers/presentation/components/form_field.dart';
-import 'package:ailment_alleviate/layers/presentation/components/input_ingredient.dart';
+import 'package:ailment_alleviate/layers/presentation/pages/maker/create/component/input_ingredient.dart';
+import 'package:ailment_alleviate/layers/presentation/states/image_state.dart';
 import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../../constants/custom_style.dart';
+import 'component/img_preview.dart';
 
-class AddMedScreen extends StatefulWidget {
+class AddMedScreen extends ConsumerStatefulWidget {
   const AddMedScreen({super.key});
 
   @override
-  State<AddMedScreen> createState() => _AddMedScreenState();
+  ConsumerState<AddMedScreen> createState() => _AddMedScreenState();
 }
 
-class _AddMedScreenState extends State<AddMedScreen> {
+class _AddMedScreenState extends ConsumerState<AddMedScreen> {
   final _nameC = TextEditingController();
   final _descC = TextEditingController();
   final _usageC = TextEditingController();
@@ -32,6 +37,8 @@ class _AddMedScreenState extends State<AddMedScreen> {
 
   @override
   Widget build(BuildContext context) {
+    File? previewImage = ref.watch(inputImgRecipeProvider);
+
     return Scaffold(
       backgroundColor: white,
       appBar: AppBar(
@@ -64,20 +71,14 @@ class _AddMedScreenState extends State<AddMedScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                          height: 50,
-                          width: 50,
-                          decoration: BoxDecoration(
-                            color: primary,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: InkWell(
-                            onTap: () {},
-                            child: Icon(
-                              Boxicons.bx_camera,
-                              color: white,
-                            ),
-                          ),
+                        ImagePickerButton(
+                          setFunction: () {
+                            showChooseImage(
+                                context,
+                                ref
+                                    .read(inputImgRecipeProvider.notifier)
+                                    .setImage);
+                          },
                         ),
                         const SizedBox(width: 25),
                         SizedBox(
@@ -94,6 +95,14 @@ class _AddMedScreenState extends State<AddMedScreen> {
                         )
                       ],
                     ),
+                    previewImage == null
+                        ? const SizedBox()
+                        : Column(
+                            children: [
+                              const SizedBox(height: 16),
+                              ImagePreview(filePic: previewImage),
+                            ],
+                          ),
                     const SizedBox(height: 16),
                     CustomFormField(
                         controller: _descC,
@@ -130,7 +139,6 @@ class _AddMedScreenState extends State<AddMedScreen> {
               const SizedBox(height: 24),
               IngredientInput(
                 onSelected: (value) {},
-                onRemove: (value) {},
               ),
               const SizedBox(height: 36),
               Row(
