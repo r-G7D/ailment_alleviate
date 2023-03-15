@@ -2,8 +2,8 @@ import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../../constants/custom_style.dart';
-import '../../components/form_field.dart';
+import '../../../../../constants/custom_style.dart';
+import '../../../components/form_field.dart';
 
 class AddIngredientScreen extends StatefulWidget {
   const AddIngredientScreen({super.key});

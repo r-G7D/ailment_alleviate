@@ -4,7 +4,7 @@ import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../../constants/custom_style.dart';
+import '../../../../../constants/custom_style.dart';
 
 class AddMedScreen extends StatefulWidget {
   const AddMedScreen({super.key});
@@ -32,16 +32,6 @@ class _AddMedScreenState extends State<AddMedScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> _ingredients = [
-      'Jahe',
-      'Garam',
-      'Gula',
-      'Air',
-      'Minyak',
-      'Bawang Putih',
-      'Bawang Merah',
-    ];
-
     return Scaffold(
       backgroundColor: white,
       appBar: AppBar(
@@ -138,17 +128,7 @@ class _AddMedScreenState extends State<AddMedScreen> {
                 ),
               ),
               const SizedBox(height: 24),
-              // Center(
-              //   child: Text(
-              //     'Pilih Bahan',
-              //     style: GoogleFonts.lato(
-              //         textStyle: Typo.paragraph
-              //             .copyWith(fontSize: 24, fontWeight: FontWeight.w400)),
-              //   ),
-              // ),
-              // const SizedBox(height: 12),
               IngredientInput(
-                tagsValue: _ingredients,
                 onSelected: (value) {},
                 onRemove: (value) {},
               ),

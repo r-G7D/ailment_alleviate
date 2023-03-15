@@ -1,5 +1,3 @@
-import 'package:ailment_alleviate/layers/presentation/pages/maker/add_ingredient_screen.dart';
-import 'package:ailment_alleviate/layers/presentation/pages/maker/add_med_screen.dart';
 import 'package:ailment_alleviate/layers/presentation/pages/dashboard_screen.dart';
 import 'package:ailment_alleviate/layers/presentation/pages/home_screen.dart';
 import 'package:ailment_alleviate/layers/presentation/pages/maker/maker_screen.dart';
@@ -8,6 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
 import '../layers/presentation/pages/emperis_screen.dart';
+import '../layers/presentation/pages/maker/create/add_ingredient_screen.dart';
+import '../layers/presentation/pages/maker/create/add_med_screen.dart';
 import '../layers/presentation/pages/recipe_screen.dart';
 import '../layers/presentation/pages/splash_screen.dart';
 

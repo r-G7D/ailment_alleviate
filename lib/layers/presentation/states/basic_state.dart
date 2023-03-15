@@ -1,7 +1,11 @@
 // ignore_for_file: prefer_final_fields
 
 // import 'package:flutter/material.dart';
+import 'package:ailment_alleviate/layers/domain/addIngredient/add_ingredient.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../domain/filter/filter.dart';
 
 enum Role { user, maker }
 
@@ -35,6 +39,49 @@ final acceptedProvider = StateProvider.autoDispose<bool>((ref) {
 
 final pendingProvider = StateProvider.autoDispose<bool>((ref) {
   return false;
+});
+
+class FilterNotifier extends StateNotifier<Filter> {
+  FilterNotifier() : super(Filter(filters: []));
+  List<String> filters = [];
+
+  addFilter(String filter) {
+    filters.add(filter);
+    state = state.copyWith(filters: filters);
+  }
+
+  removeFilter(String filter) {
+    filters.remove(filter);
+    state = state.copyWith(filters: filters);
+  }
+
+  clearFilter() {
+    filters = [];
+    state = state.copyWith(filters: filters);
+  }
+}
+
+final filterStateProvider =
+    StateNotifierProvider.autoDispose<FilterNotifier, Filter>(
+        (ref) => FilterNotifier());
+
+//state add ingredient on create recipe
+class AddIngredientsNotifier extends StateNotifier<AddIngredient> {
+  AddIngredientsNotifier() : super(AddIngredient(ingredients: []));
+
+  addIngredient(String ing) {
+    state = state.copyWith(ingredients: [...state.ingredients, ing]);
+  }
+
+  removeIngredient(String ing) {
+    state = state.copyWith(
+        ingredients: [...state.ingredients.where((element) => element != ing)]);
+  }
+}
+
+final addIngsProvider =
+    StateNotifierProvider<AddIngredientsNotifier, AddIngredient>((ref) {
+  return AddIngredientsNotifier();
 });
 
 // class Emperis1Provider with ChangeNotifier {
