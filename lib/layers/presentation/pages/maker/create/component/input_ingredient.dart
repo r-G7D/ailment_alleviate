@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:ailment_alleviate/constants/custom_style.dart';
-import 'package:ailment_alleviate/layers/data/dashboard/dashboard_repo.dart';
+import 'package:ailment_alleviate/layers/domain/ingredient/ingredient.dart';
 import 'package:ailment_alleviate/layers/presentation/controllers/basic_controller.dart';
 import 'package:ailment_alleviate/layers/presentation/states/basic_state.dart';
 import 'package:ailment_alleviate/routes/router.dart';
@@ -15,10 +15,8 @@ class IngredientInput extends ConsumerWidget {
   const IngredientInput({
     super.key,
     required this.onSelected,
-    required this.onRemove,
   });
   final void Function(dynamic) onSelected;
-  final void Function(dynamic) onRemove;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -87,10 +85,11 @@ class IngredientInput extends ConsumerWidget {
     );
   }
 
-  Widget typeAhead(WidgetRef ref, List<dynamic> data) {
+  Widget typeAhead(WidgetRef ref, List<Ingredient> data) {
+    List<String> items = data.map((e) => e.name.toString()).toList();
+
     return TypeAheadField<dynamic>(
       suggestionsCallback: (String query) {
-        List<String> items = data.map((e) => e.name.toString()).toList();
         return items
             .where((e) => e.toLowerCase().contains(query.toLowerCase()))
             .toList();
@@ -138,8 +137,6 @@ class IngredientInput extends ConsumerWidget {
       onSuggestionSelected: onSelected,
       textFieldConfiguration: TextFieldConfiguration(
         textInputAction: TextInputAction.search,
-        onChanged: (value) {},
-        // controller: _searchC,
         cursorColor: primary,
         maxLines: 1,
         style: GoogleFonts.lato(
