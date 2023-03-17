@@ -3,10 +3,12 @@
 import 'dart:developer';
 
 import 'package:ailment_alleviate/layers/data/auth/auth_repository.dart';
+import 'package:ailment_alleviate/layers/presentation/pages/auth/components/auth_dialog.dart';
 import 'package:ailment_alleviate/routes/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'components/InputLabel.dart';
 
 import '../../../../constants/custom_style.dart';
 import 'state/auth_state.dart';
@@ -132,31 +134,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     //ngeset nilai password provider dari password controller
                     showDialog(
                         context: context,
-                        builder: (context) => Dialog(
-                              child: SizedBox(
-                                height: 300,
-                                //provider.when == futurebuilder
-                                child: ref.watch(loginProvider).when(
-                                  //builder ketika sukses
-                                  data: (data) {
-                                    log(data.toString());
-                                    return Text('success');
-                                  },
-                                  //builder ketika error
-                                  error: (error, stack) {
-                                    log('error');
-                                    return Text(error.toString());
-                                  },
-                                  //builder ketika loading
-                                  loading: () {
-                                    log('loading');
-                                    return Center(
-                                      child: LoadingWidget(),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ));
+                        builder: (context) => AuthDialog(isLogin: true,));
                   },
                   child: Container(
                     width: 327,
@@ -246,54 +224,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               //   ),
               // ),
             ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class InputLabel extends StatelessWidget {
-  InputLabel({
-    super.key,
-    required this.label,
-    required this.controller,
-    this.isObscure,
-  });
-  final String? label;
-  final TextEditingController controller;
-  bool? isObscure;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(left: 34, right: 34),
-      child: TextField(
-        style: GoogleFonts.comfortaa(
-          textStyle: Typo.title.copyWith(
-            color: white,
-            fontSize: 15,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        controller: controller,
-        obscureText: isObscure ?? false,
-        keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-          border: UnderlineInputBorder(),
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: white!),
-          ),
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: white!),
-          ),
-          hintText: label,
-          hintStyle: GoogleFonts.comfortaa(
-            textStyle: Typo.title.copyWith(
-              color: white,
-              fontSize: 15,
-              fontWeight: FontWeight.w700,
-            ),
           ),
         ),
       ),

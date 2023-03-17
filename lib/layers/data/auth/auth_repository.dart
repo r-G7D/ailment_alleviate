@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -15,12 +16,15 @@ class AuthRepository {
   final APIService api = APIService();
 
   Future<Map<String, dynamic>> login(String email, String password) async {
+    // var storage = new FlutterSecureStorage();
+
     final param = {
       'email': email,
       'password': password,
     };
     log("param : $param");
     Uri uri = api.login();
+    log("uri:$uri");
     final response = await api.run(
       request: () => dio.postUri(
         uri,
@@ -33,6 +37,9 @@ class AuthRepository {
       ),
       parse: (json) => json,
     );
+    // await storage.write(key: 'token', value: response['token']['access']);
+    // var token = await storage.read(key: 'token');
+    // log(token.toString());
     return response;
   }
 
@@ -48,18 +55,6 @@ class AuthRepository {
   ) async {
     // Set form data
     final formData = {
-//       {
-//     "data_peracik": {
-//         "alamat": "",
-//         "no_hp": "",
-//         "sertifikat": null,
-//         "gambar_pendukung": null
-//     },
-//     "email": "",
-//     "username": "",
-//     "password": "",
-//     "password_2": ""
-// }
       'username': name,
       'email': email,
       'password': password,
