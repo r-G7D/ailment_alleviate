@@ -3,6 +3,8 @@ import 'package:ailment_alleviate/layers/presentation/pages/home_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
+import '../layers/presentation/pages/auth/login_screen.dart';
+import '../layers/presentation/pages/auth/register_screen.dart';
 import '../layers/presentation/pages/emperis_screen.dart';
 import '../layers/presentation/pages/recipe_screen.dart';
 import '../layers/presentation/pages/splash_screen.dart';
@@ -20,6 +22,20 @@ final GoRouter router = GoRouter(
           name: 'home',
           pageBuilder: (context, state) => slideTransitionRL(
             const HomeScreen(),
+          ),
+        ),
+        GoRoute(
+          path: 'login',
+          name: 'login',
+          pageBuilder: (context, state) => slideTransitionRL(
+            const LoginScreen(),
+          ),
+        ),
+        GoRoute(
+          path: 'register',
+          name: 'register',
+          pageBuilder: (context, state) => slideTransitionRL(
+            const RegisterScreen(),
           ),
         ),
         GoRoute(
