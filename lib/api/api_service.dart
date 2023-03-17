@@ -55,6 +55,18 @@ class APIService {
     );
   }
 
+  Uri login() {
+    return _buildUri(
+      endpoint: '/api/peracik/login/',
+    );
+  }
+
+  Uri register() {
+    return _buildUri(
+      endpoint: '/api/peracik/signup/',
+    );
+  }
+
   Uri dashboardId(String id) {
     return _buildUri(
       endpoint: '/dashboard/$id',

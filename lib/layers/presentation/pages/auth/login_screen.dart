@@ -1,16 +1,38 @@
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'dart:developer';
+
+import 'package:ailment_alleviate/layers/data/auth/auth_repository.dart';
 import 'package:ailment_alleviate/routes/router.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-import '../../../constants/custom_style.dart';
+import '../../../../constants/custom_style.dart';
+import 'state/auth_state.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
   @override
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends ConsumerState<LoginScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    // AsyncValue<dynamic> loginP = ref.watch(loginProvider);
+
     return Scaffold(
       backgroundColor: primary,
       body: SingleChildScrollView(
@@ -72,6 +94,7 @@ class LoginScreen extends StatelessWidget {
               ),
               InputLabel(
                 label: 'Masukkan Email',
+                controller: emailController,
               ),
               Container(
                 padding: EdgeInsets.only(top: 54, left: 34),
@@ -88,7 +111,8 @@ class LoginScreen extends StatelessWidget {
               ),
               InputLabel(
                 label: 'Masukkan Password',
-                isOsecure: true,
+                controller: passwordController,
+                isObscure: true,
               ),
               SizedBox(
                 height: 77,
@@ -98,23 +122,60 @@ class LoginScreen extends StatelessWidget {
                 SizedBox(
                   width: 32,
                 ),
-                Container(
-                  width: 327,
-                  height: 46,
-                  decoration: BoxDecoration(
-                    color: white,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
+                InkWell(
+                  onTap: () {
+                    ref.read(emailProvider.notifier).state =
+                        emailController.text;
+                    //ngeset nilai email provider dari email controller
+                    ref.read(passwordProvider.notifier).state =
+                        passwordController.text;
+                    //ngeset nilai password provider dari password controller
+                    showDialog(
+                        context: context,
+                        builder: (context) => Dialog(
+                              child: SizedBox(
+                                height: 300,
+                                //provider.when == futurebuilder
+                                child: ref.watch(loginProvider).when(
+                                  //builder ketika sukses
+                                  data: (data) {
+                                    log(data.toString());
+                                    return Text('success');
+                                  },
+                                  //builder ketika error
+                                  error: (error, stack) {
+                                    log('error');
+                                    return Text(error.toString());
+                                  },
+                                  //builder ketika loading
+                                  loading: () {
+                                    log('loading');
+                                    return Center(
+                                      child: LoadingWidget(),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ));
+                  },
                   child: Container(
-                    padding: EdgeInsets.only(top: 12),
-                    child: Text(
-                      'Login',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.comfortaa(
-                        textStyle: Typo.title.copyWith(
-                          color: primary,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
+                    width: 327,
+                    height: 46,
+                    decoration: BoxDecoration(
+                      color: white,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Container(
+                      padding: EdgeInsets.only(top: 12),
+                      child: Text(
+                        'Login',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.comfortaa(
+                          textStyle: Typo.title.copyWith(
+                            color: primary,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                     ),
@@ -156,6 +217,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                     onTap: () {
                       router.pushNamed('register');
+                      log('register');
                     },
                   ),
                 )
@@ -195,10 +257,12 @@ class InputLabel extends StatelessWidget {
   InputLabel({
     super.key,
     required this.label,
-    this.isOsecure,
+    required this.controller,
+    this.isObscure,
   });
   final String? label;
-  bool? isOsecure;
+  final TextEditingController controller;
+  bool? isObscure;
 
   @override
   Widget build(BuildContext context) {
@@ -212,7 +276,8 @@ class InputLabel extends StatelessWidget {
             fontWeight: FontWeight.w700,
           ),
         ),
-        obscureText: isOsecure ?? false,
+        controller: controller,
+        obscureText: isObscure ?? false,
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
           border: UnderlineInputBorder(),

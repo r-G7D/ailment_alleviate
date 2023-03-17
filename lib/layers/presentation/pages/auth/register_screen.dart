@@ -1,14 +1,46 @@
 // ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers
 
+import 'dart:developer';
 import 'dart:io';
 import 'package:ailment_alleviate/constants/custom_style.dart';
+import 'package:ailment_alleviate/layers/presentation/pages/auth/state/auth_state.dart';
 import 'package:ailment_alleviate/routes/router.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 
-class RegisterScreen extends StatelessWidget {
-  const RegisterScreen({Key? key}) : super(key: key);
+import '../../../data/auth/auth_repository.dart';
+
+class RegisterScreen extends ConsumerStatefulWidget {
+  const RegisterScreen({super.key});
+
+  @override
+  ConsumerState<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends ConsumerState<RegisterScreen> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmpasswordController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController pendukungFileController = TextEditingController();
+  TextEditingController sertifikatFileController = TextEditingController();
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmpasswordController.dispose();
+    addressController.dispose();
+    phoneController.dispose();
+    pendukungFileController.dispose();
+    sertifikatFileController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +136,45 @@ class RegisterScreen extends StatelessWidget {
                             duration: const Duration(milliseconds: 500),
                             curve: Curves.easeInOut);
                       } else if (pageController.page == 1) {
-                        router.pop();
+                        ref.read(nameProvider.notifier).state =
+                            nameController.text;
+                        ref.read(emailProvider.notifier).state =
+                            emailController.text;
+                        ref.read(passwordProvider.notifier).state =
+                            passwordController.text;
+                        ref.read(confirmpasswordProvider.notifier).state =
+                            confirmpasswordController.text;
+                        ref.read(addressProvider.notifier).state =
+                            addressController.text;
+                        ref.read(phoneProvider.notifier).state =
+                            phoneController.text;
+                        showDialog(
+                            context: context,
+                            builder: (context) => Dialog(
+                                  child: SizedBox(
+                                    height: 300,
+                                    //provider.when == futurebuilder
+                                    child: ref.watch(registerProvider).when(
+                                      //builder ketika sukses
+                                      data: (data) {
+                                        log(data.toString());
+                                        return Text('success');
+                                      },
+                                      //builder ketika error
+                                      error: (error, stack) {
+                                        log('error');
+                                        return Text(error.toString());
+                                      },
+                                      //builder ketika loading
+                                      loading: () {
+                                        log('loading');
+                                        return Center(
+                                          child: LoadingWidget(),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ));
                       }
                     },
                   )
@@ -181,6 +251,7 @@ class RegisterScreen extends StatelessWidget {
             ),
           ),
           InputLabel(
+            controller: nameController,
             label: 'Masukkan Nama',
           ),
           SizedBox(
@@ -196,7 +267,7 @@ class RegisterScreen extends StatelessWidget {
               ),
             ),
           ),
-          InputLabel(label: 'Masukkan Email'),
+          InputLabel(controller: emailController, label: 'Masukkan Email'),
           SizedBox(
             height: 15,
           ),
@@ -211,6 +282,7 @@ class RegisterScreen extends StatelessWidget {
             ),
           ),
           InputLabel(
+            controller: passwordController,
             label: 'Masukkan Password',
             isObscure: true,
           ),
@@ -228,6 +300,7 @@ class RegisterScreen extends StatelessWidget {
             ),
           ),
           InputLabel(
+            controller: confirmpasswordController,
             label: 'Masukkan Password',
             isObscure: true,
           ),
@@ -252,7 +325,7 @@ class RegisterScreen extends StatelessWidget {
               ),
             ),
           ),
-          InputLabel(label: 'Masukkan Alamat'),
+          InputLabel(controller: addressController, label: 'Masukkan Alamat'),
           SizedBox(
             height: 15,
           ),
@@ -266,7 +339,8 @@ class RegisterScreen extends StatelessWidget {
               ),
             ),
           ),
-          InputLabel(label: 'Masukkan Nomor Telepon'),
+          InputLabel(
+              controller: phoneController, label: 'Masukkan Nomor Telepon'),
           SizedBox(
             height: 15,
           ),
@@ -281,6 +355,7 @@ class RegisterScreen extends StatelessWidget {
             ),
           ),
           InputLabel2(
+            isSertifikat: false,
             label: 'Pilih Gambar Pendukung',
             isObscure: true,
           ),
@@ -298,6 +373,7 @@ class RegisterScreen extends StatelessWidget {
             ),
           ),
           InputLabel2(
+            isSertifikat: true,
             label: 'Pilih Sertifikat',
             isObscure: true,
           ),
@@ -311,9 +387,11 @@ class InputLabel extends StatelessWidget {
   InputLabel({
     super.key,
     required this.label,
+    required this.controller,
     this.isObscure,
   });
   final String? label;
+  final TextEditingController controller;
   bool? isObscure;
 
   @override
@@ -330,6 +408,7 @@ class InputLabel extends StatelessWidget {
             fontWeight: FontWeight.w700,
           ),
         ),
+        controller: controller,
         obscureText: isObscure ?? false,
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
@@ -354,21 +433,25 @@ class InputLabel extends StatelessWidget {
   }
 }
 
-class InputLabel2 extends StatefulWidget {
+class InputLabel2 extends ConsumerStatefulWidget {
   InputLabel2({
     Key? key,
     required this.label,
+    this.isSertifikat,
+    this.controller,
     this.isObscure,
   }) : super(key: key);
 
   final String? label;
   final bool? isObscure;
+  final TextEditingController? controller;
+  final bool? isSertifikat;
 
   @override
-  _InputLabel2State createState() => _InputLabel2State();
+  ConsumerState<InputLabel2> createState() => _InputLabel2State();
 }
 
-class _InputLabel2State extends State<InputLabel2> {
+class _InputLabel2State extends ConsumerState<InputLabel2> {
   File? _imageFile;
 
   Future<void> _pickImage(BuildContext context) async {
@@ -405,6 +488,9 @@ class _InputLabel2State extends State<InputLabel2> {
     if (pickedFile != null) {
       setState(() {
         _imageFile = File(pickedFile.path);
+        widget.isSertifikat == true
+            ? ref.read(sertifikatFileProvider.notifier).state = _imageFile!
+            : ref.watch(pendukungFileProvider.notifier).state = _imageFile!;
       });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(_imageFile!.path)),
@@ -444,6 +530,7 @@ class _InputLabel2State extends State<InputLabel2> {
             : SizedBox(),
         SizedBox(height: 16),
         TextField(
+          controller: widget.controller,
           style: GoogleFonts.comfortaa(
             textStyle: Typo.title.copyWith(
               color: white,
