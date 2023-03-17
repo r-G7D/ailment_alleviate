@@ -6,6 +6,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'api_error.dart';
 
 class APIService {
+  // static const String _baseUrl =
+  // 'suggesting-key-bangladesh-va.trycloudflare.com';
   static const String _baseUrl = 'deployailment.pythonanywhere.com';
 
   Future<T> run<T>({
