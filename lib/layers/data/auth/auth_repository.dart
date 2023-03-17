@@ -16,7 +16,7 @@ class AuthRepository {
   final APIService api = APIService();
 
   Future<Map<String, dynamic>> login(String email, String password) async {
-    // var storage = new FlutterSecureStorage();
+    var storage = new FlutterSecureStorage();
 
     final param = {
       'email': email,
@@ -37,9 +37,9 @@ class AuthRepository {
       ),
       parse: (json) => json,
     );
-    // await storage.write(key: 'token', value: response['token']['access']);
-    // var token = await storage.read(key: 'token');
-    // log(token.toString());
+    await storage.write(key: 'token', value: response['token']['access']);
+    var token = await storage.read(key: 'token');
+    log(token.toString());
     return response;
   }
 
