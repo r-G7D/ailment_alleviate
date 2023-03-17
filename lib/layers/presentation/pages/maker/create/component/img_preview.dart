@@ -24,18 +24,16 @@ class ImagePreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 10),
       width: MediaQuery.of(context).size.width,
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: white,
+        color: grey,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Builder(builder: (_) {
         if (filePic != null) {
           return Image.file(
             filePic!,
-            fit: BoxFit.fitHeight,
-            height: 200,
           );
         } else {
           return Image.network(
