@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -84,6 +82,18 @@ class APIService {
   Uri ingredientId(String id) {
     return _buildUri(
       endpoint: '/bahan/$id',
+    );
+  }
+
+  Uri createRecipe() {
+    return _buildUri(
+      endpoint: '/api/peracik/create/',
+    );
+  }
+
+  Uri createIngredient() {
+    return _buildUri(
+      endpoint: '/api/peracik/',
     );
   }
 }
