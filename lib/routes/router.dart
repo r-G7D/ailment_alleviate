@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
 import '../layers/presentation/pages/dashboard_screen.dart';
+import '../layers/presentation/pages/auth/login_screen.dart';
+import '../layers/presentation/pages/auth/register_screen.dart';
 import '../layers/presentation/pages/emperis_screen.dart';
 import '../layers/presentation/pages/home_screen.dart';
 import '../layers/presentation/pages/maker/create/add_med_screen.dart';
@@ -31,6 +33,20 @@ final GoRouter router = GoRouter(
           name: 'home',
           pageBuilder: (context, state) => slideTransitionRL(
             const HomeScreen(),
+          ),
+        ),
+        GoRoute(
+          path: 'login',
+          name: 'login',
+          pageBuilder: (context, state) => slideTransitionRL(
+            const LoginScreen(),
+          ),
+        ),
+        GoRoute(
+          path: 'register',
+          name: 'register',
+          pageBuilder: (context, state) => slideTransitionRL(
+            const RegisterScreen(),
           ),
         ),
         GoRoute(

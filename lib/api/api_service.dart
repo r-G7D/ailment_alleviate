@@ -4,6 +4,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'api_error.dart';
 
 class APIService {
+  // static const String _baseUrl =
+  // 'suggesting-key-bangladesh-va.trycloudflare.com';
   static const String _baseUrl = 'deployailment.pythonanywhere.com';
 
   Future<T> run<T>({
@@ -50,6 +52,18 @@ class APIService {
     return _buildUri(
       endpoint: '/dashboard',
       params: params,
+    );
+  }
+
+  Uri login() {
+    return _buildUri(
+      endpoint: '/api/peracik/login/',
+    );
+  }
+
+  Uri register() {
+    return _buildUri(
+      endpoint: '/api/peracik/signup/',
     );
   }
 
