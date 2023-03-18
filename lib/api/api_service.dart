@@ -1,39 +1,40 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-
-import 'api_error.dart';
 
 class APIService {
   // static const String _baseUrl =
   // 'suggesting-key-bangladesh-va.trycloudflare.com';
   static const String _baseUrl = 'deployailment.pythonanywhere.com';
 
-  Future<T> run<T>({
+  Future<T> runCRUD<T>({
+    required Future<Response> Function() request,
+    T Function(dynamic)? parse,
+  }) async {
+    try {
+      final response = await request();
+      dynamic parsed = parse != null ? parse(response.data) : null;
+      return parsed;
+    } on SocketException catch (_) {
+      throw Exception('No Internet Connection');
+    } on DioError catch (e) {
+      throw Exception(e.response!.data);
+    }
+  }
+
+  Future<T> runFetch<T>({
     required Future<Response> Function() request,
     required T Function(dynamic) parse,
   }) async {
     try {
-      // add artificial delay to test loading UI
-      //await Future.delayed(const Duration(seconds: 1));
       final response = await request();
-      switch (response.statusCode) {
-        case 200:
-          return parse(response.data);
-        case 201:
-          return parse(response.data);
-        case 204:
-          return parse(response.data);
-        case 404:
-          throw const APIError.notFound();
-        default:
-          throw const APIError.unknown();
-      }
-    } catch (e) {
-      throw Exception(e.toString());
+      return parse(response.data);
+    } on SocketException catch (_) {
+      throw Exception('No Internet Connection');
+    } on DioError catch (e) {
+      throw Exception(e.response!.data);
     }
-    // on SocketException catch (_) {
-    //   throw const APIError.noInternetConnection();
-    // }
   }
 
   Uri _buildUri({
@@ -101,11 +102,6 @@ class APIService {
 final apiProvider = Provider<APIService>(
   (ref) => APIService(),
 );
-
-// @riverpod
-// ApiService apiProvider(ApiProviderRef ref) {
-//   return ApiService();
-// }
 
 /**
  * *riverpod generator

@@ -17,7 +17,6 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(Duration(seconds: 2), () => router.pushNamed('role'));
-    Timer(Duration(seconds: 2), () => router.pushNamed('login'));
   }
 
   @override

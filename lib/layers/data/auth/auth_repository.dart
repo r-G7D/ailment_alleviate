@@ -15,8 +15,8 @@ class AuthRepository {
   final Dio dio = Dio();
   final APIService api = APIService();
 
-  Future<Map<String, dynamic>> login(String email, String password) async {
-    var storage = new FlutterSecureStorage();
+  Future login(String email, String password) async {
+    var storage = const FlutterSecureStorage();
 
     final param = {
       'email': email,
@@ -25,7 +25,7 @@ class AuthRepository {
     log("param : $param");
     Uri uri = api.login();
     log("uri:$uri");
-    final response = await api.run(
+    final response = await api.runCRUD(
       request: () => dio.postUri(
         uri,
         data: param,
@@ -39,11 +39,11 @@ class AuthRepository {
     );
     await storage.write(key: 'token', value: response['token']['access']);
     var token = await storage.read(key: 'token');
-    log(token.toString());
+    log("token: $token");
     return response;
   }
 
-  Future<Map<String, dynamic>> register(
+  Future register(
     String name,
     String email,
     String password,
@@ -72,13 +72,11 @@ class AuthRepository {
         ),
       }
     };
-
     log("form data : $formData");
-
     // Send request
     Uri uri = api.register();
     log(uri.toString());
-    final response = await api.run(
+    final response = await api.runCRUD(
       request: () => dio.postUri(
         uri,
         data: formData,
@@ -100,13 +98,13 @@ AuthRepository authRepository(AuthRepositoryRef ref) {
   return AuthRepository();
 }
 
-final loginProvider = FutureProvider<Map<String, dynamic>>((ref) async {
+final loginProvider = FutureProvider<dynamic>((ref) async {
   var email = ref.watch(emailProvider);
   var password = ref.watch(passwordProvider);
   return ref.watch(authRepositoryProvider).login(email, password);
 });
 
-final registerProvider = FutureProvider<Map<String, dynamic>>((ref) async {
+final registerProvider = FutureProvider<dynamic>((ref) async {
   var name = ref.watch(nameProvider);
   // log(name);
   var email = ref.watch(emailProvider);
