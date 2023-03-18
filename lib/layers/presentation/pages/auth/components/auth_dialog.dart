@@ -21,8 +21,11 @@ class AuthDialog extends ConsumerWidget {
             ref.watch(isLogin == true ? loginProvider : registerProvider).when(
           //builder ketika sukses
           data: (data) {
-            Future.delayed(const Duration(seconds: 1), () {
-              router.pushNamed('maker');
+            Future.delayed(const Duration(milliseconds: 500), () {
+              router.pop();
+              Future.delayed(const Duration(milliseconds: 250), () {
+                router.pushNamed('maker');
+              });
             });
             return const Center(
               child: Text('success'),
