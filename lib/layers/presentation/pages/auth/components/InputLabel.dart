@@ -18,7 +18,6 @@ class InputLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: 34, right: 34),
       child: TextField(
         style: GoogleFonts.comfortaa(
           textStyle: Typo.title.copyWith(

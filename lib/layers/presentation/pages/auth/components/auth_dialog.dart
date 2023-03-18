@@ -1,8 +1,8 @@
 import 'dart:developer';
 
+import 'package:ailment_alleviate/routes/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../../../../constants/custom_style.dart';
 import '../../../../data/auth/auth_repository.dart';
@@ -21,18 +21,23 @@ class AuthDialog extends ConsumerWidget {
             ref.watch(isLogin == true ? loginProvider : registerProvider).when(
           //builder ketika sukses
           data: (data) {
-            log('success');
-            return Text('success');
+            Future.delayed(const Duration(seconds: 1), () {
+              router.pushNamed('maker');
+            });
+            return const Center(
+              child: Text('success'),
+            );
           },
           //builder ketika error
           error: (error, stack) {
-            log('error');
-            return Text(error.toString());
+            log(error.toString());
+            return const Center(
+              child: Text('error'),
+            );
           },
           //builder ketika loading
           loading: () {
-            log('loading');
-            return Center(
+            return const Center(
               child: LoadingWidget(),
             );
           },

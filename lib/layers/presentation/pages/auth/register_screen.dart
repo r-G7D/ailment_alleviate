@@ -1,6 +1,3 @@
-// ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers
-
-import 'dart:developer';
 import 'package:ailment_alleviate/constants/custom_style.dart';
 import 'package:ailment_alleviate/layers/presentation/pages/auth/components/auth_dialog.dart';
 import 'package:ailment_alleviate/layers/presentation/pages/auth/state/auth_state.dart';
@@ -9,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../data/auth/auth_repository.dart';
 import 'components/InputLabel.dart';
 import 'components/InputLabel2.dart';
 
@@ -49,120 +45,115 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     return Scaffold(
         backgroundColor: primary,
         body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: EdgeInsets.only(top: 47, left: 34),
-                  child: Text(
-                    'Alleviate',
-                    style: GoogleFonts.comfortaa(
-                      textStyle: Typo.title.copyWith(
-                        color: white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.only(top: 21, left: 34, right: 54),
-                  child: Text(
-                    'Bergabung bersama kami',
-                    style: GoogleFonts.comfortaa(
-                      textStyle: Typo.title.copyWith(
-                        color: white,
-                        fontSize: 32,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.only(top: 17, left: 34),
-                  child: Text(
-                    'Silahkan isi data diri anda',
-                    style: GoogleFonts.comfortaa(
-                      textStyle: Typo.title.copyWith(
-                        color: secondary,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 320,
-                  child: PageView(
-                    physics: NeverScrollableScrollPhysics(),
-                    controller: pageController,
-                    children: [register(), verif()],
-                  ),
-                ),
-                SizedBox(
-                  height: 111,
-                ),
-                Container(
-                    child: Row(children: [
-                  SizedBox(
-                    width: 32,
-                  ),
-                  InkWell(
-                    child: Container(
-                      width: 327,
-                      height: 46,
-                      decoration: BoxDecoration(
-                        color: white,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Container(
-                        padding: EdgeInsets.only(top: 12),
-                        child: Text(
-                          'Daftar',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.comfortaa(
-                            textStyle: Typo.title.copyWith(
-                              color: primary,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
-                            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 34),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.only(top: 47),
+                      child: Text(
+                        'Alleviate',
+                        style: GoogleFonts.comfortaa(
+                          textStyle: Typo.title.copyWith(
+                            color: white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                       ),
                     ),
-                    onTap: () {
-                      if (pageController.page == 0) {
-                        pageController.animateToPage(1,
-                            duration: const Duration(milliseconds: 500),
-                            curve: Curves.easeInOut);
-                      } else if (pageController.page == 1) {
-                        ref.read(nameProvider.notifier).state =
-                            nameController.text;
-                        ref.read(emailProvider.notifier).state =
-                            emailController.text;
-                        ref.read(passwordProvider.notifier).state =
-                            passwordController.text;
-                        ref.read(confirmpasswordProvider.notifier).state =
-                            confirmpasswordController.text;
-                        ref.read(addressProvider.notifier).state =
-                            addressController.text;
-                        ref.read(phoneProvider.notifier).state =
-                            phoneController.text;
-                        showDialog(
-                            context: context,
-                            builder: (context) => AuthDialog(isLogin: false));
-                      }
-                    },
-                  )
-                ])),
-                SizedBox(
-                  height: 17,
+                    const SizedBox(height: 20),
+                    Text(
+                      'Bergabung bersama kami',
+                      style: GoogleFonts.comfortaa(
+                        textStyle: Typo.title.copyWith(
+                          color: white,
+                          fontSize: 32,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      'Silahkan isi data diri anda',
+                      style: GoogleFonts.comfortaa(
+                        textStyle: Typo.title.copyWith(
+                          color: secondary,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                  ],
                 ),
-                Row(
+              ),
+              Flexible(
+                child: PageView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  controller: pageController,
+                  children: [register(), verif()],
+                ),
+              ),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 34),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      width: 32,
+                    InkWell(
+                      child: Container(
+                        width: 327,
+                        height: 46,
+                        decoration: BoxDecoration(
+                          color: white,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Container(
+                          padding: const EdgeInsets.only(top: 12),
+                          child: Text(
+                            'Daftar',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.comfortaa(
+                              textStyle: Typo.title.copyWith(
+                                color: primary,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        if (pageController.page == 0) {
+                          pageController.animateToPage(1,
+                              duration: const Duration(milliseconds: 500),
+                              curve: Curves.easeInOut);
+                        } else if (pageController.page == 1) {
+                          ref.read(nameProvider.notifier).state =
+                              nameController.text;
+                          ref.read(emailProvider.notifier).state =
+                              emailController.text;
+                          ref.read(passwordProvider.notifier).state =
+                              passwordController.text;
+                          ref.read(confirmpasswordProvider.notifier).state =
+                              confirmpasswordController.text;
+                          ref.read(addressProvider.notifier).state =
+                              addressController.text;
+                          ref.read(phoneProvider.notifier).state =
+                              phoneController.text;
+                          showDialog(
+                              context: context,
+                              builder: (context) =>
+                                  const AuthDialog(isLogin: false));
+                        }
+                      },
+                    ),
+                    const SizedBox(
+                      height: 17,
                     ),
                     InkWell(
                       child: Container(
@@ -176,7 +167,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: Container(
-                          padding: EdgeInsets.only(top: 12),
+                          padding: const EdgeInsets.only(top: 12),
                           child: Text(
                             'Kembali',
                             textAlign: TextAlign.center,
@@ -201,9 +192,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       },
                     ),
                   ],
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           ),
         ));
   }
@@ -214,7 +205,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           Text(
@@ -231,7 +222,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             controller: nameController,
             label: 'Masukkan Nama',
           ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           Text(
@@ -245,7 +236,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             ),
           ),
           InputLabel(controller: emailController, label: 'Masukkan Email'),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           Text(
@@ -263,7 +254,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             label: 'Masukkan Password',
             isObscure: true,
           ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           Text(
@@ -290,7 +281,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     return Padding(
       padding: const EdgeInsets.only(top: 15),
       child: ListView(
-        padding: EdgeInsets.only(left: 34, right: 34),
+        padding: const EdgeInsets.only(left: 34, right: 34),
         children: [
           Text(
             'Alamat',
@@ -303,7 +294,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             ),
           ),
           InputLabel(controller: addressController, label: 'Masukkan Alamat'),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           Text(
@@ -318,7 +309,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           ),
           InputLabel(
               controller: phoneController, label: 'Masukkan Nomor Telepon'),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           Text(
@@ -336,7 +327,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             label: 'Pilih Gambar Pendukung',
             isObscure: true,
           ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           Text(

@@ -22,7 +22,7 @@ class RoleScreen extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 roleItem('User', 'home', ref),
-                roleItem('Peracik', 'maker', ref),
+                roleItem('Peracik', 'login', ref),
               ],
             ),
           )),
