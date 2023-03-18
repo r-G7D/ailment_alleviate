@@ -18,7 +18,7 @@ class DashboardRepository {
     };
     Uri uri = api.dashboard(param);
     log(uri.toString());
-    final response = await api.run(
+    final response = await api.runFetch(
       request: () => dio.getUri(
         uri,
         options: Options(
@@ -34,7 +34,7 @@ class DashboardRepository {
 
   Future<Recipe> fetchRecipe(int id) async {
     Uri uri = api.dashboardId(id.toString());
-    final response = await api.run(
+    final response = await api.runFetch(
       request: () => dio.getUri(
         uri,
         options: Options(
@@ -50,7 +50,7 @@ class DashboardRepository {
 
   Future<List<Ingredient>> fetchIngredients() async {
     Uri uri = api.ingredient();
-    final response = await api.run(
+    final response = await api.runFetch(
       request: () => dio.getUri(
         uri,
         options: Options(
