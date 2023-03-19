@@ -2,7 +2,6 @@
 
 // import 'package:flutter/material.dart';
 import 'package:ailment_alleviate/layers/domain/addIngredient/add_ingredient.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/filter/filter.dart';
@@ -38,6 +37,10 @@ final acceptedProvider = StateProvider.autoDispose<bool>((ref) {
 });
 
 final pendingProvider = StateProvider.autoDispose<bool>((ref) {
+  return false;
+});
+
+final declinedProvider = StateProvider.autoDispose<bool>((ref) {
   return false;
 });
 
