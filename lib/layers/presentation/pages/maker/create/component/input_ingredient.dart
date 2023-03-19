@@ -110,7 +110,7 @@ class IngredientInput extends ConsumerWidget {
       noItemsFoundBuilder: (context) {
         return InkWell(
           onTap: () {
-            router.pushNamed('add-ingredient');
+            router.pushNamed('create-ingredient');
           },
           child: Container(
             height: 50,
