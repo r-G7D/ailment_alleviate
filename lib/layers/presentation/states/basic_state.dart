@@ -32,18 +32,6 @@ final recipePageProvider = StateProvider.autoDispose<int>((ref) {
   return 0;
 });
 
-final acceptedProvider = StateProvider.autoDispose<bool>((ref) {
-  return false;
-});
-
-final pendingProvider = StateProvider.autoDispose<bool>((ref) {
-  return false;
-});
-
-final declinedProvider = StateProvider.autoDispose<bool>((ref) {
-  return false;
-});
-
 class FilterNotifier extends StateNotifier<Filter> {
   FilterNotifier() : super(Filter(filters: []));
   List<String> filters = [];

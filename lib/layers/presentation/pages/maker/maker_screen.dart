@@ -1,5 +1,6 @@
 import 'package:ailment_alleviate/constants/custom_style.dart';
 import 'package:ailment_alleviate/layers/data/maker_repository/maker_repository.dart';
+import 'package:ailment_alleviate/layers/presentation/pages/maker/state/maker_state.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -137,60 +138,86 @@ class MakerScreen extends ConsumerWidget {
   }
 
   Widget accountCard(String name, String email, WidgetRef ref) {
-    return Container(
-      height: 70 + 60,
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: grey!.withOpacity(0.5),
-            spreadRadius: 1,
-            blurRadius: 7,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            children: [
-              const Icon(
-                Icons.account_circle,
-                size: 50,
-              ),
-              const SizedBox(
-                width: 16,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    name,
-                    style: GoogleFonts.comfortaa(
-                        textStyle:
-                            Typo.title.copyWith(color: black, fontSize: 16)),
-                  ),
-                  Text(
-                    email,
-                    style: GoogleFonts.lato(
-                        textStyle: Typo.paragraph
-                            .copyWith(color: black, fontSize: 14)),
-                  ),
-                ],
-              )
-            ],
-          ),
-          const SizedBox(height: 10),
-          ElevatedButton(
-              onPressed: () {
-                ref.read(makerControllerProvider.notifier).logout();
-              },
-              child: Text('Logout'))
-        ],
+    bool isActive = ref.watch(accountCardProvider);
+    return InkWell(
+      onTap: () {
+        ref.read(accountCardProvider.notifier).state = !isActive;
+      },
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 150),
+        height: isActive ? 130 : 70,
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: grey!.withOpacity(0.5),
+              spreadRadius: 1,
+              blurRadius: 7,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                const Icon(
+                  Icons.account_circle,
+                  size: 50,
+                ),
+                const SizedBox(
+                  width: 16,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      name,
+                      style: GoogleFonts.comfortaa(
+                          textStyle:
+                              Typo.title.copyWith(color: black, fontSize: 16)),
+                    ),
+                    Text(
+                      email,
+                      style: GoogleFonts.lato(
+                          textStyle: Typo.paragraph
+                              .copyWith(color: black, fontSize: 14)),
+                    ),
+                  ],
+                ),
+                const Spacer(),
+                Icon(
+                  isActive ? Icons.arrow_drop_down : Icons.chevron_right,
+                  size: 30,
+                ),
+              ],
+            ),
+            isActive
+                ? Column(
+                    children: [
+                      const SizedBox(height: 10),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: red,
+                            minimumSize: const Size(double.infinity, 50)),
+                        onPressed: () {
+                          ref.read(makerControllerProvider.notifier).logout();
+                        },
+                        child: Text(
+                          'Keluar',
+                          style: GoogleFonts.comfortaa(
+                              textStyle: Typo.title
+                                  .copyWith(color: white, fontSize: 18)),
+                        ),
+                      ),
+                    ],
+                  )
+                : const SizedBox(),
+          ],
+        ),
       ),
     );
   }

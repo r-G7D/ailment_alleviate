@@ -5,9 +5,9 @@ import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 class APIService {
-  static const String _baseUrl =
-      'andrea-shadow-tongue-meditation.trycloudflare.com';
-  // static const String _baseUrl = 'deployailment.pythonanywhere.com';
+  // static const String _baseUrl =
+  //     'andrea-shadow-tongue-meditation.trycloudflare.com';
+  static const String _baseUrl = 'deployailment.pythonanywhere.com';
 
   Future<T> runCRUD<T>({
     required Future<Response> Function() request,
