@@ -7,7 +7,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../../../constants/custom_style.dart';
-import '../../../../states/image_state.dart';
 
 class ImagePreview extends StatelessWidget {
   const ImagePreview({
@@ -53,6 +52,33 @@ class ImagePreview extends StatelessWidget {
           );
         }
       }),
+    );
+  }
+}
+
+class DeleteImageButton extends StatelessWidget {
+  final Function() setFunction;
+  const DeleteImageButton({
+    super.key,
+    required this.setFunction,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 50,
+      width: 50,
+      decoration: BoxDecoration(
+        color: primary,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: InkWell(
+        onTap: setFunction,
+        child: Icon(
+          Boxicons.bx_x,
+          color: white,
+        ),
+      ),
     );
   }
 }
