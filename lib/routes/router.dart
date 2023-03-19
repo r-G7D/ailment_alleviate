@@ -6,7 +6,7 @@ import '../layers/presentation/pages/auth/login_screen.dart';
 import '../layers/presentation/pages/auth/register_screen.dart';
 import '../layers/presentation/pages/emperis_screen.dart';
 import '../layers/presentation/pages/home_screen.dart';
-import '../layers/presentation/pages/maker/create/add_med_screen.dart';
+import '../layers/presentation/pages/maker/create/create_recipe_screen.dart';
 import '../layers/presentation/pages/maker/create/create_ingredient_screen.dart';
 import '../layers/presentation/pages/maker/maker_screen.dart';
 import '../layers/presentation/pages/recipe_screen.dart';
@@ -78,15 +78,15 @@ final GoRouter router = GoRouter(
           ),
         ),
         GoRoute(
-          path: 'add-med',
-          name: 'add-med',
+          path: 'create-recipe',
+          name: 'create-recipe',
           pageBuilder: (context, state) => slideTransitionRL(
-            const AddMedScreen(),
+            const CreateRecipeScreen(),
           ),
         ),
         GoRoute(
-          path: 'add-ingredient',
-          name: 'add-ingredient',
+          path: 'create-ingredient',
+          name: 'create-ingredient',
           pageBuilder: (context, state) => slideTransitionRL(
             const CreateIngredientScreen(),
           ),

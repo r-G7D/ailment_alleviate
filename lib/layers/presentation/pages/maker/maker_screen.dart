@@ -1,161 +1,144 @@
-import 'dart:async';
-
 import 'package:ailment_alleviate/constants/custom_style.dart';
+import 'package:ailment_alleviate/layers/data/maker_repository/maker_repository.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../routes/router.dart';
+import '../../../domain/recipe/recipe.dart';
 import '../../components/net_image.dart';
 import '../../states/basic_state.dart';
+import 'controller/maker_controller.dart';
 
-class MakerScreen extends StatelessWidget {
+class MakerScreen extends ConsumerWidget {
   const MakerScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    dynamic data = {
-      "pending": [
-        {
-          "id": 35,
-          "nama_obat": "tester 1",
-          "keterangan": "ket 1",
-          "gambar":
-              "https://deployailment.pythonanywhere.com/media/obat/dumm_ItsSQfL.png",
-          "cara_pembuatan": "cp 1",
-          "aturan_pemakaian": "ap 1",
-          "bahan": [
-            {
-              "id": 29,
-              "nama_bahan": "Akar Anting-Anting Kering",
-              "gambar":
-                  "https://deployailment.pythonanywhere.com/media/bahan/_0030_akar_anting-anting.jpg",
-              "keterangan": "_"
-            },
-            {
-              "id": 30,
-              "nama_bahan": "Batang Seledri",
-              "gambar":
-                  "https://deployailment.pythonanywhere.com/media/bahan/_0037_Daun_dan_Batang_Seledri_Muda.jpg",
-              "keterangan": "_"
-            }
-          ]
-        },
-        {
-          "id": 38,
-          "nama_obat": "tester 3",
-          "keterangan": "ket 3",
-          "gambar":
-              "https://deployailment.pythonanywhere.com/media/obat/default.jpeg",
-          "cara_pembuatan": "cp 3",
-          "aturan_pemakaian": "ap 3",
-          "bahan": [
-            {
-              "id": 29,
-              "nama_bahan": "Akar Anting-Anting Kering",
-              "gambar":
-                  "https://deployailment.pythonanywhere.com/media/bahan/_0030_akar_anting-anting.jpg",
-              "keterangan": "_"
-            },
-            {
-              "id": 30,
-              "nama_bahan": "Batang Seledri",
-              "gambar":
-                  "https://deployailment.pythonanywhere.com/media/bahan/_0037_Daun_dan_Batang_Seledri_Muda.jpg",
-              "keterangan": "_"
-            }
-          ]
-        }
-      ],
-      "accepted": [
-        {
-          "id": 36,
-          "nama_obat": "tester 2",
-          "keterangan": "ket 2",
-          "gambar":
-              "https://deployailment.pythonanywhere.com/media/obat/dumm_tyESUGj.png",
-          "cara_pembuatan": "cp 1",
-          "aturan_pemakaian": "ap 1",
-          "bahan": [
-            {
-              "id": 29,
-              "nama_bahan": "Akar Anting-Anting Kering",
-              "gambar":
-                  "https://deployailment.pythonanywhere.com/media/bahan/_0030_akar_anting-anting.jpg",
-              "keterangan": "_"
-            },
-            {
-              "id": 30,
-              "nama_bahan": "Batang Seledri",
-              "gambar":
-                  "https://deployailment.pythonanywhere.com/media/bahan/_0037_Daun_dan_Batang_Seledri_Muda.jpg",
-              "keterangan": "_"
-            }
-          ]
-        }
-      ]
-    };
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ref.watch(makerProvider).when(
+      data: (data) {
+        String accountStatus = data.accountStatus;
+        List<Recipe> pending = data.pending!;
+        List<Recipe> accepted = data.accepted!;
 
-    String accountStatus = '';
-
-    return Scaffold(
-      backgroundColor: white,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: white,
-        title: Text(
-          'Ailment Alleviate',
-          style: GoogleFonts.comfortaa(textStyle: Typo.title),
-        ),
-        bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(0),
-            child: Divider(
-              thickness: 4,
-              color: grey,
-              endIndent: 43,
-              indent: 43,
-            )),
-        elevation: 0,
-      ),
-      floatingActionButton:
-          accountStatus == 'pending' || accountStatus == 'declined'
-              ? const SizedBox()
-              : SizedBox(
-                  height: 50,
-                  width: 50,
-                  child: FloatingActionButton(
-                    backgroundColor: primary,
-                    onPressed: () {
-                      router.pushNamed('add-med');
-                    },
-                    child: const Icon(
-                      Icons.add,
-                      color: Colors.white,
-                      size: 14,
+        return Scaffold(
+          backgroundColor: white,
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            backgroundColor: white,
+            title: Text(
+              'Ailment Alleviate',
+              style: GoogleFonts.comfortaa(textStyle: Typo.title),
+            ),
+            bottom: PreferredSize(
+                preferredSize: const Size.fromHeight(0),
+                child: Divider(
+                  thickness: 4,
+                  color: grey,
+                  endIndent: 43,
+                  indent: 43,
+                )),
+            elevation: 0,
+          ),
+          floatingActionButton:
+              accountStatus == 'MENUNGGU' || accountStatus == 'DITOLAK'
+                  ? const SizedBox()
+                  : SizedBox(
+                      height: 50,
+                      width: 50,
+                      child: FloatingActionButton(
+                        backgroundColor: primary,
+                        onPressed: () {
+                          router.pushNamed('create-recipe');
+                        },
+                        child: const Icon(
+                          Icons.add,
+                          color: Colors.white,
+                          size: 14,
+                        ),
+                      ),
+                    ),
+          body: accountStatus == 'MENUNGGU' || accountStatus == 'DITOLAK'
+              ? accountPending(context, accountStatus: accountStatus)
+              : RefreshIndicator(
+                  color: primary,
+                  onRefresh: () async {
+                    ref.watch(makerRepositoryProvider).fetchMaker();
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 26, horizontal: 34),
+                    child: ListView(
+                      children: [
+                        accountCard(data.profile!['nama']!,
+                            data.profile!['email']!, ref),
+                        const SizedBox(height: 16),
+                        MedList(status: 'accepted', data: accepted),
+                        const SizedBox(height: 16),
+                        MedList(status: 'pending', data: pending),
+                      ],
                     ),
                   ),
                 ),
-      body: accountStatus == 'pending' || accountStatus == 'declined'
-          ? accountPending(context, accountStatus: accountStatus)
-          : Padding(
-              padding: const EdgeInsets.symmetric(vertical: 26, horizontal: 34),
-              child: Column(
-                children: [
-                  accountCard(),
-                  const SizedBox(height: 16),
-                  MedList(isAccepted: true, data: data['accepted']),
-                  const SizedBox(height: 16),
-                  MedList(isAccepted: false, data: data['pending']),
-                ],
-              ),
+        );
+      },
+      error: (error, trace) {
+        return Scaffold(
+          backgroundColor: white,
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            backgroundColor: white,
+            title: Text(
+              'Ailment Alleviate',
+              style: GoogleFonts.comfortaa(textStyle: Typo.title),
             ),
+            bottom: PreferredSize(
+                preferredSize: const Size.fromHeight(0),
+                child: Divider(
+                  thickness: 4,
+                  color: grey,
+                  endIndent: 43,
+                  indent: 43,
+                )),
+            elevation: 0,
+          ),
+          body: Center(
+            child: Text(error.toString()),
+          ),
+        );
+      },
+      loading: () {
+        return Scaffold(
+          backgroundColor: white,
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            backgroundColor: white,
+            title: Text(
+              'Ailment Alleviate',
+              style: GoogleFonts.comfortaa(textStyle: Typo.title),
+            ),
+            bottom: PreferredSize(
+                preferredSize: const Size.fromHeight(0),
+                child: Divider(
+                  thickness: 4,
+                  color: grey,
+                  endIndent: 43,
+                  indent: 43,
+                )),
+            elevation: 0,
+          ),
+          body: const Center(
+            child: LoadingWidget(),
+          ),
+        );
+      },
     );
   }
 
-  Widget accountCard() {
+  Widget accountCard(String name, String email, WidgetRef ref) {
     return Container(
-      height: 70,
+      height: 70 + 60,
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
@@ -166,7 +149,7 @@ class MakerScreen extends StatelessWidget {
             color: grey!.withOpacity(0.5),
             spreadRadius: 1,
             blurRadius: 7,
-            offset: const Offset(0, 3), // changes position of shadow
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -186,13 +169,13 @@ class MakerScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Nama',
+                    name,
                     style: GoogleFonts.comfortaa(
                         textStyle:
                             Typo.title.copyWith(color: black, fontSize: 16)),
                   ),
                   Text(
-                    'Email',
+                    email,
                     style: GoogleFonts.lato(
                         textStyle: Typo.paragraph
                             .copyWith(color: black, fontSize: 14)),
@@ -201,6 +184,12 @@ class MakerScreen extends StatelessWidget {
               )
             ],
           ),
+          const SizedBox(height: 10),
+          ElevatedButton(
+              onPressed: () {
+                ref.read(makerControllerProvider.notifier).logout();
+              },
+              child: Text('Logout'))
         ],
       ),
     );
@@ -212,7 +201,7 @@ class MakerScreen extends StatelessWidget {
       color: white,
       child: Column(
         children: [
-          statusCard(accountStatus == 'pending' ? true : false),
+          statusCard(accountStatus == 'MENUNGGU' ? true : false),
           const Spacer(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 34, vertical: 26),
@@ -293,55 +282,80 @@ class MakerScreen extends StatelessWidget {
 }
 
 class MedList extends ConsumerWidget {
-  final bool isAccepted;
+  final String status;
   final dynamic data;
-  const MedList({super.key, required this.isAccepted, required this.data});
+  const MedList({super.key, required this.status, required this.data});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var prov =
-        isAccepted ? ref.watch(acceptedProvider) : ref.watch(pendingProvider);
+    var prov = status == 'accepted'
+        ? ref.watch(acceptedProvider)
+        : status == 'pending'
+            ? ref.watch(pendingProvider)
+            : ref.watch(declinedProvider);
 
     return Card(
       elevation: 2,
       child: Container(
         decoration: BoxDecoration(
-          color: isAccepted ? secondary : offWhite,
+          color: status == 'accepted'
+              ? secondary
+              : status == 'pending'
+                  ? offWhite
+                  : red,
           borderRadius: BorderRadius.circular(5),
         ),
         child: Column(
           children: [
             InkWell(
               onTap: () {
-                isAccepted
+                status == 'accepted'
                     ? ref.read(acceptedProvider.notifier).state = !prov
-                    : ref.read(pendingProvider.notifier).state = !prov;
+                    : status == 'pending'
+                        ? ref.read(pendingProvider.notifier).state = !prov
+                        : ref.read(declinedProvider.notifier).state = !prov;
               },
               child: Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
                 decoration: BoxDecoration(
-                  color: isAccepted ? primary : primaryLight,
+                  color: status == 'accepted'
+                      ? primary
+                      : status == 'pending'
+                          ? primaryLight
+                          : red,
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      isAccepted ? 'Diterima' : 'Menunggu',
+                      status == 'accepted'
+                          ? 'Diterima'
+                          : status == 'pending'
+                              ? 'Menunggu'
+                              : 'Ditolak',
                       style: GoogleFonts.lato(
                         textStyle: Typo.paragraph.copyWith(
-                          color: isAccepted ? white : primary,
+                          color: status == 'accepted'
+                              ? white
+                              : status == 'pending'
+                                  ? primary
+                                  : red,
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
                     ),
                     Text(
-                      isAccepted ? '${data.length}' : '${data.length}',
+                      data.length.toString(),
                       style: GoogleFonts.lato(
                         textStyle: Typo.paragraph.copyWith(
-                          color: isAccepted ? white : primary,
+                          color: status == 'accepted'
+                              ? white
+                              : status == 'pending'
+                                  ? primary
+                                  : red,
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
                         ),
@@ -358,17 +372,21 @@ class MedList extends ConsumerWidget {
               height: prov ? 130 : 0,
               padding: const EdgeInsets.only(left: 12),
               decoration: BoxDecoration(
-                color: isAccepted ? secondary : offWhite,
+                color: status == 'accepted'
+                    ? secondary
+                    : status == 'pending'
+                        ? offWhite
+                        : red,
                 borderRadius: BorderRadius.circular(5),
               ),
               duration: const Duration(milliseconds: 200),
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 // physics: const NeverScrollableScrollPhysics(),
-                itemCount: isAccepted ? data.length : data.length,
+                itemCount: data.length,
                 itemBuilder: (context, index) {
-                  return medTile(ref, isAccepted, data[index]['nama_obat'],
-                      data[index]['id'], data[index]['gambar']);
+                  return medTile(ref, status, data[index].name, data[index].id,
+                      data[index].pic);
                 },
               ),
             ),
@@ -379,9 +397,12 @@ class MedList extends ConsumerWidget {
   }
 
   Widget medTile(
-      WidgetRef ref, bool accepted, String name, int id, String pic) {
-    var prov =
-        isAccepted ? ref.watch(acceptedProvider) : ref.watch(pendingProvider);
+      WidgetRef ref, String status, String name, int id, String pic) {
+    var prov = status == 'accepted'
+        ? ref.watch(acceptedProvider)
+        : status == 'pending'
+            ? ref.watch(pendingProvider)
+            : ref.watch(declinedProvider);
 
     return Row(
       children: [

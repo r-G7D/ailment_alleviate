@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:ailment_alleviate/constants/custom_style.dart';
 import 'package:ailment_alleviate/layers/presentation/components/net_image.dart';
 import 'package:ailment_alleviate/routes/router.dart';
@@ -8,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../data/dashboard/dashboard_repo.dart';
 import '../../domain/ingredient/ingredient.dart';
 import '../../domain/recipe/recipe.dart';
 import '../controllers/basic_controller.dart';

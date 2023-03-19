@@ -37,10 +37,10 @@ class AuthRepository {
       ),
       parse: (json) => json,
     );
-    await storage.write(key: 'token', value: response['token']['access']);
-    var token = await storage.read(key: 'token');
-    log("token: $token");
-    return response;
+    if (response['token'] != null) {
+      await storage.write(key: 'token', value: response['token']['access']);
+      return response;
+    }
   }
 
   Future register(
@@ -97,38 +97,3 @@ class AuthRepository {
 AuthRepository authRepository(AuthRepositoryRef ref) {
   return AuthRepository();
 }
-
-final loginProvider = FutureProvider<dynamic>((ref) async {
-  var email = ref.watch(emailProvider);
-  var password = ref.watch(passwordProvider);
-  return ref.watch(authRepositoryProvider).login(email, password);
-});
-
-final registerProvider = FutureProvider<dynamic>((ref) async {
-  var name = ref.watch(nameProvider);
-  // log(name);
-  var email = ref.watch(emailProvider);
-  // log(email);
-  var password = ref.watch(passwordProvider);
-  // log(password);
-  var confirmPassword = ref.watch(confirmpasswordProvider);
-  // log(confirmPassword);
-  var address = ref.watch(addressProvider);
-  // log(address);
-  var phone = ref.watch(phoneProvider);
-  // log(phone);
-  var pendukungFile = ref.watch(pendukungFileProvider);
-  // log(pendukungFile.toString());
-  var sertifikatFile = ref.watch(sertifikatFileProvider);
-  // log(sertifikatFile.toString());
-  return ref.watch(authRepositoryProvider).register(
-        name,
-        email,
-        password,
-        confirmPassword,
-        address,
-        phone,
-        pendukungFile,
-        sertifikatFile,
-      );
-});

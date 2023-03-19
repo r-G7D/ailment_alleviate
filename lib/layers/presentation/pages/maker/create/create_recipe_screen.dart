@@ -11,14 +11,14 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../../../constants/custom_style.dart';
 import 'component/img_preview.dart';
 
-class AddMedScreen extends ConsumerStatefulWidget {
-  const AddMedScreen({super.key});
+class CreateRecipeScreen extends ConsumerStatefulWidget {
+  const CreateRecipeScreen({super.key});
 
   @override
-  ConsumerState<AddMedScreen> createState() => _AddMedScreenState();
+  ConsumerState<CreateRecipeScreen> createState() => _CreateRecipeScreenState();
 }
 
-class _AddMedScreenState extends ConsumerState<AddMedScreen> {
+class _CreateRecipeScreenState extends ConsumerState<CreateRecipeScreen> {
   final _nameC = TextEditingController();
   final _descC = TextEditingController();
   final _usageC = TextEditingController();
