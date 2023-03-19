@@ -1,12 +1,13 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 class APIService {
-  // static const String _baseUrl =
-  // 'suggesting-key-bangladesh-va.trycloudflare.com';
-  static const String _baseUrl = 'deployailment.pythonanywhere.com';
+  static const String _baseUrl =
+      'andrea-shadow-tongue-meditation.trycloudflare.com';
+  // static const String _baseUrl = 'deployailment.pythonanywhere.com';
 
   Future<T> runCRUD<T>({
     required Future<Response> Function() request,
@@ -19,7 +20,8 @@ class APIService {
     } on SocketException catch (_) {
       throw Exception('No Internet Connection');
     } on DioError catch (e) {
-      throw Exception(e.response!.data);
+      log(e.response.toString());
+      throw Exception(e.response!.statusCode);
     }
   }
 
@@ -29,7 +31,9 @@ class APIService {
   }) async {
     try {
       final response = await request();
-      return parse(response.data);
+      dynamic parsed = parse(response.data);
+      log(parsed.toString());
+      return parsed;
     } on SocketException catch (_) {
       throw Exception('No Internet Connection');
     } on DioError catch (e) {
@@ -56,18 +60,6 @@ class APIService {
     );
   }
 
-  Uri login() {
-    return _buildUri(
-      endpoint: '/api/peracik/login/',
-    );
-  }
-
-  Uri register() {
-    return _buildUri(
-      endpoint: '/api/peracik/signup/',
-    );
-  }
-
   Uri dashboardId(String id) {
     return _buildUri(
       endpoint: '/dashboard/$id',
@@ -86,6 +78,24 @@ class APIService {
     );
   }
 
+  Uri login() {
+    return _buildUri(
+      endpoint: '/api/peracik/login/',
+    );
+  }
+
+  Uri register() {
+    return _buildUri(
+      endpoint: '/api/peracik/signup/',
+    );
+  }
+
+  Uri dashboardMaker() {
+    return _buildUri(
+      endpoint: '/api/peracik/dashboard',
+    );
+  }
+
   Uri createRecipe() {
     return _buildUri(
       endpoint: '/api/peracik/create/',
@@ -94,7 +104,7 @@ class APIService {
 
   Uri createIngredient() {
     return _buildUri(
-      endpoint: '/api/peracik/',
+      endpoint: '/bahan/create/',
     );
   }
 }

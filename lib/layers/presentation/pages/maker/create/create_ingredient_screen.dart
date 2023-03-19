@@ -1,11 +1,14 @@
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:ailment_alleviate/layers/presentation/pages/maker/controller/maker_controller.dart';
 import 'package:ailment_alleviate/layers/presentation/pages/maker/create/component/img_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../../constants/custom_style.dart';
+import '../../../../../routes/router.dart';
 import '../../../components/form_field.dart';
 import '../../../states/image_state.dart';
 
@@ -31,7 +34,7 @@ class _CreateIngredientScreenState
 
   @override
   Widget build(BuildContext context) {
-    File? previewImage;
+    File? previewImage = ref.watch(inputImgCreateIngProvider);
 
     return Scaffold(
       backgroundColor: white,
@@ -60,12 +63,20 @@ class _CreateIngredientScreenState
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ImagePickerButton(
-                  setFunction: () {
-                    showChooseImage(context,
-                        ref.read(inputImgCreateIngProvider.notifier).setImage);
-                  },
-                ),
+                previewImage == null
+                    ? ImagePickerButton(
+                        setFunction: () {
+                          showChooseImage(
+                              context,
+                              ref
+                                  .read(inputImgCreateIngProvider.notifier)
+                                  .setImage);
+                        },
+                      )
+                    : DeleteImageButton(setFunction: () {
+                        ref.read(inputImgCreateIngProvider.notifier).state =
+                            null;
+                      }),
                 const SizedBox(width: 25),
                 SizedBox(
                   width: MediaQuery.of(context).size.width - 165,
@@ -133,7 +144,16 @@ class _CreateIngredientScreenState
                   ),
                   child: TextButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      ref.read(ingredientNameProvider.notifier).state =
+                          _nameC.text;
+                      ref.read(ingredientDescProvider.notifier).state =
+                          _descC.text;
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return CreateDialog();
+                        },
+                      );
                     },
                     child: Text(
                       'Tambah',
@@ -164,6 +184,37 @@ class _CreateIngredientScreenState
             ),
             const SizedBox(height: 35),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class CreateDialog extends ConsumerWidget {
+  const CreateDialog({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Dialog(
+      child: SizedBox(
+        height: 300,
+        child: ref.watch(createIngredientProvider).when(
+          data: (data) {
+            return const Center(
+              child: Text('success'),
+            );
+          },
+          error: (error, stack) {
+            log(error.toString());
+            return const Center(
+              child: Text('error'),
+            );
+          },
+          loading: () {
+            return const Center(
+              child: LoadingWidget(),
+            );
+          },
         ),
       ),
     );
