@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_final_fields
 
 // import 'package:flutter/material.dart';
-import 'package:ailment_alleviate/layers/domain/addIngredient/add_ingredient.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../domain/add_ingredient/add_ingredient.dart';
 import '../../domain/filter/filter.dart';
 
 enum Role { user, maker }

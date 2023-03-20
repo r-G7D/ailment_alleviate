@@ -40,6 +40,8 @@ class AuthRepository {
     if (response['token'] != null) {
       await storage.write(key: 'token', value: response['token']['access']);
       return response;
+    } else {
+      throw Exception('Login failed');
     }
   }
 
