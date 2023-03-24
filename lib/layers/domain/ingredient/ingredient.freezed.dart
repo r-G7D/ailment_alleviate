@@ -21,11 +21,10 @@ Ingredient _$IngredientFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Ingredient {
   int get id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'nama_bahan')
   String get name => throw _privateConstructorUsedError;
-  @JsonKey(name: 'gambar')
+  @JsonKey(name: 'image')
   String get pic => throw _privateConstructorUsedError;
-  @JsonKey(name: 'keterangan')
+  @JsonKey(name: 'description')
   String get desc => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -42,9 +41,9 @@ abstract class $IngredientCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      @JsonKey(name: 'nama_bahan') String name,
-      @JsonKey(name: 'gambar') String pic,
-      @JsonKey(name: 'keterangan') String desc});
+      String name,
+      @JsonKey(name: 'image') String pic,
+      @JsonKey(name: 'description') String desc});
 }
 
 /// @nodoc
@@ -96,9 +95,9 @@ abstract class _$$_IngredientCopyWith<$Res>
   @useResult
   $Res call(
       {int id,
-      @JsonKey(name: 'nama_bahan') String name,
-      @JsonKey(name: 'gambar') String pic,
-      @JsonKey(name: 'keterangan') String desc});
+      String name,
+      @JsonKey(name: 'image') String pic,
+      @JsonKey(name: 'description') String desc});
 }
 
 /// @nodoc
@@ -143,9 +142,9 @@ class __$$_IngredientCopyWithImpl<$Res>
 class _$_Ingredient implements _Ingredient {
   _$_Ingredient(
       {required this.id,
-      @JsonKey(name: 'nama_bahan') required this.name,
-      @JsonKey(name: 'gambar') required this.pic,
-      @JsonKey(name: 'keterangan') required this.desc});
+      required this.name,
+      @JsonKey(name: 'image') required this.pic,
+      @JsonKey(name: 'description') required this.desc});
 
   factory _$_Ingredient.fromJson(Map<String, dynamic> json) =>
       _$$_IngredientFromJson(json);
@@ -153,13 +152,12 @@ class _$_Ingredient implements _Ingredient {
   @override
   final int id;
   @override
-  @JsonKey(name: 'nama_bahan')
   final String name;
   @override
-  @JsonKey(name: 'gambar')
+  @JsonKey(name: 'image')
   final String pic;
   @override
-  @JsonKey(name: 'keterangan')
+  @JsonKey(name: 'description')
   final String desc;
 
   @override
@@ -198,10 +196,11 @@ class _$_Ingredient implements _Ingredient {
 
 abstract class _Ingredient implements Ingredient {
   factory _Ingredient(
-      {required final int id,
-      @JsonKey(name: 'nama_bahan') required final String name,
-      @JsonKey(name: 'gambar') required final String pic,
-      @JsonKey(name: 'keterangan') required final String desc}) = _$_Ingredient;
+          {required final int id,
+          required final String name,
+          @JsonKey(name: 'image') required final String pic,
+          @JsonKey(name: 'description') required final String desc}) =
+      _$_Ingredient;
 
   factory _Ingredient.fromJson(Map<String, dynamic> json) =
       _$_Ingredient.fromJson;
@@ -209,13 +208,12 @@ abstract class _Ingredient implements Ingredient {
   @override
   int get id;
   @override
-  @JsonKey(name: 'nama_bahan')
   String get name;
   @override
-  @JsonKey(name: 'gambar')
+  @JsonKey(name: 'image')
   String get pic;
   @override
-  @JsonKey(name: 'keterangan')
+  @JsonKey(name: 'description')
   String get desc;
   @override
   @JsonKey(ignore: true)

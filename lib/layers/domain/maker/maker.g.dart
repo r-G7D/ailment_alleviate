@@ -11,10 +11,13 @@ _$_Maker _$$_MakerFromJson(Map<String, dynamic> json) => _$_Maker(
       profile: (json['profile'] as Map<String, dynamic>?)?.map(
         (k, e) => MapEntry(k, e as String),
       ),
-      pending: (json['pending'] as List<dynamic>?)
+      accepted: (json['accepted_medication'] as List<dynamic>?)
           ?.map((e) => Recipe.fromJson(e as Map<String, dynamic>))
           .toList(),
-      accepted: (json['accepted'] as List<dynamic>?)
+      pending: (json['waiting_medication'] as List<dynamic>?)
+          ?.map((e) => Recipe.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      declined: (json['canceled_medication'] as List<dynamic>?)
           ?.map((e) => Recipe.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
@@ -22,6 +25,7 @@ _$_Maker _$$_MakerFromJson(Map<String, dynamic> json) => _$_Maker(
 Map<String, dynamic> _$$_MakerToJson(_$_Maker instance) => <String, dynamic>{
       'status': instance.accountStatus,
       'profile': instance.profile,
-      'pending': instance.pending,
-      'accepted': instance.accepted,
+      'accepted_medication': instance.accepted,
+      'waiting_medication': instance.pending,
+      'canceled_medication': instance.declined,
     };

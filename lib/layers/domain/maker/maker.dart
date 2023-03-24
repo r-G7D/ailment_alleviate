@@ -10,8 +10,9 @@ class Maker with _$Maker {
   factory Maker({
     @JsonKey(name: 'status') required String accountStatus,
     Map<String, String>? profile,
-    List<Recipe>? pending,
-    List<Recipe>? accepted,
+    @JsonKey(name: 'accepted_medication') List<Recipe>? accepted,
+    @JsonKey(name: 'waiting_medication') List<Recipe>? pending,
+    @JsonKey(name: 'canceled_medication') List<Recipe>? declined,
   }) = _Maker;
 
   factory Maker.fromJson(Map<String, dynamic> json) => _$MakerFromJson(json);

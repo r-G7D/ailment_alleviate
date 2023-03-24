@@ -23,8 +23,12 @@ mixin _$Maker {
   @JsonKey(name: 'status')
   String get accountStatus => throw _privateConstructorUsedError;
   Map<String, String>? get profile => throw _privateConstructorUsedError;
-  List<Recipe>? get pending => throw _privateConstructorUsedError;
+  @JsonKey(name: 'accepted_medication')
   List<Recipe>? get accepted => throw _privateConstructorUsedError;
+  @JsonKey(name: 'waiting_medication')
+  List<Recipe>? get pending => throw _privateConstructorUsedError;
+  @JsonKey(name: 'canceled_medication')
+  List<Recipe>? get declined => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -39,8 +43,9 @@ abstract class $MakerCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'status') String accountStatus,
       Map<String, String>? profile,
-      List<Recipe>? pending,
-      List<Recipe>? accepted});
+      @JsonKey(name: 'accepted_medication') List<Recipe>? accepted,
+      @JsonKey(name: 'waiting_medication') List<Recipe>? pending,
+      @JsonKey(name: 'canceled_medication') List<Recipe>? declined});
 }
 
 /// @nodoc
@@ -58,8 +63,9 @@ class _$MakerCopyWithImpl<$Res, $Val extends Maker>
   $Res call({
     Object? accountStatus = null,
     Object? profile = freezed,
-    Object? pending = freezed,
     Object? accepted = freezed,
+    Object? pending = freezed,
+    Object? declined = freezed,
   }) {
     return _then(_value.copyWith(
       accountStatus: null == accountStatus
@@ -70,13 +76,17 @@ class _$MakerCopyWithImpl<$Res, $Val extends Maker>
           ? _value.profile
           : profile // ignore: cast_nullable_to_non_nullable
               as Map<String, String>?,
+      accepted: freezed == accepted
+          ? _value.accepted
+          : accepted // ignore: cast_nullable_to_non_nullable
+              as List<Recipe>?,
       pending: freezed == pending
           ? _value.pending
           : pending // ignore: cast_nullable_to_non_nullable
               as List<Recipe>?,
-      accepted: freezed == accepted
-          ? _value.accepted
-          : accepted // ignore: cast_nullable_to_non_nullable
+      declined: freezed == declined
+          ? _value.declined
+          : declined // ignore: cast_nullable_to_non_nullable
               as List<Recipe>?,
     ) as $Val);
   }
@@ -91,8 +101,9 @@ abstract class _$$_MakerCopyWith<$Res> implements $MakerCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'status') String accountStatus,
       Map<String, String>? profile,
-      List<Recipe>? pending,
-      List<Recipe>? accepted});
+      @JsonKey(name: 'accepted_medication') List<Recipe>? accepted,
+      @JsonKey(name: 'waiting_medication') List<Recipe>? pending,
+      @JsonKey(name: 'canceled_medication') List<Recipe>? declined});
 }
 
 /// @nodoc
@@ -106,8 +117,9 @@ class __$$_MakerCopyWithImpl<$Res> extends _$MakerCopyWithImpl<$Res, _$_Maker>
   $Res call({
     Object? accountStatus = null,
     Object? profile = freezed,
-    Object? pending = freezed,
     Object? accepted = freezed,
+    Object? pending = freezed,
+    Object? declined = freezed,
   }) {
     return _then(_$_Maker(
       accountStatus: null == accountStatus
@@ -118,13 +130,17 @@ class __$$_MakerCopyWithImpl<$Res> extends _$MakerCopyWithImpl<$Res, _$_Maker>
           ? _value._profile
           : profile // ignore: cast_nullable_to_non_nullable
               as Map<String, String>?,
+      accepted: freezed == accepted
+          ? _value._accepted
+          : accepted // ignore: cast_nullable_to_non_nullable
+              as List<Recipe>?,
       pending: freezed == pending
           ? _value._pending
           : pending // ignore: cast_nullable_to_non_nullable
               as List<Recipe>?,
-      accepted: freezed == accepted
-          ? _value._accepted
-          : accepted // ignore: cast_nullable_to_non_nullable
+      declined: freezed == declined
+          ? _value._declined
+          : declined // ignore: cast_nullable_to_non_nullable
               as List<Recipe>?,
     ));
   }
@@ -136,11 +152,13 @@ class _$_Maker implements _Maker {
   _$_Maker(
       {@JsonKey(name: 'status') required this.accountStatus,
       final Map<String, String>? profile,
-      final List<Recipe>? pending,
-      final List<Recipe>? accepted})
+      @JsonKey(name: 'accepted_medication') final List<Recipe>? accepted,
+      @JsonKey(name: 'waiting_medication') final List<Recipe>? pending,
+      @JsonKey(name: 'canceled_medication') final List<Recipe>? declined})
       : _profile = profile,
+        _accepted = accepted,
         _pending = pending,
-        _accepted = accepted;
+        _declined = declined;
 
   factory _$_Maker.fromJson(Map<String, dynamic> json) =>
       _$$_MakerFromJson(json);
@@ -158,18 +176,9 @@ class _$_Maker implements _Maker {
     return EqualUnmodifiableMapView(value);
   }
 
-  final List<Recipe>? _pending;
-  @override
-  List<Recipe>? get pending {
-    final value = _pending;
-    if (value == null) return null;
-    if (_pending is EqualUnmodifiableListView) return _pending;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
   final List<Recipe>? _accepted;
   @override
+  @JsonKey(name: 'accepted_medication')
   List<Recipe>? get accepted {
     final value = _accepted;
     if (value == null) return null;
@@ -178,9 +187,31 @@ class _$_Maker implements _Maker {
     return EqualUnmodifiableListView(value);
   }
 
+  final List<Recipe>? _pending;
+  @override
+  @JsonKey(name: 'waiting_medication')
+  List<Recipe>? get pending {
+    final value = _pending;
+    if (value == null) return null;
+    if (_pending is EqualUnmodifiableListView) return _pending;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<Recipe>? _declined;
+  @override
+  @JsonKey(name: 'canceled_medication')
+  List<Recipe>? get declined {
+    final value = _declined;
+    if (value == null) return null;
+    if (_declined is EqualUnmodifiableListView) return _declined;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   String toString() {
-    return 'Maker(accountStatus: $accountStatus, profile: $profile, pending: $pending, accepted: $accepted)';
+    return 'Maker(accountStatus: $accountStatus, profile: $profile, accepted: $accepted, pending: $pending, declined: $declined)';
   }
 
   @override
@@ -191,8 +222,9 @@ class _$_Maker implements _Maker {
             (identical(other.accountStatus, accountStatus) ||
                 other.accountStatus == accountStatus) &&
             const DeepCollectionEquality().equals(other._profile, _profile) &&
+            const DeepCollectionEquality().equals(other._accepted, _accepted) &&
             const DeepCollectionEquality().equals(other._pending, _pending) &&
-            const DeepCollectionEquality().equals(other._accepted, _accepted));
+            const DeepCollectionEquality().equals(other._declined, _declined));
   }
 
   @JsonKey(ignore: true)
@@ -201,8 +233,9 @@ class _$_Maker implements _Maker {
       runtimeType,
       accountStatus,
       const DeepCollectionEquality().hash(_profile),
+      const DeepCollectionEquality().hash(_accepted),
       const DeepCollectionEquality().hash(_pending),
-      const DeepCollectionEquality().hash(_accepted));
+      const DeepCollectionEquality().hash(_declined));
 
   @JsonKey(ignore: true)
   @override
@@ -220,10 +253,12 @@ class _$_Maker implements _Maker {
 
 abstract class _Maker implements Maker {
   factory _Maker(
-      {@JsonKey(name: 'status') required final String accountStatus,
-      final Map<String, String>? profile,
-      final List<Recipe>? pending,
-      final List<Recipe>? accepted}) = _$_Maker;
+          {@JsonKey(name: 'status') required final String accountStatus,
+          final Map<String, String>? profile,
+          @JsonKey(name: 'accepted_medication') final List<Recipe>? accepted,
+          @JsonKey(name: 'waiting_medication') final List<Recipe>? pending,
+          @JsonKey(name: 'canceled_medication') final List<Recipe>? declined}) =
+      _$_Maker;
 
   factory _Maker.fromJson(Map<String, dynamic> json) = _$_Maker.fromJson;
 
@@ -233,9 +268,14 @@ abstract class _Maker implements Maker {
   @override
   Map<String, String>? get profile;
   @override
+  @JsonKey(name: 'accepted_medication')
+  List<Recipe>? get accepted;
+  @override
+  @JsonKey(name: 'waiting_medication')
   List<Recipe>? get pending;
   @override
-  List<Recipe>? get accepted;
+  @JsonKey(name: 'canceled_medication')
+  List<Recipe>? get declined;
   @override
   @JsonKey(ignore: true)
   _$$_MakerCopyWith<_$_Maker> get copyWith =>

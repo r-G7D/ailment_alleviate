@@ -10,13 +10,14 @@ part 'recipe.g.dart';
 class Recipe with _$Recipe {
   const factory Recipe({
     required int id,
-    @JsonKey(name: 'nama_obat') required String? name,
-    @JsonKey(name: 'keterangan') required String? desc,
-    @JsonKey(name: 'gambar') required String? pic,
-    @JsonKey(name: 'bahan') required List<Ingredient> ingredients,
+    required String? name,
+    @JsonKey(name: 'image') required String? pic,
+    @JsonKey(name: 'description') required String? desc,
     // required dynamic symptoms,
-    @JsonKey(name: 'cara_pembuatan') required String steps,
-    @JsonKey(name: 'aturan_pemakaian') required String usage,
+    @JsonKey(name: 'usage_rules') required String? usage,
+    @JsonKey(name: 'ways_to_use') required String? steps,
+    // @JsonKey(name: 'peracik') required String? peracik,
+    required List<Ingredient>? ingredients,
   }) = _Recipe;
 
   factory Recipe.fromJson(Map<String, dynamic> json) => _$RecipeFromJson(json);
