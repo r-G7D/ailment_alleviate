@@ -29,38 +29,38 @@ class _SystemHash {
   }
 }
 
-String _$InputImgRecipeHash() => r'6146d56db1a0e7ebdb96465492051edae2218f46';
+String _$InputImgRecipeHash() => r'84dc27e880d1cdca81043dd954c7307ffde5b99e';
 
 /// See also [InputImgRecipe].
 final inputImgRecipeProvider =
-    AutoDisposeNotifierProvider<InputImgRecipe, File?>(
+    AutoDisposeNotifierProvider<InputImgRecipe, XFile?>(
   InputImgRecipe.new,
   name: r'inputImgRecipeProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
       : _$InputImgRecipeHash,
 );
-typedef InputImgRecipeRef = AutoDisposeNotifierProviderRef<File?>;
+typedef InputImgRecipeRef = AutoDisposeNotifierProviderRef<XFile?>;
 
-abstract class _$InputImgRecipe extends AutoDisposeNotifier<File?> {
+abstract class _$InputImgRecipe extends AutoDisposeNotifier<XFile?> {
   @override
-  File? build();
+  XFile? build();
 }
 
-String _$InputImgCreateIngHash() => r'b228b1084e2049e311fcda3fa413f7ca5e0dcbb6';
+String _$InputImgCreateIngHash() => r'315e616099cd95bdff29e8027d6213c6eab5dfd4';
 
 /// See also [InputImgCreateIng].
 final inputImgCreateIngProvider =
-    AutoDisposeNotifierProvider<InputImgCreateIng, File?>(
+    AutoDisposeNotifierProvider<InputImgCreateIng, XFile?>(
   InputImgCreateIng.new,
   name: r'inputImgCreateIngProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
       : _$InputImgCreateIngHash,
 );
-typedef InputImgCreateIngRef = AutoDisposeNotifierProviderRef<File?>;
+typedef InputImgCreateIngRef = AutoDisposeNotifierProviderRef<XFile?>;
 
-abstract class _$InputImgCreateIng extends AutoDisposeNotifier<File?> {
+abstract class _$InputImgCreateIng extends AutoDisposeNotifier<XFile?> {
   @override
-  File? build();
+  XFile? build();
 }

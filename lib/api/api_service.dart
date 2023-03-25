@@ -16,6 +16,7 @@ class APIService {
     try {
       final response = await request();
       dynamic parsed = parse != null ? parse(response.data) : null;
+      log(parsed.toString());
       return parsed;
     } on SocketException catch (_) {
       throw Exception('No Internet Connection');
@@ -31,8 +32,9 @@ class APIService {
   }) async {
     try {
       final response = await request();
+      log(response.toString());
       dynamic parsed = parse(response.data);
-      log(parsed.toString());
+      // log(parsed.toString());
       return parsed;
     } on SocketException catch (_) {
       throw Exception('No Internet Connection');
@@ -55,56 +57,56 @@ class APIService {
 
   Uri dashboard(Map<String, dynamic>? params) {
     return _buildUri(
-      endpoint: '/dashboard',
+      endpoint: '/api/medicine',
       params: params,
     );
   }
 
   Uri dashboardId(String id) {
     return _buildUri(
-      endpoint: '/dashboard/$id',
+      endpoint: '/api/medicine/$id',
     );
   }
 
   Uri ingredient() {
     return _buildUri(
-      endpoint: '/bahan',
+      endpoint: '/api/ingredient',
     );
   }
 
   Uri ingredientId(String id) {
     return _buildUri(
-      endpoint: '/bahan/$id',
+      endpoint: '/ingredient/$id',
     );
   }
 
   Uri login() {
     return _buildUri(
-      endpoint: '/api/peracik/login/',
+      endpoint: '/api/login/',
     );
   }
 
   Uri register() {
     return _buildUri(
-      endpoint: '/api/peracik/signup/',
+      endpoint: '/api/signup/',
     );
   }
 
   Uri dashboardMaker() {
     return _buildUri(
-      endpoint: '/api/peracik/dashboard',
+      endpoint: '/api/dashboard/peracik',
     );
   }
 
   Uri createRecipe() {
     return _buildUri(
-      endpoint: '/api/peracik/create/',
+      endpoint: '/api/create/',
     );
   }
 
   Uri createIngredient() {
     return _buildUri(
-      endpoint: '/bahan/create/',
+      endpoint: '/api/ingredient',
     );
   }
 }

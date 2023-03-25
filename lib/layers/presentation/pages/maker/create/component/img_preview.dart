@@ -16,7 +16,7 @@ class ImagePreview extends StatelessWidget {
     this.label,
   });
 
-  final File? filePic;
+  final XFile? filePic;
   final String? urlPic;
   final String? label;
 
@@ -31,8 +31,9 @@ class ImagePreview extends StatelessWidget {
       ),
       child: Builder(builder: (_) {
         if (filePic != null) {
+          File imgFile = File(filePic!.path);
           return Image.file(
-            filePic!,
+            imgFile,
           );
         } else {
           return Image.network(

@@ -10,7 +10,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../constants/custom_style.dart';
-import '../../data/dashboard/dashboard_repo.dart';
 import '../../domain/recipe/recipe.dart';
 import '../components/net_image.dart';
 import '../controllers/basic_controller.dart';
@@ -211,7 +210,7 @@ class DashboardScreen extends ConsumerWidget {
                                       children: [
                                         //* e = Recipe
                                         searchItem(e.id.toString(), e.name!,
-                                            e.pic!, e.ingredients, ref),
+                                            e.pic!, e.ingredients!, ref),
                                         const SizedBox(height: 10),
                                       ],
                                     ))

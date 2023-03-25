@@ -7,8 +7,12 @@ import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../../constants/custom_style.dart';
+import '../../../../data/dashboard/dashboard_repo.dart';
+import '../../../controllers/basic_controller.dart';
+import 'component/create_dialog.dart';
 import 'component/img_preview.dart';
 
 class CreateRecipeScreen extends ConsumerStatefulWidget {
@@ -37,7 +41,7 @@ class _CreateRecipeScreenState extends ConsumerState<CreateRecipeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    File? previewImage = ref.watch(inputImgRecipeProvider);
+    XFile? previewImage = ref.watch(inputImgRecipeProvider);
 
     return Scaffold(
       backgroundColor: white,
@@ -58,121 +62,154 @@ class _CreateRecipeScreenState extends ConsumerState<CreateRecipeScreen> {
             )),
         elevation: 0,
       ),
-      body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        children: [
-          Column(
-            children: [
-              const SizedBox(height: 16),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 23),
-                child: Column(
+      body: ref.watch(ingredientProvider).when(
+            data: (data) {
+              return RefreshIndicator(
+                color: primary,
+                onRefresh: () async {
+                  // ref.watch(ingredientProvider);
+                  return ref.refresh(ingredientProvider);
+                },
+                child: ListView(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    Column(
                       children: [
-                        ImagePickerButton(
-                          setFunction: () {
-                            showChooseImage(
-                                context,
-                                ref
-                                    .read(inputImgRecipeProvider.notifier)
-                                    .setImage);
-                          },
+                        const SizedBox(height: 16),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 23),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ImagePickerButton(
+                                    setFunction: () {
+                                      showChooseImage(
+                                          context,
+                                          ref
+                                              .read(inputImgRecipeProvider
+                                                  .notifier)
+                                              .setImage);
+                                    },
+                                  ),
+                                  const SizedBox(width: 25),
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width - 165,
+                                    child: CustomFormField(
+                                        controller: _nameC,
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Tidak boleh kosong';
+                                          }
+                                          return null;
+                                        },
+                                        hintText: 'Nama Resep'),
+                                  )
+                                ],
+                              ),
+                              previewImage == null
+                                  ? const SizedBox()
+                                  : Column(
+                                      children: [
+                                        const SizedBox(height: 16),
+                                        ImagePreview(filePic: previewImage),
+                                      ],
+                                    ),
+                              const SizedBox(height: 16),
+                              CustomFormField(
+                                  controller: _descC,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Tidak boleh kosong';
+                                    }
+                                    return null;
+                                  },
+                                  hintText: 'Keterangan'),
+                              const SizedBox(height: 16),
+                              CustomFormField(
+                                  controller: _usageC,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Tidak boleh kosong';
+                                    }
+                                    return null;
+                                  },
+                                  hintText: 'Aturan Pemakaian'),
+                              const SizedBox(height: 16),
+                              CustomFormField(
+                                  controller: _stepC,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Tidak boleh kosong';
+                                    }
+                                    return null;
+                                  },
+                                  hintText: 'Cara Pembuatan'),
+                            ],
+                          ),
                         ),
-                        const SizedBox(width: 25),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width - 165,
-                          child: CustomFormField(
-                              controller: _nameC,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Tidak boleh kosong';
-                                }
-                                return null;
+                        const SizedBox(height: 24),
+                        IngredientInput(
+                          onSelected: (value) {},
+                          ahead: data,
+                        ),
+                        const SizedBox(height: 36),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.pop(context);
                               },
-                              hintText: 'Nama Resep'),
+                              child: Icon(
+                                Boxicons.bx_x,
+                                color: primary,
+                                size: 50,
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                // ref.read(ingredientNameProvider.notifier).state =
+                                //     _nameC.text;
+                                // ref.read(ingredientDescProvider.notifier).state =
+                                //     _descC.text;
+                                //TODO
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (context) {
+                                    return const CreateDialog(
+                                      type: 'obat',
+                                    );
+                                  },
+                                );
+                              },
+                              child: Icon(
+                                Boxicons.bx_check,
+                                color: primary,
+                                size: 50,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 200,
                         )
                       ],
                     ),
-                    previewImage == null
-                        ? const SizedBox()
-                        : Column(
-                            children: [
-                              const SizedBox(height: 16),
-                              ImagePreview(filePic: previewImage),
-                            ],
-                          ),
-                    const SizedBox(height: 16),
-                    CustomFormField(
-                        controller: _descC,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Tidak boleh kosong';
-                          }
-                          return null;
-                        },
-                        hintText: 'Keterangan'),
-                    const SizedBox(height: 16),
-                    CustomFormField(
-                        controller: _usageC,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Tidak boleh kosong';
-                          }
-                          return null;
-                        },
-                        hintText: 'Aturan Pemakaian'),
-                    const SizedBox(height: 16),
-                    CustomFormField(
-                        controller: _stepC,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Tidak boleh kosong';
-                          }
-                          return null;
-                        },
-                        hintText: 'Cara Pembuatan'),
                   ],
                 ),
-              ),
-              const SizedBox(height: 24),
-              IngredientInput(
-                onSelected: (value) {},
-              ),
-              const SizedBox(height: 36),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Icon(
-                      Boxicons.bx_x,
-                      color: primary,
-                      size: 50,
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Icon(
-                      Boxicons.bx_check,
-                      color: primary,
-                      size: 50,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 200,
-              )
-            ],
+              );
+            },
+            loading: () => const Center(
+              child: LoadingWidget(),
+            ),
+            error: (e, s) => const Center(
+              child: Text('Error'),
+            ),
           ),
-        ],
-      ),
       bottomSheet: Container(
         color: white,
         height: 62,

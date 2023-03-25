@@ -1,16 +1,19 @@
 import 'dart:developer';
-import 'dart:io';
 
+import 'package:ailment_alleviate/layers/data/maker_repository/maker_repository.dart';
 import 'package:ailment_alleviate/layers/presentation/pages/maker/controller/maker_controller.dart';
 import 'package:ailment_alleviate/layers/presentation/pages/maker/create/component/img_preview.dart';
+import 'package:ailment_alleviate/routes/router.dart';
+import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../../constants/custom_style.dart';
-import '../../../../../routes/router.dart';
 import '../../../components/form_field.dart';
 import '../../../states/image_state.dart';
+import 'component/create_dialog.dart';
 
 class CreateIngredientScreen extends ConsumerStatefulWidget {
   const CreateIngredientScreen({super.key});
@@ -34,7 +37,7 @@ class _CreateIngredientScreenState
 
   @override
   Widget build(BuildContext context) {
-    File? previewImage = ref.watch(inputImgCreateIngProvider);
+    XFile? previewImage = ref.watch(inputImgCreateIngProvider);
 
     return Scaffold(
       backgroundColor: white,
@@ -150,8 +153,11 @@ class _CreateIngredientScreenState
                           _descC.text;
                       showDialog(
                         context: context,
+                        barrierDismissible: false,
                         builder: (context) {
-                          return CreateDialog();
+                          return const CreateDialog(
+                            type: 'bahan',
+                          );
                         },
                       );
                     },
@@ -184,37 +190,6 @@ class _CreateIngredientScreenState
             ),
             const SizedBox(height: 35),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class CreateDialog extends ConsumerWidget {
-  const CreateDialog({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Dialog(
-      child: SizedBox(
-        height: 300,
-        child: ref.watch(createIngredientProvider).when(
-          data: (data) {
-            return const Center(
-              child: Text('success'),
-            );
-          },
-          error: (error, stack) {
-            log(error.toString());
-            return const Center(
-              child: Text('error'),
-            );
-          },
-          loading: () {
-            return const Center(
-              child: LoadingWidget(),
-            );
-          },
         ),
       ),
     );
