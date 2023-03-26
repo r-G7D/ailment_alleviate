@@ -1,8 +1,7 @@
-import 'dart:developer';
+// import 'dart:developer';
 
 import 'package:ailment_alleviate/constants/custom_style.dart';
 import 'package:ailment_alleviate/layers/domain/ingredient/ingredient.dart';
-import 'package:ailment_alleviate/layers/presentation/controllers/basic_controller.dart';
 import 'package:ailment_alleviate/layers/presentation/states/basic_state.dart';
 import 'package:ailment_alleviate/routes/router.dart';
 import 'package:boxicons/boxicons.dart';
@@ -12,15 +11,17 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class IngredientInput extends ConsumerWidget {
+  final void Function(dynamic) onSelected;
+  final List<Ingredient> ahead;
   const IngredientInput({
     super.key,
     required this.onSelected,
+    required this.ahead,
   });
-  final void Function(dynamic) onSelected;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    List<String> tagsValue = ref.watch(addIngsProvider).ingredients;
+    List<Ingredient> tagsValue = ref.watch(addIngsProvider).ingredients;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,7 +51,7 @@ class IngredientInput extends ConsumerWidget {
                               ref
                                   .read(addIngsProvider.notifier)
                                   .removeIngredient(value);
-                              log(ref.watch(addIngsProvider).toString());
+                              // log(ref.watch(addIngsProvider).toString());
                             },
                           ))
                       .toList(),
@@ -58,51 +59,63 @@ class IngredientInput extends ConsumerWidget {
         ),
         const SizedBox(height: 16),
         Center(
-          child: ref.watch(ingredientProvider).when(
-                data: (data) {
-                  return Container(
-                      height: 50,
-                      width: 250,
-                      padding:
-                          const EdgeInsets.only(left: 18, bottom: 8, top: 8),
-                      decoration: BoxDecoration(
-                        color: secondary,
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(25),
-                        ),
-                      ),
-                      child: typeAhead(ref, data));
-                },
-                loading: () => const Center(
-                  child: LoadingWidget(),
-                ),
-                error: (e, s) => const Center(
-                  child: Text('Error'),
-                ),
-              ),
-        ),
+            child: Container(
+          height: 50,
+          width: 250,
+          padding: const EdgeInsets.only(left: 18, bottom: 8, top: 8),
+          decoration: BoxDecoration(
+            color: secondary,
+            borderRadius: const BorderRadius.all(
+              Radius.circular(25),
+            ),
+          ),
+          child: typeAhead(ref, ahead),
+        )
+            // child: ref.watch(ingredientProvider).when(
+            //       data: (data) {
+            // return Container(
+            //     height: 50,
+            //     width: 250,
+            //     padding:
+            //         const EdgeInsets.only(left: 18, bottom: 8, top: 8),
+            //     decoration: BoxDecoration(
+            //       color: secondary,
+            //       borderRadius: const BorderRadius.all(
+            //         Radius.circular(25),
+            //       ),
+            //     ),
+            //     child: typeAhead(ref, data));
+            //       },
+            //       loading: () => const Center(
+            //         child: LoadingWidget(),
+            //       ),
+            //       error: (e, s) => const Center(
+            //         child: Text('Error'),
+            //       ),
+            //     ),
+            ),
       ],
     );
   }
 
   Widget typeAhead(WidgetRef ref, List<Ingredient> data) {
-    List<String> items = data.map((e) => e.name.toString()).toList();
+    // List<String> items = data.map((e) => e.name.toString()).toList();
 
-    return TypeAheadField<dynamic>(
+    return TypeAheadField<Ingredient>(
       suggestionsCallback: (String query) {
-        return items
-            .where((e) => e.toLowerCase().contains(query.toLowerCase()))
+        return data
+            .where((e) => e.name.toLowerCase().contains(query.toLowerCase()))
             .toList();
       },
       itemBuilder: (context, tag) {
         return ListTile(
-          title: Text(tag),
+          title: Text(tag.name),
           onTap: () {
             ref.watch(addIngsProvider).ingredients.contains(tag)
                 ? null
                 : {
                     ref.read(addIngsProvider.notifier).addIngredient(tag),
-                    log(ref.watch(addIngsProvider).toString())
+                    // log(ref.watch(addIngsProvider).toString())
                   };
           },
         );
@@ -136,7 +149,7 @@ class IngredientInput extends ConsumerWidget {
       },
       onSuggestionSelected: onSelected,
       textFieldConfiguration: TextFieldConfiguration(
-        textInputAction: TextInputAction.search,
+        textInputAction: TextInputAction.done,
         cursorColor: primary,
         maxLines: 1,
         style: GoogleFonts.lato(
@@ -170,8 +183,8 @@ class TagItem extends StatelessWidget {
     required this.item,
     required this.onRemove,
   });
-  final String item;
-  final void Function(String) onRemove;
+  final Ingredient item;
+  final void Function(Ingredient) onRemove;
 
   @override
   Widget build(BuildContext context) {
@@ -187,7 +200,7 @@ class TagItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            item,
+            item.name,
             style: GoogleFonts.lato(
                 textStyle: Typo.paragraph.copyWith(color: white, fontSize: 14)),
           ),

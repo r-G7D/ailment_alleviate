@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_final_fields
 
 // import 'package:flutter/material.dart';
+import 'package:ailment_alleviate/layers/domain/ingredient/ingredient.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/add_ingredient/add_ingredient.dart';
@@ -60,18 +61,19 @@ final filterStateProvider =
 class AddIngredientsNotifier extends StateNotifier<AddIngredient> {
   AddIngredientsNotifier() : super(AddIngredient(ingredients: []));
 
-  addIngredient(String ing) {
+  addIngredient(Ingredient ing) {
     state = state.copyWith(ingredients: [...state.ingredients, ing]);
   }
 
-  removeIngredient(String ing) {
+  removeIngredient(Ingredient ing) {
     state = state.copyWith(
         ingredients: [...state.ingredients.where((element) => element != ing)]);
   }
 }
 
 final addIngsProvider =
-    StateNotifierProvider<AddIngredientsNotifier, AddIngredient>((ref) {
+    StateNotifierProvider.autoDispose<AddIngredientsNotifier, AddIngredient>(
+        (ref) {
   return AddIngredientsNotifier();
 });
 

@@ -9,7 +9,7 @@ part of 'add_ingredient.dart';
 _$_AddIngredient _$$_AddIngredientFromJson(Map<String, dynamic> json) =>
     _$_AddIngredient(
       ingredients: (json['ingredients'] as List<dynamic>)
-          .map((e) => e as String)
+          .map((e) => Ingredient.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
