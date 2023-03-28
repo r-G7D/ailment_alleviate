@@ -52,9 +52,7 @@ class RecipeScreen extends ConsumerWidget {
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(100),
                       child: NetImage(
-                        // url: recipe.pic!,
-                        url:
-                            'https://www.themealdb.com/images/media/meals/58oia61564916529.jpg',
+                        url: recipe.pic!,
                         bg: primary!,
                         width: 100,
                         height: 100,
@@ -113,9 +111,9 @@ class RecipeScreen extends ConsumerWidget {
                   onPageChanged: (value) =>
                       ref.read(recipePageProvider.notifier).state = value,
                   children: [
-                    ingredientPage(context, recipe.ingredients),
-                    stepPage(context, recipe.steps),
-                    usagePage(context, recipe.usage)
+                    ingredientPage(context, recipe.ingredients!),
+                    stepPage(context, recipe.steps!),
+                    usagePage(context, recipe.usage!)
                   ],
                 ),
               )

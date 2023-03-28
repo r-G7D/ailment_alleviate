@@ -22,6 +22,7 @@ class MakerScreen extends ConsumerWidget {
         String accountStatus = data.accountStatus;
         List<Recipe> pending = data.pending!;
         List<Recipe> accepted = data.accepted!;
+        List<Recipe> declined = data.declined!;
 
         return Scaffold(
           backgroundColor: white,
@@ -72,12 +73,14 @@ class MakerScreen extends ConsumerWidget {
                         vertical: 26, horizontal: 34),
                     child: ListView(
                       children: [
-                        accountCard(data.profile!['nama']!,
+                        accountCard(data.profile!['name']!,
                             data.profile!['email']!, ref),
                         const SizedBox(height: 16),
                         MedList(status: 'accepted', data: accepted),
                         const SizedBox(height: 16),
                         MedList(status: 'pending', data: pending),
+                        const SizedBox(height: 16),
+                        MedList(status: 'declined', data: declined)
                       ],
                     ),
                   ),
@@ -329,7 +332,7 @@ class MedList extends ConsumerWidget {
               ? secondary
               : status == 'pending'
                   ? offWhite
-                  : red,
+                  : lightRed,
           borderRadius: BorderRadius.circular(5),
         ),
         child: Column(
@@ -368,7 +371,7 @@ class MedList extends ConsumerWidget {
                               ? white
                               : status == 'pending'
                                   ? primary
-                                  : red,
+                                  : white,
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
                         ),
@@ -382,7 +385,7 @@ class MedList extends ConsumerWidget {
                               ? white
                               : status == 'pending'
                                   ? primary
-                                  : red,
+                                  : white,
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
                         ),
@@ -403,7 +406,7 @@ class MedList extends ConsumerWidget {
                     ? secondary
                     : status == 'pending'
                         ? offWhite
-                        : red,
+                        : lightRed,
                 borderRadius: BorderRadius.circular(5),
               ),
               duration: const Duration(milliseconds: 200),
