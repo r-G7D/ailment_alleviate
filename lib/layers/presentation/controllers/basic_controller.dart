@@ -20,6 +20,7 @@ class BasicController extends _$BasicController {
 
   checkToken() async {
     var storage = const FlutterSecureStorage();
+    // await storage.delete(key: 'token');
     var token = await storage.read(key: 'token');
     if (token != null) {
       ref.read(tokenProvider.notifier).state = token.toString();
@@ -42,11 +43,16 @@ final queryC = Provider<TextEditingController>((ref) {
   return TextEditingController();
 });
 
+final sortProvider = StateProvider<String>((ref) {
+  return 'name';
+});
+
 final searchProvider = FutureProvider<List<Recipe>>((ref) async {
   var filter = ref.watch(filterProvider);
   var query = ref.watch(queryProvider);
   var repo = ref.watch(dashboardRepositoryProvider);
-  return repo.fetchRecipes(query, filter);
+  var sort = ref.watch(sortProvider);
+  return repo.fetchRecipes(query, filter, sort);
 });
 
 final ingredientProvider = FutureProvider<List<Ingredient>>((ref) async {
@@ -76,6 +82,7 @@ final registerProvider = FutureProvider<dynamic>((ref) async {
   var phone = ref.watch(phoneProvider);
   var pendukungFile = ref.watch(pendukungFileProvider);
   var sertifikatFile = ref.watch(sertifikatFileProvider);
+
   return ref.watch(authRepositoryProvider).register(
         name,
         email,

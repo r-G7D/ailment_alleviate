@@ -12,9 +12,11 @@ class DashboardRepository {
   final Dio dio = Dio();
   final APIService api = APIService();
 
-  Future<List<Recipe>> fetchRecipes(String? query, String? filter) async {
+  Future<List<Recipe>> fetchRecipes(
+      String? query, String? filter, String? sort) async {
     final param = {
       'search': '${query!} ${filter!}',
+      'ordering': '$sort!',
     };
     Uri uri = api.dashboard(param);
     log(uri.toString());
