@@ -32,7 +32,7 @@ class APIService {
   }) async {
     try {
       final response = await request();
-      log(response.toString());
+      // log(response.toString());
       dynamic parsed = parse(response.data);
       // log(parsed.toString());
       return parsed;
@@ -100,7 +100,7 @@ class APIService {
 
   Uri createRecipe() {
     return _buildUri(
-      endpoint: '/api/create/',
+      endpoint: '/api/medicine',
     );
   }
 
