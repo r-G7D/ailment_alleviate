@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:ailment_alleviate/layers/presentation/states/basic_state.dart';
 import 'package:ailment_alleviate/layers/presentation/states/image_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -18,10 +19,43 @@ class MakerController extends _$MakerController {
   var storage = const FlutterSecureStorage();
 
   Future logout() async {
-    await storage.delete(key: 'token');
+    await storage.write(key: 'token', value: '');
     router.pushReplacement('/');
   }
 }
+
+//maker
+final makerProvider = FutureProvider<Maker>((ref) async {
+  var repo = ref.watch(makerRepositoryProvider);
+  return repo.fetchMaker();
+});
+
+final recipeNameProvider = StateProvider<String>((ref) {
+  return '';
+});
+
+final recipeDescProvider = StateProvider<String>((ref) {
+  return '';
+});
+
+final recipeUsageProvider = StateProvider<String>((ref) {
+  return '';
+});
+
+final recipeStepProvider = StateProvider<String>((ref) {
+  return '';
+});
+
+final createRecipeProvider = FutureProvider<dynamic>((ref) async {
+  var repo = ref.watch(makerRepositoryProvider);
+  var name = ref.watch(recipeNameProvider);
+  var desc = ref.watch(recipeDescProvider);
+  var usage = ref.watch(recipeUsageProvider);
+  var steps = ref.watch(recipeStepProvider);
+  var ingredients = ref.read(addIngsProvider).ingredients;
+  var img = ref.read(inputImgCreateRecipeProvider.notifier).state;
+  return repo.createRecipe(name, desc, usage, steps, img!, ingredients);
+});
 
 final ingredientNameProvider = StateProvider<String>((ref) {
   return '';
@@ -29,12 +63,6 @@ final ingredientNameProvider = StateProvider<String>((ref) {
 
 final ingredientDescProvider = StateProvider<String>((ref) {
   return '';
-});
-
-//maker
-final makerProvider = FutureProvider<Maker>((ref) async {
-  var repo = ref.watch(makerRepositoryProvider);
-  return repo.fetchMaker();
 });
 
 final createIngredientProvider = FutureProvider<dynamic>((ref) async {

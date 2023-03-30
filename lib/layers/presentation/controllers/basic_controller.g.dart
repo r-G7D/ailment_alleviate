@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String _$BasicControllerHash() => r'a4487f9c17cee7468720fd8fc8f9136b8058887f';
+String _$BasicControllerHash() => r'5b1725b997f06e1732edd193e1ffe3413247bfec';
 
 /// See also [BasicController].
 final basicControllerProvider =

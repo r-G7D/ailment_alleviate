@@ -22,11 +22,11 @@ class BasicController extends _$BasicController {
     var storage = const FlutterSecureStorage();
     // await storage.delete(key: 'token');
     var token = await storage.read(key: 'token');
-    if (token != null) {
+    if (token == '' || token == null) {
+      log('token null');
+    } else {
       ref.read(tokenProvider.notifier).state = token.toString();
       log(ref.watch(tokenProvider).toString());
-    } else {
-      log('token null');
     }
   }
 }
