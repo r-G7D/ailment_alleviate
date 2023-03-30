@@ -19,10 +19,14 @@ class MakerScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ref.watch(makerProvider).when(
       data: (data) {
-        String accountStatus = data.accountStatus;
-        List<Recipe> pending = data.pending!;
-        List<Recipe> accepted = data.accepted!;
-        List<Recipe> declined = data.declined!;
+        List<Recipe> pending = [];
+        List<Recipe> accepted = [];
+        List<Recipe> declined = [];
+        if (data.accountStatus == 'ACCEPTED') {
+          pending = data.pending!;
+          accepted = data.accepted!;
+          declined = data.declined!;
+        }
 
         return Scaffold(
           backgroundColor: white,
@@ -43,26 +47,27 @@ class MakerScreen extends ConsumerWidget {
                 )),
             elevation: 0,
           ),
-          floatingActionButton:
-              accountStatus == 'MENUNGGU' || accountStatus == 'DITOLAK'
-                  ? const SizedBox()
-                  : SizedBox(
-                      height: 50,
-                      width: 50,
-                      child: FloatingActionButton(
-                        backgroundColor: primary,
-                        onPressed: () {
-                          router.pushNamed('create-recipe');
-                        },
-                        child: const Icon(
-                          Icons.add,
-                          color: Colors.white,
-                          size: 14,
-                        ),
-                      ),
+          floatingActionButton: data.accountStatus == 'MENUNGGU' ||
+                  data.accountStatus == 'CANCELLED'
+              ? const SizedBox()
+              : SizedBox(
+                  height: 50,
+                  width: 50,
+                  child: FloatingActionButton(
+                    backgroundColor: primary,
+                    onPressed: () {
+                      router.pushNamed('create-recipe');
+                    },
+                    child: const Icon(
+                      Icons.add,
+                      color: Colors.white,
+                      size: 14,
                     ),
-          body: accountStatus == 'MENUNGGU' || accountStatus == 'DITOLAK'
-              ? accountPending(context, accountStatus: accountStatus)
+                  ),
+                ),
+          body: data.accountStatus == 'MENUNGGU' ||
+                  data.accountStatus == 'CANCELLED'
+              ? accountPending(context, ref, accountStatus: data.accountStatus)
               : RefreshIndicator(
                   color: primary,
                   onRefresh: () async {
@@ -225,13 +230,14 @@ class MakerScreen extends ConsumerWidget {
     );
   }
 
-  Widget accountPending(BuildContext context, {required String accountStatus}) {
+  Widget accountPending(BuildContext context, WidgetRef ref,
+      {required String accountStatus}) {
     return Container(
       height: MediaQuery.of(context).size.height - 70,
       color: white,
       child: Column(
         children: [
-          statusCard(accountStatus == 'MENUNGGU' ? true : false),
+          statusCard(accountStatus == 'MENUNGGU' ? true : false, context),
           const Spacer(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 34, vertical: 26),
@@ -240,7 +246,7 @@ class MakerScreen extends ConsumerWidget {
                     backgroundColor: red,
                     minimumSize: const Size(double.infinity, 50)),
                 onPressed: () {
-                  router.pop();
+                  ref.read(makerControllerProvider.notifier).logout();
                 },
                 child: Text(
                   'Keluar',
@@ -254,7 +260,7 @@ class MakerScreen extends ConsumerWidget {
     );
   }
 
-  Widget statusCard(bool pending) {
+  Widget statusCard(bool pending, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(17.5),
       child: Card(
@@ -274,7 +280,7 @@ class MakerScreen extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    pending ? 'Sedang diverifikasi' : 'Pengajuan ditolak!',
+                    pending ? 'Sedang diverifikasi' : 'Pengajuan Ditolak!',
                     style: GoogleFonts.lato(
                         textStyle: Typo.title.copyWith(
                       color: pending ? yellow : red,
@@ -283,7 +289,7 @@ class MakerScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 8),
                   SizedBox(
-                    width: 265,
+                    width: MediaQuery.of(context).size.width < 376 ? 247 : 265,
                     child: Text(
                       pending
                           ? 'Akun anda sedang diverifikasi oleh admin, silahkan tunggu dalam beberapa hari.'
@@ -364,7 +370,7 @@ class MedList extends ConsumerWidget {
                           ? 'Diterima'
                           : status == 'pending'
                               ? 'Menunggu'
-                              : 'Ditolak',
+                              : 'CANCELLED',
                       style: GoogleFonts.lato(
                         textStyle: Typo.paragraph.copyWith(
                           color: status == 'accepted'
