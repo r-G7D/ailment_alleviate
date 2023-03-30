@@ -15,10 +15,12 @@ class CreateDialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    var prov =
+        type == 'bahan' ? createIngredientProvider : createRecipeProvider;
     return Dialog(
       child: SizedBox(
         height: 300,
-        child: ref.watch(createIngredientProvider).when(
+        child: ref.watch(prov).when(
           data: (data) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,

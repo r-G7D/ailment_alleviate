@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:ailment_alleviate/layers/domain/maker/maker.dart';
@@ -38,7 +39,14 @@ class MakerRepository {
   }
 
   Future createRecipe(String name, String desc, String steps, String usage,
-      XFile img, List<Ingredient> bahan) async {
+      XFile img, List<Ingredient> ingredients) async {
+    // List ingredientsList = [];
+    // for (var i = 0; i < ingredients.length; i++) {
+    //   ingredientsList.add(
+    //     {'name': ingredients[i].name},
+    //   );
+    // }
+
     FormData data = FormData.fromMap(
       {
         'name': name,
@@ -49,12 +57,24 @@ class MakerRepository {
           img.path,
           filename: img.path.split('/').last,
         ),
-        'ingredients': bahan.map((e) => e.toJson()).toList(),
+        // 'ingredients': ingredients.map((e) => e.toJson()).toList(),
+        // 'ingredients': ingredientsList,
+        // 'ingredients[0]name': 'Jahe',
       },
     );
+    for (var i = 0; i < ingredients.length; i++) {
+      data.fields.add(
+        MapEntry(
+          'ingredients[$i]name',
+          ingredients[i].name,
+        ),
+      );
+    } //* this is the solution for nested json array + image in formdata
+
     Uri uri = api.createRecipe();
     var token = await storage.read(key: 'token');
     log(uri.toString());
+    log(data.fields.toString());
 
     final response = await api.runCRUD(
       request: () => dio.postUri(
@@ -74,9 +94,9 @@ class MakerRepository {
   Future createIngredient(String name, String desc, XFile img) async {
     FormData data = FormData.fromMap(
       {
-        'nama_bahan': name,
-        'keterangan': desc,
-        'gambar': await MultipartFile.fromFile(
+        'name': name,
+        'description': desc,
+        'image': await MultipartFile.fromFile(
           img.path,
           filename: img.path.split('/').last,
         ),

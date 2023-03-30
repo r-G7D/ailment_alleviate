@@ -9,7 +9,7 @@ import '../../../utils/img_pick_crop.dart';
 part 'image_state.g.dart';
 
 @riverpod
-class InputImgRecipe extends _$InputImgRecipe {
+class InputImgCreateRecipe extends _$InputImgCreateRecipe {
   @override
   XFile? build() => null;
 

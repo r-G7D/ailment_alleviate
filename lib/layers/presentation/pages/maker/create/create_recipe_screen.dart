@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:ailment_alleviate/layers/presentation/components/form_field.dart';
+import 'package:ailment_alleviate/layers/presentation/pages/maker/controller/maker_controller.dart';
 import 'package:ailment_alleviate/layers/presentation/pages/maker/create/component/input_ingredient.dart';
 import 'package:ailment_alleviate/layers/presentation/states/image_state.dart';
 import 'package:boxicons/boxicons.dart';
@@ -41,7 +42,7 @@ class _CreateRecipeScreenState extends ConsumerState<CreateRecipeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    XFile? previewImage = ref.watch(inputImgRecipeProvider);
+    XFile? previewImage = ref.watch(inputImgCreateRecipeProvider);
 
     return Scaffold(
       backgroundColor: white,
@@ -88,7 +89,7 @@ class _CreateRecipeScreenState extends ConsumerState<CreateRecipeScreen> {
                                       showChooseImage(
                                           context,
                                           ref
-                                              .read(inputImgRecipeProvider
+                                              .read(inputImgCreateRecipeProvider
                                                   .notifier)
                                               .setImage);
                                     },
@@ -171,11 +172,14 @@ class _CreateRecipeScreenState extends ConsumerState<CreateRecipeScreen> {
                             ),
                             InkWell(
                               onTap: () {
-                                // ref.read(ingredientNameProvider.notifier).state =
-                                //     _nameC.text;
-                                // ref.read(ingredientDescProvider.notifier).state =
-                                //     _descC.text;
-                                //TODO
+                                ref.read(recipeNameProvider.notifier).state =
+                                    _nameC.text;
+                                ref.read(recipeDescProvider.notifier).state =
+                                    _descC.text;
+                                ref.read(recipeUsageProvider.notifier).state =
+                                    _usageC.text;
+                                ref.read(recipeStepProvider.notifier).state =
+                                    _stepC.text;
                                 showDialog(
                                   context: context,
                                   barrierDismissible: false,

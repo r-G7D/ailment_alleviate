@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String _$MakerControllerHash() => r'4ccec272ba7d8ece58fdf5c5ef6da0a505edf061';
+String _$MakerControllerHash() => r'e19324d79b1fa78f232d00916628d0cdf5393df0';
 
 /// See also [MakerController].
 final makerControllerProvider =
