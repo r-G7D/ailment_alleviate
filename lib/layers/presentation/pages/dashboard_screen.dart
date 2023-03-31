@@ -161,7 +161,7 @@ class DashboardScreen extends ConsumerWidget {
                                         searchItem(
                                             e.id.toString(),
                                             e.name!,
-                                            e.pic!,
+                                            e.pic,
                                             e.ingredients!,
                                             ref,
                                             context),
@@ -191,7 +191,7 @@ class DashboardScreen extends ConsumerWidget {
     );
   }
 
-  Widget searchItem(String id, String name, String img,
+  Widget searchItem(String id, String name, String? img,
       List<Ingredient> ingredients, WidgetRef ref, BuildContext context) {
     double itemW = 151;
     double itemH = 143;

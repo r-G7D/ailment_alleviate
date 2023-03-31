@@ -171,7 +171,9 @@ class RecipeScreen extends ConsumerWidget {
                                   ),
                                   const SizedBox(height: 9),
                                   Text(
-                                    e.desc,
+                                    e.desc == null
+                                        ? 'Deskripsi tidak ada'
+                                        : e.desc!,
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.lato(
                                       textStyle: Typo.paragraph.copyWith(

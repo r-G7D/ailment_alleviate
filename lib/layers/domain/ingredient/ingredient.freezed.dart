@@ -23,9 +23,10 @@ mixin _$Ingredient {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'image')
-  String get pic => throw _privateConstructorUsedError;
+  String? get pic => throw _privateConstructorUsedError;
   @JsonKey(name: 'description')
-  String get desc => throw _privateConstructorUsedError;
+  String? get desc => throw _privateConstructorUsedError;
+  String? get category => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,8 +43,9 @@ abstract class $IngredientCopyWith<$Res> {
   $Res call(
       {int id,
       String name,
-      @JsonKey(name: 'image') String pic,
-      @JsonKey(name: 'description') String desc});
+      @JsonKey(name: 'image') String? pic,
+      @JsonKey(name: 'description') String? desc,
+      String? category});
 }
 
 /// @nodoc
@@ -61,8 +63,9 @@ class _$IngredientCopyWithImpl<$Res, $Val extends Ingredient>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? pic = null,
-    Object? desc = null,
+    Object? pic = freezed,
+    Object? desc = freezed,
+    Object? category = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -73,14 +76,18 @@ class _$IngredientCopyWithImpl<$Res, $Val extends Ingredient>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      pic: null == pic
+      pic: freezed == pic
           ? _value.pic
           : pic // ignore: cast_nullable_to_non_nullable
-              as String,
-      desc: null == desc
+              as String?,
+      desc: freezed == desc
           ? _value.desc
           : desc // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      category: freezed == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -96,8 +103,9 @@ abstract class _$$_IngredientCopyWith<$Res>
   $Res call(
       {int id,
       String name,
-      @JsonKey(name: 'image') String pic,
-      @JsonKey(name: 'description') String desc});
+      @JsonKey(name: 'image') String? pic,
+      @JsonKey(name: 'description') String? desc,
+      String? category});
 }
 
 /// @nodoc
@@ -113,8 +121,9 @@ class __$$_IngredientCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? pic = null,
-    Object? desc = null,
+    Object? pic = freezed,
+    Object? desc = freezed,
+    Object? category = freezed,
   }) {
     return _then(_$_Ingredient(
       id: null == id
@@ -125,14 +134,18 @@ class __$$_IngredientCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      pic: null == pic
+      pic: freezed == pic
           ? _value.pic
           : pic // ignore: cast_nullable_to_non_nullable
-              as String,
-      desc: null == desc
+              as String?,
+      desc: freezed == desc
           ? _value.desc
           : desc // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      category: freezed == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -143,8 +156,9 @@ class _$_Ingredient implements _Ingredient {
   _$_Ingredient(
       {required this.id,
       required this.name,
-      @JsonKey(name: 'image') required this.pic,
-      @JsonKey(name: 'description') required this.desc});
+      @JsonKey(name: 'image') this.pic,
+      @JsonKey(name: 'description') this.desc,
+      this.category});
 
   factory _$_Ingredient.fromJson(Map<String, dynamic> json) =>
       _$$_IngredientFromJson(json);
@@ -155,14 +169,16 @@ class _$_Ingredient implements _Ingredient {
   final String name;
   @override
   @JsonKey(name: 'image')
-  final String pic;
+  final String? pic;
   @override
   @JsonKey(name: 'description')
-  final String desc;
+  final String? desc;
+  @override
+  final String? category;
 
   @override
   String toString() {
-    return 'Ingredient(id: $id, name: $name, pic: $pic, desc: $desc)';
+    return 'Ingredient(id: $id, name: $name, pic: $pic, desc: $desc, category: $category)';
   }
 
   @override
@@ -173,12 +189,14 @@ class _$_Ingredient implements _Ingredient {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.pic, pic) || other.pic == pic) &&
-            (identical(other.desc, desc) || other.desc == desc));
+            (identical(other.desc, desc) || other.desc == desc) &&
+            (identical(other.category, category) ||
+                other.category == category));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, pic, desc);
+  int get hashCode => Object.hash(runtimeType, id, name, pic, desc, category);
 
   @JsonKey(ignore: true)
   @override
@@ -196,11 +214,11 @@ class _$_Ingredient implements _Ingredient {
 
 abstract class _Ingredient implements Ingredient {
   factory _Ingredient(
-          {required final int id,
-          required final String name,
-          @JsonKey(name: 'image') required final String pic,
-          @JsonKey(name: 'description') required final String desc}) =
-      _$_Ingredient;
+      {required final int id,
+      required final String name,
+      @JsonKey(name: 'image') final String? pic,
+      @JsonKey(name: 'description') final String? desc,
+      final String? category}) = _$_Ingredient;
 
   factory _Ingredient.fromJson(Map<String, dynamic> json) =
       _$_Ingredient.fromJson;
@@ -211,10 +229,12 @@ abstract class _Ingredient implements Ingredient {
   String get name;
   @override
   @JsonKey(name: 'image')
-  String get pic;
+  String? get pic;
   @override
   @JsonKey(name: 'description')
-  String get desc;
+  String? get desc;
+  @override
+  String? get category;
   @override
   @JsonKey(ignore: true)
   _$$_IngredientCopyWith<_$_Ingredient> get copyWith =>

@@ -13,6 +13,7 @@ _$_Recipe _$$_RecipeFromJson(Map<String, dynamic> json) => _$_Recipe(
       desc: json['description'] as String?,
       usage: json['usage_rules'] as String?,
       steps: json['ways_to_use'] as String?,
+      peracik: json['peracik'] as String?,
       ingredients: (json['ingredients'] as List<dynamic>?)
           ?.map((e) => Ingredient.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -25,5 +26,6 @@ Map<String, dynamic> _$$_RecipeToJson(_$_Recipe instance) => <String, dynamic>{
       'description': instance.desc,
       'usage_rules': instance.usage,
       'ways_to_use': instance.steps,
+      'peracik': instance.peracik,
       'ingredients': instance.ingredients,
     };

@@ -16,7 +16,7 @@ class Recipe with _$Recipe {
     // required dynamic symptoms,
     @JsonKey(name: 'usage_rules') required String? usage,
     @JsonKey(name: 'ways_to_use') required String? steps,
-    // @JsonKey(name: 'peracik') required String? peracik,
+    String? peracik,
     required List<Ingredient>? ingredients,
   }) = _Recipe;
 
