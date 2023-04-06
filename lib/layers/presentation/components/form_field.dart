@@ -19,8 +19,9 @@ class CustomFormField extends StatelessWidget {
       controller: controller,
       cursorColor: black,
       validator: validator,
-      style: GoogleFonts.comfortaa(
-          textStyle: Typo.paragraph.copyWith(color: black, fontSize: 16)),
+      style: GoogleFonts.lato(
+          textStyle: Typo.paragraph.copyWith(
+              color: black, fontSize: 16, fontWeight: FontWeight.w500)),
       decoration: InputDecoration(
         hintText: hintText,
         focusColor: grey,

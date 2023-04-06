@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'create_med_controller.dart';
+part of 'maker_repository.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -29,21 +29,14 @@ class _SystemHash {
   }
 }
 
-String _$CreateMedControllerHash() =>
-    r'80fec94806189e120b7de934b30a77411596cb2f';
+String _$makerRepositoryHash() => r'a68d479a9617c66489a53f73052f0a2579d5f517';
 
-/// See also [CreateMedController].
-final createMedControllerProvider =
-    AutoDisposeNotifierProvider<CreateMedController, List<String>>(
-  CreateMedController.new,
-  name: r'createMedControllerProvider',
+/// See also [makerRepository].
+final makerRepositoryProvider = Provider<MakerRepository>(
+  makerRepository,
+  name: r'makerRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$CreateMedControllerHash,
+      : _$makerRepositoryHash,
 );
-typedef CreateMedControllerRef = AutoDisposeNotifierProviderRef<List<String>>;
-
-abstract class _$CreateMedController extends AutoDisposeNotifier<List<String>> {
-  @override
-  List<String> build();
-}
+typedef MakerRepositoryRef = ProviderRef<MakerRepository>;

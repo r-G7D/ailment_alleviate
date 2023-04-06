@@ -21,19 +21,18 @@ Recipe _$RecipeFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Recipe {
   int get id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'nama_obat')
   String? get name => throw _privateConstructorUsedError;
-  @JsonKey(name: 'keterangan')
-  String? get desc => throw _privateConstructorUsedError;
-  @JsonKey(name: 'gambar')
+  @JsonKey(name: 'image')
   String? get pic => throw _privateConstructorUsedError;
-  @JsonKey(name: 'bahan')
-  List<Ingredient> get ingredients =>
+  @JsonKey(name: 'description')
+  String? get desc =>
       throw _privateConstructorUsedError; // required dynamic symptoms,
-  @JsonKey(name: 'cara_pembuatan')
-  String get steps => throw _privateConstructorUsedError;
-  @JsonKey(name: 'aturan_pemakaian')
-  String get usage => throw _privateConstructorUsedError;
+  @JsonKey(name: 'usage_rules')
+  String? get usage => throw _privateConstructorUsedError;
+  @JsonKey(name: 'ways_to_use')
+  String? get steps => throw _privateConstructorUsedError;
+  String? get peracik => throw _privateConstructorUsedError;
+  List<Ingredient>? get ingredients => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -47,12 +46,13 @@ abstract class $RecipeCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      @JsonKey(name: 'nama_obat') String? name,
-      @JsonKey(name: 'keterangan') String? desc,
-      @JsonKey(name: 'gambar') String? pic,
-      @JsonKey(name: 'bahan') List<Ingredient> ingredients,
-      @JsonKey(name: 'cara_pembuatan') String steps,
-      @JsonKey(name: 'aturan_pemakaian') String usage});
+      String? name,
+      @JsonKey(name: 'image') String? pic,
+      @JsonKey(name: 'description') String? desc,
+      @JsonKey(name: 'usage_rules') String? usage,
+      @JsonKey(name: 'ways_to_use') String? steps,
+      String? peracik,
+      List<Ingredient>? ingredients});
 }
 
 /// @nodoc
@@ -70,11 +70,12 @@ class _$RecipeCopyWithImpl<$Res, $Val extends Recipe>
   $Res call({
     Object? id = null,
     Object? name = freezed,
-    Object? desc = freezed,
     Object? pic = freezed,
-    Object? ingredients = null,
-    Object? steps = null,
-    Object? usage = null,
+    Object? desc = freezed,
+    Object? usage = freezed,
+    Object? steps = freezed,
+    Object? peracik = freezed,
+    Object? ingredients = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -85,26 +86,30 @@ class _$RecipeCopyWithImpl<$Res, $Val extends Recipe>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      desc: freezed == desc
-          ? _value.desc
-          : desc // ignore: cast_nullable_to_non_nullable
-              as String?,
       pic: freezed == pic
           ? _value.pic
           : pic // ignore: cast_nullable_to_non_nullable
               as String?,
-      ingredients: null == ingredients
-          ? _value.ingredients
-          : ingredients // ignore: cast_nullable_to_non_nullable
-              as List<Ingredient>,
-      steps: null == steps
-          ? _value.steps
-          : steps // ignore: cast_nullable_to_non_nullable
-              as String,
-      usage: null == usage
+      desc: freezed == desc
+          ? _value.desc
+          : desc // ignore: cast_nullable_to_non_nullable
+              as String?,
+      usage: freezed == usage
           ? _value.usage
           : usage // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      steps: freezed == steps
+          ? _value.steps
+          : steps // ignore: cast_nullable_to_non_nullable
+              as String?,
+      peracik: freezed == peracik
+          ? _value.peracik
+          : peracik // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ingredients: freezed == ingredients
+          ? _value.ingredients
+          : ingredients // ignore: cast_nullable_to_non_nullable
+              as List<Ingredient>?,
     ) as $Val);
   }
 }
@@ -117,12 +122,13 @@ abstract class _$$_RecipeCopyWith<$Res> implements $RecipeCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      @JsonKey(name: 'nama_obat') String? name,
-      @JsonKey(name: 'keterangan') String? desc,
-      @JsonKey(name: 'gambar') String? pic,
-      @JsonKey(name: 'bahan') List<Ingredient> ingredients,
-      @JsonKey(name: 'cara_pembuatan') String steps,
-      @JsonKey(name: 'aturan_pemakaian') String usage});
+      String? name,
+      @JsonKey(name: 'image') String? pic,
+      @JsonKey(name: 'description') String? desc,
+      @JsonKey(name: 'usage_rules') String? usage,
+      @JsonKey(name: 'ways_to_use') String? steps,
+      String? peracik,
+      List<Ingredient>? ingredients});
 }
 
 /// @nodoc
@@ -137,11 +143,12 @@ class __$$_RecipeCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = freezed,
-    Object? desc = freezed,
     Object? pic = freezed,
-    Object? ingredients = null,
-    Object? steps = null,
-    Object? usage = null,
+    Object? desc = freezed,
+    Object? usage = freezed,
+    Object? steps = freezed,
+    Object? peracik = freezed,
+    Object? ingredients = freezed,
   }) {
     return _then(_$_Recipe(
       id: null == id
@@ -152,26 +159,30 @@ class __$$_RecipeCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      desc: freezed == desc
-          ? _value.desc
-          : desc // ignore: cast_nullable_to_non_nullable
-              as String?,
       pic: freezed == pic
           ? _value.pic
           : pic // ignore: cast_nullable_to_non_nullable
               as String?,
-      ingredients: null == ingredients
-          ? _value._ingredients
-          : ingredients // ignore: cast_nullable_to_non_nullable
-              as List<Ingredient>,
-      steps: null == steps
-          ? _value.steps
-          : steps // ignore: cast_nullable_to_non_nullable
-              as String,
-      usage: null == usage
+      desc: freezed == desc
+          ? _value.desc
+          : desc // ignore: cast_nullable_to_non_nullable
+              as String?,
+      usage: freezed == usage
           ? _value.usage
           : usage // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      steps: freezed == steps
+          ? _value.steps
+          : steps // ignore: cast_nullable_to_non_nullable
+              as String?,
+      peracik: freezed == peracik
+          ? _value.peracik
+          : peracik // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ingredients: freezed == ingredients
+          ? _value._ingredients
+          : ingredients // ignore: cast_nullable_to_non_nullable
+              as List<Ingredient>?,
     ));
   }
 }
@@ -181,12 +192,13 @@ class __$$_RecipeCopyWithImpl<$Res>
 class _$_Recipe implements _Recipe {
   const _$_Recipe(
       {required this.id,
-      @JsonKey(name: 'nama_obat') required this.name,
-      @JsonKey(name: 'keterangan') required this.desc,
-      @JsonKey(name: 'gambar') required this.pic,
-      @JsonKey(name: 'bahan') required final List<Ingredient> ingredients,
-      @JsonKey(name: 'cara_pembuatan') required this.steps,
-      @JsonKey(name: 'aturan_pemakaian') required this.usage})
+      required this.name,
+      @JsonKey(name: 'image') required this.pic,
+      @JsonKey(name: 'description') required this.desc,
+      @JsonKey(name: 'usage_rules') required this.usage,
+      @JsonKey(name: 'ways_to_use') required this.steps,
+      this.peracik,
+      required final List<Ingredient>? ingredients})
       : _ingredients = ingredients;
 
   factory _$_Recipe.fromJson(Map<String, dynamic> json) =>
@@ -195,34 +207,35 @@ class _$_Recipe implements _Recipe {
   @override
   final int id;
   @override
-  @JsonKey(name: 'nama_obat')
   final String? name;
   @override
-  @JsonKey(name: 'keterangan')
-  final String? desc;
-  @override
-  @JsonKey(name: 'gambar')
+  @JsonKey(name: 'image')
   final String? pic;
-  final List<Ingredient> _ingredients;
   @override
-  @JsonKey(name: 'bahan')
-  List<Ingredient> get ingredients {
-    if (_ingredients is EqualUnmodifiableListView) return _ingredients;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_ingredients);
-  }
-
+  @JsonKey(name: 'description')
+  final String? desc;
 // required dynamic symptoms,
   @override
-  @JsonKey(name: 'cara_pembuatan')
-  final String steps;
+  @JsonKey(name: 'usage_rules')
+  final String? usage;
   @override
-  @JsonKey(name: 'aturan_pemakaian')
-  final String usage;
+  @JsonKey(name: 'ways_to_use')
+  final String? steps;
+  @override
+  final String? peracik;
+  final List<Ingredient>? _ingredients;
+  @override
+  List<Ingredient>? get ingredients {
+    final value = _ingredients;
+    if (value == null) return null;
+    if (_ingredients is EqualUnmodifiableListView) return _ingredients;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'Recipe(id: $id, name: $name, desc: $desc, pic: $pic, ingredients: $ingredients, steps: $steps, usage: $usage)';
+    return 'Recipe(id: $id, name: $name, pic: $pic, desc: $desc, usage: $usage, steps: $steps, peracik: $peracik, ingredients: $ingredients)';
   }
 
   @override
@@ -232,18 +245,19 @@ class _$_Recipe implements _Recipe {
             other is _$_Recipe &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.desc, desc) || other.desc == desc) &&
             (identical(other.pic, pic) || other.pic == pic) &&
-            const DeepCollectionEquality()
-                .equals(other._ingredients, _ingredients) &&
+            (identical(other.desc, desc) || other.desc == desc) &&
+            (identical(other.usage, usage) || other.usage == usage) &&
             (identical(other.steps, steps) || other.steps == steps) &&
-            (identical(other.usage, usage) || other.usage == usage));
+            (identical(other.peracik, peracik) || other.peracik == peracik) &&
+            const DeepCollectionEquality()
+                .equals(other._ingredients, _ingredients));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, desc, pic,
-      const DeepCollectionEquality().hash(_ingredients), steps, usage);
+  int get hashCode => Object.hash(runtimeType, id, name, pic, desc, usage,
+      steps, peracik, const DeepCollectionEquality().hash(_ingredients));
 
   @JsonKey(ignore: true)
   @override
@@ -261,37 +275,37 @@ class _$_Recipe implements _Recipe {
 
 abstract class _Recipe implements Recipe {
   const factory _Recipe(
-          {required final int id,
-          @JsonKey(name: 'nama_obat') required final String? name,
-          @JsonKey(name: 'keterangan') required final String? desc,
-          @JsonKey(name: 'gambar') required final String? pic,
-          @JsonKey(name: 'bahan') required final List<Ingredient> ingredients,
-          @JsonKey(name: 'cara_pembuatan') required final String steps,
-          @JsonKey(name: 'aturan_pemakaian') required final String usage}) =
-      _$_Recipe;
+      {required final int id,
+      required final String? name,
+      @JsonKey(name: 'image') required final String? pic,
+      @JsonKey(name: 'description') required final String? desc,
+      @JsonKey(name: 'usage_rules') required final String? usage,
+      @JsonKey(name: 'ways_to_use') required final String? steps,
+      final String? peracik,
+      required final List<Ingredient>? ingredients}) = _$_Recipe;
 
   factory _Recipe.fromJson(Map<String, dynamic> json) = _$_Recipe.fromJson;
 
   @override
   int get id;
   @override
-  @JsonKey(name: 'nama_obat')
   String? get name;
   @override
-  @JsonKey(name: 'keterangan')
-  String? get desc;
-  @override
-  @JsonKey(name: 'gambar')
+  @JsonKey(name: 'image')
   String? get pic;
   @override
-  @JsonKey(name: 'bahan')
-  List<Ingredient> get ingredients;
+  @JsonKey(name: 'description')
+  String? get desc;
   @override // required dynamic symptoms,
-  @JsonKey(name: 'cara_pembuatan')
-  String get steps;
+  @JsonKey(name: 'usage_rules')
+  String? get usage;
   @override
-  @JsonKey(name: 'aturan_pemakaian')
-  String get usage;
+  @JsonKey(name: 'ways_to_use')
+  String? get steps;
+  @override
+  String? get peracik;
+  @override
+  List<Ingredient>? get ingredients;
   @override
   @JsonKey(ignore: true)
   _$$_RecipeCopyWith<_$_Recipe> get copyWith =>

@@ -5,6 +5,7 @@ Color? primary = const Color(0xFF6246EA);
 Color? primaryLight = const Color(0xFFB9B9F0);
 Color? secondary = const Color(0xFFD1D1E9);
 Color? red = const Color(0xffE53935);
+Color? lightRed = const Color(0xffE53935).withOpacity(0.2);
 Color? yellow = const Color(0xffFFC400);
 Color? green = const Color(0xff4BB450);
 Color? light = const Color(0xFFDAE4FF);

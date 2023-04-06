@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:ailment_alleviate/constants/custom_style.dart';
 import 'package:ailment_alleviate/layers/presentation/components/net_image.dart';
 import 'package:ailment_alleviate/routes/router.dart';
@@ -8,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../data/dashboard/dashboard_repo.dart';
 import '../../domain/ingredient/ingredient.dart';
 import '../../domain/recipe/recipe.dart';
 import '../controllers/basic_controller.dart';
@@ -55,9 +52,7 @@ class RecipeScreen extends ConsumerWidget {
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(100),
                       child: NetImage(
-                        // url: recipe.pic!,
-                        url:
-                            'https://www.themealdb.com/images/media/meals/58oia61564916529.jpg',
+                        url: recipe.pic!,
                         bg: primary!,
                         width: 100,
                         height: 100,
@@ -116,9 +111,9 @@ class RecipeScreen extends ConsumerWidget {
                   onPageChanged: (value) =>
                       ref.read(recipePageProvider.notifier).state = value,
                   children: [
-                    ingredientPage(context, recipe.ingredients),
-                    stepPage(context, recipe.steps),
-                    usagePage(context, recipe.usage)
+                    ingredientPage(context, recipe.ingredients!),
+                    stepPage(context, recipe.steps!),
+                    usagePage(context, recipe.usage!)
                   ],
                 ),
               )
@@ -176,7 +171,9 @@ class RecipeScreen extends ConsumerWidget {
                                   ),
                                   const SizedBox(height: 9),
                                   Text(
-                                    e.desc,
+                                    e.desc == null
+                                        ? 'Deskripsi tidak ada'
+                                        : e.desc!,
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.lato(
                                       textStyle: Typo.paragraph.copyWith(

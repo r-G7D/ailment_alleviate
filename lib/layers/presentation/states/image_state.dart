@@ -9,16 +9,16 @@ import '../../../utils/img_pick_crop.dart';
 part 'image_state.g.dart';
 
 @riverpod
-class InputImgRecipe extends _$InputImgRecipe {
+class InputImgCreateRecipe extends _$InputImgCreateRecipe {
   @override
-  File? build() => null;
+  XFile? build() => null;
 
   void setImage(ImageSource source) async {
     CroppedFile? img = await ImagePickCrop.process(
         source: source, ratio: [CropAspectRatioPreset.square]);
 
     if (img != null) {
-      state = File(img.path);
+      state = XFile(img.path);
     }
   }
 }
@@ -26,14 +26,14 @@ class InputImgRecipe extends _$InputImgRecipe {
 @riverpod
 class InputImgCreateIng extends _$InputImgCreateIng {
   @override
-  File? build() => null;
+  XFile? build() => null;
 
   void setImage(ImageSource source) async {
     CroppedFile? img = await ImagePickCrop.process(
         source: source, ratio: [CropAspectRatioPreset.square]);
 
     if (img != null) {
-      state = File(img.path);
+      state = XFile(img.path);
     }
   }
 }

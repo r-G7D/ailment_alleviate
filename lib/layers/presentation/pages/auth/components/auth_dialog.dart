@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../constants/custom_style.dart';
-import '../../../../data/auth/auth_repository.dart';
+import '../../../controllers/basic_controller.dart';
 
 class AuthDialog extends ConsumerWidget {
   const AuthDialog({super.key, required this.isLogin});

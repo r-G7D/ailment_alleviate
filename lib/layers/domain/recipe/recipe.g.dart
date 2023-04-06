@@ -8,22 +8,24 @@ part of 'recipe.dart';
 
 _$_Recipe _$$_RecipeFromJson(Map<String, dynamic> json) => _$_Recipe(
       id: json['id'] as int,
-      name: json['nama_obat'] as String?,
-      desc: json['keterangan'] as String?,
-      pic: json['gambar'] as String?,
-      ingredients: (json['bahan'] as List<dynamic>)
-          .map((e) => Ingredient.fromJson(e as Map<String, dynamic>))
+      name: json['name'] as String?,
+      pic: json['image'] as String?,
+      desc: json['description'] as String?,
+      usage: json['usage_rules'] as String?,
+      steps: json['ways_to_use'] as String?,
+      peracik: json['peracik'] as String?,
+      ingredients: (json['ingredients'] as List<dynamic>?)
+          ?.map((e) => Ingredient.fromJson(e as Map<String, dynamic>))
           .toList(),
-      steps: json['cara_pembuatan'] as String,
-      usage: json['aturan_pemakaian'] as String,
     );
 
 Map<String, dynamic> _$$_RecipeToJson(_$_Recipe instance) => <String, dynamic>{
       'id': instance.id,
-      'nama_obat': instance.name,
-      'keterangan': instance.desc,
-      'gambar': instance.pic,
-      'bahan': instance.ingredients,
-      'cara_pembuatan': instance.steps,
-      'aturan_pemakaian': instance.usage,
+      'name': instance.name,
+      'image': instance.pic,
+      'description': instance.desc,
+      'usage_rules': instance.usage,
+      'ways_to_use': instance.steps,
+      'peracik': instance.peracik,
+      'ingredients': instance.ingredients,
     };

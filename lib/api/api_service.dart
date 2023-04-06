@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -5,7 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 class APIService {
   // static const String _baseUrl =
-  // 'suggesting-key-bangladesh-va.trycloudflare.com';
+  //     'andrea-shadow-tongue-meditation.trycloudflare.com';
   static const String _baseUrl = 'deployailment.pythonanywhere.com';
 
   Future<T> runCRUD<T>({
@@ -15,11 +16,13 @@ class APIService {
     try {
       final response = await request();
       dynamic parsed = parse != null ? parse(response.data) : null;
+      log(parsed.toString());
       return parsed;
     } on SocketException catch (_) {
       throw Exception('No Internet Connection');
     } on DioError catch (e) {
-      throw Exception(e.response!.data);
+      log(e.response.toString());
+      throw Exception(e.response!.statusCode);
     }
   }
 
@@ -29,7 +32,10 @@ class APIService {
   }) async {
     try {
       final response = await request();
-      return parse(response.data);
+      // log(response.toString());
+      dynamic parsed = parse(response.data);
+      // log(parsed.toString());
+      return parsed;
     } on SocketException catch (_) {
       throw Exception('No Internet Connection');
     } on DioError catch (e) {
@@ -51,50 +57,56 @@ class APIService {
 
   Uri dashboard(Map<String, dynamic>? params) {
     return _buildUri(
-      endpoint: '/dashboard',
+      endpoint: '/api/medicine',
       params: params,
-    );
-  }
-
-  Uri login() {
-    return _buildUri(
-      endpoint: '/api/peracik/login/',
-    );
-  }
-
-  Uri register() {
-    return _buildUri(
-      endpoint: '/api/peracik/signup/',
     );
   }
 
   Uri dashboardId(String id) {
     return _buildUri(
-      endpoint: '/dashboard/$id',
+      endpoint: '/api/medicine/$id',
     );
   }
 
   Uri ingredient() {
     return _buildUri(
-      endpoint: '/bahan',
+      endpoint: '/api/ingredient',
     );
   }
 
   Uri ingredientId(String id) {
     return _buildUri(
-      endpoint: '/bahan/$id',
+      endpoint: '/ingredient/$id',
+    );
+  }
+
+  Uri login() {
+    return _buildUri(
+      endpoint: '/api/login/',
+    );
+  }
+
+  Uri register() {
+    return _buildUri(
+      endpoint: '/api/signup/',
+    );
+  }
+
+  Uri dashboardMaker() {
+    return _buildUri(
+      endpoint: '/api/dashboard/peracik',
     );
   }
 
   Uri createRecipe() {
     return _buildUri(
-      endpoint: '/api/peracik/create/',
+      endpoint: '/api/medicine',
     );
   }
 
   Uri createIngredient() {
     return _buildUri(
-      endpoint: '/api/peracik/',
+      endpoint: '/api/ingredient',
     );
   }
 }

@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../layers/presentation/pages/dashboard_screen.dart';
@@ -6,7 +6,7 @@ import '../layers/presentation/pages/auth/login_screen.dart';
 import '../layers/presentation/pages/auth/register_screen.dart';
 import '../layers/presentation/pages/emperis_screen.dart';
 import '../layers/presentation/pages/home_screen.dart';
-import '../layers/presentation/pages/maker/create/add_med_screen.dart';
+import '../layers/presentation/pages/maker/create/create_recipe_screen.dart';
 import '../layers/presentation/pages/maker/create/create_ingredient_screen.dart';
 import '../layers/presentation/pages/maker/maker_screen.dart';
 import '../layers/presentation/pages/recipe_screen.dart';
@@ -24,70 +24,70 @@ final GoRouter router = GoRouter(
         GoRoute(
           path: 'role',
           name: 'role',
-          pageBuilder: (context, state) => slideTransitionRL(
+          pageBuilder: (context, state) => mPage(
             const RoleScreen(),
           ),
         ),
         GoRoute(
           path: 'home',
           name: 'home',
-          pageBuilder: (context, state) => slideTransitionRL(
+          pageBuilder: (context, state) => mPage(
             const HomeScreen(),
           ),
         ),
         GoRoute(
           path: 'login',
           name: 'login',
-          pageBuilder: (context, state) => slideTransitionRL(
+          pageBuilder: (context, state) => mPage(
             const LoginScreen(),
           ),
         ),
         GoRoute(
           path: 'register',
           name: 'register',
-          pageBuilder: (context, state) => slideTransitionRL(
+          pageBuilder: (context, state) => mPage(
             const RegisterScreen(),
           ),
         ),
         GoRoute(
           path: 'emperis',
           name: 'emperis',
-          pageBuilder: (context, state) => slideTransitionRL(
+          pageBuilder: (context, state) => mPage(
             const EmperisScreen(),
           ),
         ),
         GoRoute(
           path: 'dashboard',
           name: 'dashboard',
-          pageBuilder: (context, state) => slideTransitionRL(
+          pageBuilder: (context, state) => mPage(
             const DashboardScreen(),
           ),
         ),
         GoRoute(
           path: 'recipe',
           name: 'recipe',
-          pageBuilder: (context, state) => slideTransitionRL(
+          pageBuilder: (context, state) => mPage(
             const RecipeScreen(),
           ),
         ),
         GoRoute(
           path: 'maker',
           name: 'maker',
-          pageBuilder: (context, state) => slideTransitionRL(
+          pageBuilder: (context, state) => mPage(
             const MakerScreen(),
           ),
         ),
         GoRoute(
-          path: 'add-med',
-          name: 'add-med',
-          pageBuilder: (context, state) => slideTransitionRL(
-            const AddMedScreen(),
+          path: 'create-recipe',
+          name: 'create-recipe',
+          pageBuilder: (context, state) => mPage(
+            const CreateRecipeScreen(),
           ),
         ),
         GoRoute(
-          path: 'add-ingredient',
-          name: 'add-ingredient',
-          pageBuilder: (context, state) => slideTransitionRL(
+          path: 'create-ingredient',
+          name: 'create-ingredient',
+          pageBuilder: (context, state) => mPage(
             const CreateIngredientScreen(),
           ),
         ),
@@ -95,6 +95,12 @@ final GoRouter router = GoRouter(
     )
   ],
 );
+
+MaterialPage mPage(page) {
+  return MaterialPage(
+    child: page,
+  );
+}
 
 CustomTransitionPage<dynamic> slideTransitionRL(page) {
   return CustomTransitionPage(

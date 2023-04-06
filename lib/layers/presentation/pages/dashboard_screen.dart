@@ -10,7 +10,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../constants/custom_style.dart';
-import '../../data/dashboard/dashboard_repo.dart';
 import '../../domain/recipe/recipe.dart';
 import '../components/net_image.dart';
 import '../controllers/basic_controller.dart';
@@ -45,7 +44,7 @@ class DashboardScreen extends ConsumerWidget {
                   elevation: 5,
                   child: Container(
                     height: 43,
-                    width: 250,
+                    width: MediaQuery.of(context).size.width < 376 ? 237 : 250,
                     padding: const EdgeInsets.only(left: 18),
                     decoration: BoxDecoration(
                       color: secondary,
@@ -58,7 +57,9 @@ class DashboardScreen extends ConsumerWidget {
                         Padding(
                           padding: const EdgeInsets.only(bottom: 7),
                           child: SizedBox(
-                            width: 190,
+                            width: MediaQuery.of(context).size.width < 376
+                                ? 177
+                                : 190,
                             child: TextFormField(
                               textInputAction: TextInputAction.search,
                               // onSubmitted: (value) {
@@ -94,8 +95,6 @@ class DashboardScreen extends ConsumerWidget {
                             ref.read(queryProvider.notifier).state =
                                 ref.watch(queryC).text;
                           },
-                          //! placeholder
-                          onDoubleTap: () => router.pop(),
                           child: Icon(
                             Icons.search,
                             color: white,
@@ -136,57 +135,6 @@ class DashboardScreen extends ConsumerWidget {
               ],
             ),
             const SizedBox(height: 20),
-            // SizedBox(
-            //   height: MediaQuery.of(context).size.height - 153,
-            //   child: FutureBuilder(
-            //       future: ref
-            //           .read(dashboardRepositoryProvider)
-            //           .fetchRecipes(ref.watch(queryProvider)),
-            //       builder: (context, snapshot) {
-            //         if (snapshot.hasData) {
-            //           dynamic data = snapshot.data;
-            //           log(data.toString());
-            //           if (data.length == 0) {
-            //             return Center(
-            //               child: Text(
-            //                 'Tidak ada hasil',
-            //                 style: GoogleFonts.lato(
-            //                   textStyle: Typo.title,
-            //                 ),
-            //               ),
-            //             );
-            //           } else {
-            //             return SingleChildScrollView(
-            //               child: Wrap(
-            //                 spacing: 10,
-            //                 children: [
-            //                   ...data
-            //                       .map((e) => Column(
-            //                             children: [
-            //                               searchItem(e.name, e.ingredients),
-            //                               const SizedBox(height: 10),
-            //                             ],
-            //                           ))
-            //                       .toList(),
-            //                 ],
-            //               ),
-            //             );
-            //           }
-            //         } else if (snapshot.connectionState ==
-            //             ConnectionState.waiting) {
-            //           return const LoadingWidget();
-            //         } else {
-            //           return Center(
-            //             child: Text(
-            //               'Tidak ada hasil',
-            //               style: GoogleFonts.lato(
-            //                 textStyle: Typo.title,
-            //               ),
-            //             ),
-            //           );
-            //         }
-            //       }),
-            // ),
             SizedBox(
               height: MediaQuery.of(context).size.height - 153,
               child: searchP.when(data: (data) {
@@ -210,8 +158,13 @@ class DashboardScreen extends ConsumerWidget {
                                 .map((e) => Column(
                                       children: [
                                         //* e = Recipe
-                                        searchItem(e.id.toString(), e.name!,
-                                            e.pic!, e.ingredients, ref),
+                                        searchItem(
+                                            e.id.toString(),
+                                            e.name!,
+                                            e.pic,
+                                            e.ingredients!,
+                                            ref,
+                                            context),
                                         const SizedBox(height: 10),
                                       ],
                                     ))
@@ -238,8 +191,14 @@ class DashboardScreen extends ConsumerWidget {
     );
   }
 
-  Widget searchItem(String id, String name, String img,
-      List<Ingredient> ingredients, WidgetRef ref) {
+  Widget searchItem(String id, String name, String? img,
+      List<Ingredient> ingredients, WidgetRef ref, BuildContext context) {
+    double itemW = 151;
+    double itemH = 143;
+    if (MediaQuery.of(context).size.width < 376) {
+      itemW = 147;
+    }
+
     List<String> ingredientsName = [];
     for (var element in ingredients) {
       //* element = Ingredient
@@ -257,8 +216,8 @@ class DashboardScreen extends ConsumerWidget {
           ref.watch(idProvider.notifier).state = int.parse(id);
         },
         child: Container(
-          height: 143,
-          width: 151,
+          height: itemH,
+          width: itemW,
           decoration: BoxDecoration(
             color: secondary,
             borderRadius: const BorderRadius.all(
@@ -272,9 +231,7 @@ class DashboardScreen extends ConsumerWidget {
                 borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(8), topRight: Radius.circular(8)),
                 child: NetImage(
-                  url:
-                      'https://www.themealdb.com/images/media/meals/58oia61564916529.jpg',
-                  // url: img,
+                  url: img,
                   bg: primary!,
                   width: 151,
                   height: 100,
@@ -341,6 +298,26 @@ class DashboardScreen extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text(
+                    'Urutkan Obat',
+                    style: GoogleFonts.comfortaa(
+                        textStyle: Typo.paragraph.copyWith(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16,
+                    )),
+                  ),
+                  const SizedBox(height: 15),
+                  InkWell(
+                    onTap: () {
+                      bool sort = ref.watch(sortButtonProvider);
+                      ref.read(sortButtonProvider.notifier).state = !sort;
+                      sort
+                          ? ref.read(sortProvider.notifier).state = '-name'
+                          : ref.read(sortProvider.notifier).state = 'name';
+                    },
+                    child: sortButton(ref),
+                  ),
+                  const SizedBox(height: 15),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -374,18 +351,30 @@ class DashboardScreen extends ConsumerWidget {
                   const SizedBox(height: 15),
                   ref.watch(ingredientProvider).when(
                     data: (data) {
-                      return SizedBox(
-                        height: MediaQuery.of(context).size.height - 312,
-                        child: SingleChildScrollView(
-                          child: Wrap(
-                            spacing: 10,
-                            runSpacing: 10,
-                            children: [
-                              ...data
-                                  .map((e) => filterItem(context, e.name, ref))
-                            ],
+                      return Column(
+                        children: [
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height -
+                                312 -
+                                36 -
+                                30,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SingleChildScrollView(
+                                  child: Wrap(
+                                    spacing: 10,
+                                    runSpacing: 10,
+                                    children: [
+                                      ...data.map((e) =>
+                                          filterItem(context, e.name, ref))
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
+                        ],
                       );
                     },
                     error: ((error, stackTrace) {
@@ -434,6 +423,53 @@ class DashboardScreen extends ConsumerWidget {
                 ],
               ),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget sortButton(WidgetRef ref) {
+    return Container(
+      decoration: BoxDecoration(
+        color: secondary,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        children: [
+          Container(
+            height: 35,
+            width: 124,
+            decoration: BoxDecoration(
+              color: ref.watch(sortButtonProvider) ? primaryLight : secondary,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Center(
+                child: Text('A - Z',
+                    style: GoogleFonts.comfortaa(
+                        textStyle: Typo.paragraph.copyWith(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                            color: ref.watch(sortButtonProvider)
+                                ? primary
+                                : white)))),
+          ),
+          Container(
+            height: 35,
+            width: 124,
+            decoration: BoxDecoration(
+              color: ref.watch(sortButtonProvider) ? secondary : primaryLight,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Center(
+                child: Text('Z - A',
+                    style: GoogleFonts.comfortaa(
+                        textStyle: Typo.paragraph.copyWith(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                            color: ref.watch(sortButtonProvider)
+                                ? white
+                                : primary)))),
           ),
         ],
       ),

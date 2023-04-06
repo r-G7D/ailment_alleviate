@@ -20,7 +20,7 @@ AddIngredient _$AddIngredientFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$AddIngredient {
-  List<String> get ingredients => throw _privateConstructorUsedError;
+  List<Ingredient> get ingredients => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +34,7 @@ abstract class $AddIngredientCopyWith<$Res> {
           AddIngredient value, $Res Function(AddIngredient) then) =
       _$AddIngredientCopyWithImpl<$Res, AddIngredient>;
   @useResult
-  $Res call({List<String> ingredients});
+  $Res call({List<Ingredient> ingredients});
 }
 
 /// @nodoc
@@ -56,7 +56,7 @@ class _$AddIngredientCopyWithImpl<$Res, $Val extends AddIngredient>
       ingredients: null == ingredients
           ? _value.ingredients
           : ingredients // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<Ingredient>,
     ) as $Val);
   }
 }
@@ -69,7 +69,7 @@ abstract class _$$_AddIngredientCopyWith<$Res>
       __$$_AddIngredientCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<String> ingredients});
+  $Res call({List<Ingredient> ingredients});
 }
 
 /// @nodoc
@@ -89,7 +89,7 @@ class __$$_AddIngredientCopyWithImpl<$Res>
       ingredients: null == ingredients
           ? _value._ingredients
           : ingredients // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<Ingredient>,
     ));
   }
 }
@@ -97,15 +97,15 @@ class __$$_AddIngredientCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_AddIngredient implements _AddIngredient {
-  _$_AddIngredient({required final List<String> ingredients})
+  _$_AddIngredient({required final List<Ingredient> ingredients})
       : _ingredients = ingredients;
 
   factory _$_AddIngredient.fromJson(Map<String, dynamic> json) =>
       _$$_AddIngredientFromJson(json);
 
-  final List<String> _ingredients;
+  final List<Ingredient> _ingredients;
   @override
-  List<String> get ingredients {
+  List<Ingredient> get ingredients {
     if (_ingredients is EqualUnmodifiableListView) return _ingredients;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_ingredients);
@@ -145,14 +145,14 @@ class _$_AddIngredient implements _AddIngredient {
 }
 
 abstract class _AddIngredient implements AddIngredient {
-  factory _AddIngredient({required final List<String> ingredients}) =
+  factory _AddIngredient({required final List<Ingredient> ingredients}) =
       _$_AddIngredient;
 
   factory _AddIngredient.fromJson(Map<String, dynamic> json) =
       _$_AddIngredient.fromJson;
 
   @override
-  List<String> get ingredients;
+  List<Ingredient> get ingredients;
   @override
   @JsonKey(ignore: true)
   _$$_AddIngredientCopyWith<_$_AddIngredient> get copyWith =>

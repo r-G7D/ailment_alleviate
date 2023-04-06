@@ -9,15 +9,17 @@ part of 'ingredient.dart';
 _$_Ingredient _$$_IngredientFromJson(Map<String, dynamic> json) =>
     _$_Ingredient(
       id: json['id'] as int,
-      name: json['nama_bahan'] as String,
-      pic: json['gambar'] as String,
-      desc: json['keterangan'] as String,
+      name: json['name'] as String,
+      pic: json['image'] as String?,
+      desc: json['description'] as String?,
+      category: json['category'] as String?,
     );
 
 Map<String, dynamic> _$$_IngredientToJson(_$_Ingredient instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'nama_bahan': instance.name,
-      'gambar': instance.pic,
-      'keterangan': instance.desc,
+      'name': instance.name,
+      'image': instance.pic,
+      'description': instance.desc,
+      'category': instance.category,
     };

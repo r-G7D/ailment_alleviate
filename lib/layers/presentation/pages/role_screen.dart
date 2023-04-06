@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:ailment_alleviate/constants/custom_style.dart';
+import 'package:ailment_alleviate/layers/presentation/controllers/basic_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,6 +14,8 @@ class RoleScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    String token = ref.watch(tokenProvider);
+
     return Scaffold(
       body: SizedBox(
           height: MediaQuery.of(context).size.height,
@@ -22,7 +25,7 @@ class RoleScreen extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 roleItem('User', 'home', ref),
-                roleItem('Peracik', 'login', ref),
+                roleItem('Peracik', token == '' ? 'login' : 'maker', ref),
               ],
             ),
           )),
@@ -33,7 +36,7 @@ class RoleScreen extends ConsumerWidget {
     return InkWell(
       onTap: () {
         router.pushNamed(path);
-        role == 'Maker'
+        role == 'Peracik'
             ? ref.read(roleProvider.notifier).state = Role.maker
             : ref.read(roleProvider.notifier).state = Role.user;
         log(ref.read(roleProvider).toString());

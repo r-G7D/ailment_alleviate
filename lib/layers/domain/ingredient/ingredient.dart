@@ -9,9 +9,10 @@ part 'ingredient.g.dart';
 class Ingredient with _$Ingredient {
   factory Ingredient({
     required int id,
-    @JsonKey(name: 'nama_bahan') required String name,
-    @JsonKey(name: 'gambar') required String pic,
-    @JsonKey(name: 'keterangan') required String desc,
+    required String name,
+    @JsonKey(name: 'image') String? pic,
+    @JsonKey(name: 'description') String? desc,
+    String? category,
   }) = _Ingredient;
 
   factory Ingredient.fromJson(Map<String, dynamic> json) =>

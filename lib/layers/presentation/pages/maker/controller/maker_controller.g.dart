@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'image_state.dart';
+part of 'maker_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -29,39 +29,20 @@ class _SystemHash {
   }
 }
 
-String _$InputImgCreateRecipeHash() =>
-    r'53197b1bacc0b2c275591f6927901fde6b88ca1a';
+String _$MakerControllerHash() => r'e19324d79b1fa78f232d00916628d0cdf5393df0';
 
-/// See also [InputImgCreateRecipe].
-final inputImgCreateRecipeProvider =
-    AutoDisposeNotifierProvider<InputImgCreateRecipe, XFile?>(
-  InputImgCreateRecipe.new,
-  name: r'inputImgCreateRecipeProvider',
+/// See also [MakerController].
+final makerControllerProvider =
+    AutoDisposeAsyncNotifierProvider<MakerController, void>(
+  MakerController.new,
+  name: r'makerControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$InputImgCreateRecipeHash,
+      : _$MakerControllerHash,
 );
-typedef InputImgCreateRecipeRef = AutoDisposeNotifierProviderRef<XFile?>;
+typedef MakerControllerRef = AutoDisposeAsyncNotifierProviderRef<void>;
 
-abstract class _$InputImgCreateRecipe extends AutoDisposeNotifier<XFile?> {
+abstract class _$MakerController extends AutoDisposeAsyncNotifier<void> {
   @override
-  XFile? build();
-}
-
-String _$InputImgCreateIngHash() => r'315e616099cd95bdff29e8027d6213c6eab5dfd4';
-
-/// See also [InputImgCreateIng].
-final inputImgCreateIngProvider =
-    AutoDisposeNotifierProvider<InputImgCreateIng, XFile?>(
-  InputImgCreateIng.new,
-  name: r'inputImgCreateIngProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$InputImgCreateIngHash,
-);
-typedef InputImgCreateIngRef = AutoDisposeNotifierProviderRef<XFile?>;
-
-abstract class _$InputImgCreateIng extends AutoDisposeNotifier<XFile?> {
-  @override
-  XFile? build();
+  FutureOr<void> build();
 }

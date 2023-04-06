@@ -1,13 +1,19 @@
-import 'dart:io';
+import 'dart:developer';
 
+import 'package:ailment_alleviate/layers/data/maker_repository/maker_repository.dart';
+import 'package:ailment_alleviate/layers/presentation/pages/maker/controller/maker_controller.dart';
 import 'package:ailment_alleviate/layers/presentation/pages/maker/create/component/img_preview.dart';
+import 'package:ailment_alleviate/routes/router.dart';
+import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../../constants/custom_style.dart';
 import '../../../components/form_field.dart';
 import '../../../states/image_state.dart';
+import 'component/create_dialog.dart';
 
 class CreateIngredientScreen extends ConsumerStatefulWidget {
   const CreateIngredientScreen({super.key});
@@ -31,7 +37,7 @@ class _CreateIngredientScreenState
 
   @override
   Widget build(BuildContext context) {
-    File? previewImage;
+    XFile? previewImage = ref.watch(inputImgCreateIngProvider);
 
     return Scaffold(
       backgroundColor: white,
@@ -60,12 +66,20 @@ class _CreateIngredientScreenState
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ImagePickerButton(
-                  setFunction: () {
-                    showChooseImage(context,
-                        ref.read(inputImgCreateIngProvider.notifier).setImage);
-                  },
-                ),
+                previewImage == null
+                    ? ImagePickerButton(
+                        setFunction: () {
+                          showChooseImage(
+                              context,
+                              ref
+                                  .read(inputImgCreateIngProvider.notifier)
+                                  .setImage);
+                        },
+                      )
+                    : DeleteImageButton(setFunction: () {
+                        ref.read(inputImgCreateIngProvider.notifier).state =
+                            null;
+                      }),
                 const SizedBox(width: 25),
                 SizedBox(
                   width: MediaQuery.of(context).size.width - 165,
@@ -133,7 +147,19 @@ class _CreateIngredientScreenState
                   ),
                   child: TextButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      ref.read(ingredientNameProvider.notifier).state =
+                          _nameC.text;
+                      ref.read(ingredientDescProvider.notifier).state =
+                          _descC.text;
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (context) {
+                          return const CreateDialog(
+                            type: 'bahan',
+                          );
+                        },
+                      );
                     },
                     child: Text(
                       'Tambah',
