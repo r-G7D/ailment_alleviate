@@ -18,131 +18,132 @@ class MakerScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ref.watch(makerProvider).when(
-      data: (data) {
-        List<Recipe> pending = [];
-        List<Recipe> accepted = [];
-        List<Recipe> declined = [];
-        if (data.accountStatus == 'ACCEPTED') {
-          pending = data.pending!;
-          accepted = data.accepted!;
-          declined = data.declined!;
-        }
+          skipLoadingOnRefresh: false,
+          data: (data) {
+            List<Recipe> pending = [];
+            List<Recipe> accepted = [];
+            List<Recipe> declined = [];
+            if (data.accountStatus == 'ACCEPTED') {
+              pending = data.pending!;
+              accepted = data.accepted!;
+              declined = data.declined!;
+            }
 
-        return Scaffold(
-          backgroundColor: white,
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            backgroundColor: white,
-            title: Text(
-              'Ailment Alleviate',
-              style: GoogleFonts.comfortaa(textStyle: Typo.title),
-            ),
-            bottom: PreferredSize(
-                preferredSize: const Size.fromHeight(0),
-                child: Divider(
-                  thickness: 4,
-                  color: grey,
-                  endIndent: 43,
-                  indent: 43,
-                )),
-            elevation: 0,
-          ),
-          floatingActionButton: data.accountStatus == 'MENUNGGU' ||
-                  data.accountStatus == 'CANCELLED'
-              ? const SizedBox()
-              : SizedBox(
-                  height: 50,
-                  width: 50,
-                  child: FloatingActionButton(
-                    backgroundColor: primary,
-                    onPressed: () {
-                      router.pushNamed('create-recipe');
-                    },
-                    child: const Icon(
-                      Icons.add,
-                      color: Colors.white,
-                      size: 14,
-                    ),
+            return Scaffold(
+                backgroundColor: white,
+                appBar: AppBar(
+                  automaticallyImplyLeading: false,
+                  backgroundColor: white,
+                  title: Text(
+                    'Ailment Alleviate',
+                    style: GoogleFonts.comfortaa(textStyle: Typo.title),
                   ),
+                  bottom: PreferredSize(
+                      preferredSize: const Size.fromHeight(0),
+                      child: Divider(
+                        thickness: 4,
+                        color: grey,
+                        endIndent: 43,
+                        indent: 43,
+                      )),
+                  elevation: 0,
                 ),
-          body: data.accountStatus == 'MENUNGGU' ||
-                  data.accountStatus == 'CANCELLED'
-              ? accountPending(context, ref, accountStatus: data.accountStatus)
-              : RefreshIndicator(
+                floatingActionButton: data.accountStatus == 'WAITING' ||
+                        data.accountStatus == 'CANCELLED'
+                    ? const SizedBox()
+                    : SizedBox(
+                        height: 50,
+                        width: 50,
+                        child: FloatingActionButton(
+                          backgroundColor: primary,
+                          onPressed: () {
+                            router.pushNamed('create-recipe');
+                          },
+                          child: const Icon(
+                            Icons.add,
+                            color: Colors.white,
+                            size: 14,
+                          ),
+                        ),
+                      ),
+                body: RefreshIndicator(
                   color: primary,
                   onRefresh: () async {
-                    ref.watch(makerRepositoryProvider).fetchMaker();
+                    return ref.refresh(makerProvider);
                   },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 26, horizontal: 34),
-                    child: ListView(
-                      children: [
-                        accountCard(data.profile!['name']!,
-                            data.profile!['email']!, ref),
-                        const SizedBox(height: 16),
-                        MedList(status: 'accepted', data: accepted),
-                        const SizedBox(height: 16),
-                        MedList(status: 'pending', data: pending),
-                        const SizedBox(height: 16),
-                        MedList(status: 'declined', data: declined)
-                      ],
-                    ),
-                  ),
+                  child: data.accountStatus == 'WAITING' ||
+                          data.accountStatus == 'CANCELLED'
+                      ? accountPending(context, ref,
+                          accountStatus: data.accountStatus)
+                      : Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 26, horizontal: 34),
+                          child: ListView(
+                            children: [
+                              accountCard(data.profile!['name']!,
+                                  data.profile!['email']!, ref),
+                              const SizedBox(height: 16),
+                              MedList(status: 'accepted', data: accepted),
+                              const SizedBox(height: 16),
+                              MedList(status: 'pending', data: pending),
+                              const SizedBox(height: 16),
+                              MedList(status: 'declined', data: declined)
+                            ],
+                          ),
+                        ),
+                ));
+          },
+          error: (error, trace) {
+            return Scaffold(
+              backgroundColor: white,
+              appBar: AppBar(
+                automaticallyImplyLeading: false,
+                backgroundColor: white,
+                title: Text(
+                  'Ailment Alleviate',
+                  style: GoogleFonts.comfortaa(textStyle: Typo.title),
                 ),
+                bottom: PreferredSize(
+                    preferredSize: const Size.fromHeight(0),
+                    child: Divider(
+                      thickness: 4,
+                      color: grey,
+                      endIndent: 43,
+                      indent: 43,
+                    )),
+                elevation: 0,
+              ),
+              body: Center(
+                child: Text(error.toString()),
+              ),
+            );
+          },
+          loading: () {
+            return Scaffold(
+              backgroundColor: white,
+              appBar: AppBar(
+                automaticallyImplyLeading: false,
+                backgroundColor: white,
+                title: Text(
+                  'Ailment Alleviate',
+                  style: GoogleFonts.comfortaa(textStyle: Typo.title),
+                ),
+                bottom: PreferredSize(
+                    preferredSize: const Size.fromHeight(0),
+                    child: Divider(
+                      thickness: 4,
+                      color: grey,
+                      endIndent: 43,
+                      indent: 43,
+                    )),
+                elevation: 0,
+              ),
+              body: const Center(
+                child: LoadingWidget(),
+              ),
+            );
+          },
         );
-      },
-      error: (error, trace) {
-        return Scaffold(
-          backgroundColor: white,
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            backgroundColor: white,
-            title: Text(
-              'Ailment Alleviate',
-              style: GoogleFonts.comfortaa(textStyle: Typo.title),
-            ),
-            bottom: PreferredSize(
-                preferredSize: const Size.fromHeight(0),
-                child: Divider(
-                  thickness: 4,
-                  color: grey,
-                  endIndent: 43,
-                  indent: 43,
-                )),
-            elevation: 0,
-          ),
-          body: Center(
-            child: Text(error.toString()),
-          ),
-        );
-      },
-      loading: () {
-        return Scaffold(
-          backgroundColor: white,
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            backgroundColor: white,
-            title: Text(
-              'Ailment Alleviate',
-              style: GoogleFonts.comfortaa(textStyle: Typo.title),
-            ),
-            bottom: PreferredSize(
-                preferredSize: const Size.fromHeight(0),
-                child: Divider(
-                  thickness: 4,
-                  color: grey,
-                  endIndent: 43,
-                  indent: 43,
-                )),
-            elevation: 0,
-          ),
-          body: const Center(
-            child: LoadingWidget(),
-          ),
-        );
-      },
-    );
   }
 
   Widget accountCard(String name, String email, WidgetRef ref) {
@@ -237,7 +238,7 @@ class MakerScreen extends ConsumerWidget {
       color: white,
       child: Column(
         children: [
-          statusCard(accountStatus == 'MENUNGGU' ? true : false, context),
+          statusCard(accountStatus == 'WAITING' ? true : false, context),
           const Spacer(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 34, vertical: 26),
@@ -370,7 +371,7 @@ class MedList extends ConsumerWidget {
                           ? 'Diterima'
                           : status == 'pending'
                               ? 'Menunggu'
-                              : 'CANCELLED',
+                              : 'Ditolak',
                       style: GoogleFonts.lato(
                         textStyle: Typo.paragraph.copyWith(
                           color: status == 'accepted'
@@ -433,7 +434,7 @@ class MedList extends ConsumerWidget {
   }
 
   Widget medTile(
-      WidgetRef ref, String status, String name, int id, String pic) {
+      WidgetRef ref, String status, String name, int id, String? pic) {
     var prov = status == 'accepted'
         ? ref.watch(acceptedProvider)
         : status == 'pending'
