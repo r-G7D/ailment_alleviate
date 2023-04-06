@@ -13,10 +13,10 @@ class DashboardRepository {
   final APIService api = APIService();
 
   Future<List<Recipe>> fetchRecipes(
-      String? query, String? filter, String? sort) async {
+      String? query, String? filter, String sort) async {
     final param = {
       'search': '${query!} ${filter!}',
-      'ordering': '$sort!',
+      'ordering': sort,
     };
     Uri uri = api.dashboard(param);
     log(uri.toString());

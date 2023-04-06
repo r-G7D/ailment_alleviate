@@ -298,6 +298,26 @@ class DashboardScreen extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text(
+                    'Urutkan Obat',
+                    style: GoogleFonts.comfortaa(
+                        textStyle: Typo.paragraph.copyWith(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16,
+                    )),
+                  ),
+                  const SizedBox(height: 15),
+                  InkWell(
+                    onTap: () {
+                      bool sort = ref.watch(sortButtonProvider);
+                      ref.read(sortButtonProvider.notifier).state = !sort;
+                      sort
+                          ? ref.read(sortProvider.notifier).state = '-name'
+                          : ref.read(sortProvider.notifier).state = 'name';
+                    },
+                    child: sortButton(ref),
+                  ),
+                  const SizedBox(height: 15),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -331,18 +351,30 @@ class DashboardScreen extends ConsumerWidget {
                   const SizedBox(height: 15),
                   ref.watch(ingredientProvider).when(
                     data: (data) {
-                      return SizedBox(
-                        height: MediaQuery.of(context).size.height - 312,
-                        child: SingleChildScrollView(
-                          child: Wrap(
-                            spacing: 10,
-                            runSpacing: 10,
-                            children: [
-                              ...data
-                                  .map((e) => filterItem(context, e.name, ref))
-                            ],
+                      return Column(
+                        children: [
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height -
+                                312 -
+                                36 -
+                                30,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SingleChildScrollView(
+                                  child: Wrap(
+                                    spacing: 10,
+                                    runSpacing: 10,
+                                    children: [
+                                      ...data.map((e) =>
+                                          filterItem(context, e.name, ref))
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
+                        ],
                       );
                     },
                     error: ((error, stackTrace) {
@@ -391,6 +423,53 @@ class DashboardScreen extends ConsumerWidget {
                 ],
               ),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget sortButton(WidgetRef ref) {
+    return Container(
+      decoration: BoxDecoration(
+        color: secondary,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        children: [
+          Container(
+            height: 35,
+            width: 124,
+            decoration: BoxDecoration(
+              color: ref.watch(sortButtonProvider) ? primaryLight : secondary,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Center(
+                child: Text('A - Z',
+                    style: GoogleFonts.comfortaa(
+                        textStyle: Typo.paragraph.copyWith(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                            color: ref.watch(sortButtonProvider)
+                                ? primary
+                                : white)))),
+          ),
+          Container(
+            height: 35,
+            width: 124,
+            decoration: BoxDecoration(
+              color: ref.watch(sortButtonProvider) ? secondary : primaryLight,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Center(
+                child: Text('Z - A',
+                    style: GoogleFonts.comfortaa(
+                        textStyle: Typo.paragraph.copyWith(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                            color: ref.watch(sortButtonProvider)
+                                ? white
+                                : primary)))),
           ),
         ],
       ),

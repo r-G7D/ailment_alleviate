@@ -33,6 +33,10 @@ final recipePageProvider = StateProvider.autoDispose<int>((ref) {
   return 0;
 });
 
+final sortButtonProvider = StateProvider<bool>((ref) {
+  return false;
+});
+
 class FilterNotifier extends StateNotifier<Filter> {
   FilterNotifier() : super(Filter(filters: []));
   List<String> filters = [];
