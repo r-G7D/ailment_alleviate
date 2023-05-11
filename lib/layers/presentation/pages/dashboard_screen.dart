@@ -294,7 +294,7 @@ class DashboardScreen extends ConsumerWidget {
             width: MediaQuery.of(context).size.width - 50,
             child: Padding(
               padding: const EdgeInsets.only(
-                  top: 78, left: 42, bottom: 45, right: 35),
+                  top: 76, left: 42, bottom: 45, right: 35),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

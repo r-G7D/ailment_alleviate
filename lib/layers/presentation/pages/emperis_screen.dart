@@ -35,7 +35,7 @@ class EmperisScreen extends ConsumerWidget {
       },
       {
         'pic': 'https://picsum.photos/id/1/200/300',
-        'title': 'Lorem Ipsum',
+        'title': 'Etnomedicine',
         'path': null,
         'desc':
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc sit amet aliquam tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Sed euismod, nunc sit amet aliquam tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Sed euismod, nunc sit amet aliquam tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Sed euismod, nunc sit amet aliquam tincidunt.',

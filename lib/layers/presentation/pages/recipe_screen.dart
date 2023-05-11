@@ -52,7 +52,7 @@ class RecipeScreen extends ConsumerWidget {
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(100),
                       child: NetImage(
-                        url: recipe.pic!,
+                        url: recipe.pic,
                         bg: primary!,
                         width: 100,
                         height: 100,

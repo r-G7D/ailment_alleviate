@@ -20,7 +20,7 @@ class BasicController extends _$BasicController {
 
   checkToken() async {
     var storage = const FlutterSecureStorage();
-    // await storage.delete(key: 'token');
+    await storage.delete(key: 'token');
     var token = await storage.read(key: 'token');
     if (token == '' || token == null) {
       log('token null');
